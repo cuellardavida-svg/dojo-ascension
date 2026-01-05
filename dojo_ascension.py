@@ -2,19 +2,18 @@ import sys
 import time
 import os
 import json
-# We now import external tools (dependencies)
+import platform # New Tool: To detect the OS
+import shutil   # New Tool: To check disk space
 from colorama import init, Fore, Style
 
-# Initialize colorama. 'autoreset=True' means the color resets 
-# back to white automatically after each print statement.
 init(autoreset=True)
 
-# --- THE CURRICULUM DATA ---
+# --- CONFIGURATION ---
 CURRICULUM = {
     "Phase 1": {
         "Theme": "Foundations & Style",
         "Weeks": [
-            {"week": 1, "task": "Linux Grounding & Mindset", "status": "Locked"},
+            {"week": 1, "task": "Linux Grounding & Mindset", "status": "Unlocked"},
             {"week": 2, "task": "Automation v1 & Data Fetch", "status": "Locked"},
             {"week": 3, "task": "Security Toolkit v1", "status": "Locked"},
             {"week": 4, "task": "Quant Backtester v1", "status": "Locked"}
@@ -28,15 +27,6 @@ CURRICULUM = {
             {"week": 7, "task": "VPS Deployment", "status": "Locked"},
             {"week": 8, "task": "Risk Metrics Dashboard", "status": "Locked"}
         ]
-    },
-    "Phase 3": {
-        "Theme": "Originality & Light",
-        "Weeks": [
-            {"week": 9, "task": "Flagship Design", "status": "Locked"},
-            {"week": 10, "task": "The Unified Theme", "status": "Locked"},
-            {"week": 11, "task": "Polishing the Temple", "status": "Locked"},
-            {"week": 12, "task": "Final Ascension", "status": "Locked"}
-        ]
     }
 }
 
@@ -48,63 +38,69 @@ class Player:
         self.shadow = 0
         self.level = 1
 
-    def choose_path(self):
-        print(f"\n{Style.BRIGHT}{Fore.MAGENTA}=== THE CROSSROADS ==={Style.RESET_ALL}")
-        print("At Level 5, you must choose your discipline:")
-        print(f"{Fore.GREEN}[1] Path of Earth (Automation){Style.RESET_ALL} - The Builder")
-        print(f"{Fore.RED}[2] Path of Fire (Security){Style.RESET_ALL}   - The Guardian")
-        print(f"{Fore.BLUE}[3] Path of Water (Quant){Style.RESET_ALL}      - The Oracle")
-        
-        choice = input(f"\n{Fore.CYAN}Select your destiny (1-3): {Style.RESET_ALL}")
-        if choice == '1': self.path = "Automator"
-        elif choice == '2': self.path = "Guardian"
-        elif choice == '3': self.path = "Oracle"
-        else: self.path = "Ronin"
-        
-        print(f"\nYou have chosen the path of the {Style.BRIGHT}{self.path}.")
-        time.sleep(1)
-
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
 
-def print_slow(text):
+def print_slow(text, speed=0.02):
     for char in text:
         sys.stdout.write(char)
         sys.stdout.flush()
-        time.sleep(0.02)
+        time.sleep(speed)
     print()
 
+# --- MISSION LOGIC ---
+def execute_week1():
+    clear_screen()
+    print(f"{Style.BRIGHT}{Fore.YELLOW}=== MISSION 1: THE GROUNDING ==={Style.RESET_ALL}")
+    print_slow("Objective: Verify the integrity of the Dojo environment.")
+    print("Scanning system parameters...\n")
+    time.sleep(1)
+
+    # Check 1: Operating System
+    system_os = platform.system()
+    print(f"Checking OS... {Fore.CYAN}{system_os}{Style.RESET_ALL}")
+    
+    if system_os == "Linux":
+        print(f"{Fore.GREEN}[PASS] The soil is fertile.{Style.RESET_ALL}")
+    else:
+        print(f"{Fore.RED}[WARNING] Non-Linux environment detected.{Style.RESET_ALL}")
+        print("We will proceed, but true power requires Linux.")
+    
+    time.sleep(1)
+
+    # Check 2: Disk Space
+    total, used, free = shutil.disk_usage("/")
+    free_gb = free // (2**30)
+    print(f"\nChecking Floor Space... {Fore.CYAN}{free_gb} GB Free{Style.RESET_ALL}")
+
+    if free_gb > 5:
+        print(f"{Fore.GREEN}[PASS] The Dojo has room to grow.{Style.RESET_ALL}")
+    else:
+        print(f"{Fore.RED}[FAIL] The Dojo is cluttered. Clean your disk.{Style.RESET_ALL}")
+
+    print(f"\n{Style.BRIGHT}Mission Complete. +10 Honor gained.{Style.RESET_ALL}")
+    input("\n[Press Enter to return to Meditate]")
+    return 10 # Return XP/Honor
+
+# --- MAIN LOOP ---
 def main_menu():
     clear_screen()
     print(f"{Style.BRIGHT}{Fore.CYAN}")
     print("╔════════════════════════════════════════╗")
     print("║     DOJO OS: THE ASQ ASCENSION         ║")
-    print("║   build_v3.1 | Status: ONLINE          ║")
+    print("║   build_v3.2 | Status: ONLINE          ║")
     print("╚════════════════════════════════════════╝")
     print(f"{Style.RESET_ALL}")
-    print(f"{Fore.YELLOW}Current Objective: Build the Inner Temple")
     
-    print("1. Enter the Dojo (Start Curriculum)")
+    print("1. Enter the Dojo (Current Mission)")
     print("2. View ASQ Map")
-    print("3. Check Mental State (Shadow/Honor)")
+    print("3. Check Mental State")
     print("4. Exit")
     
     return input(f"\n{Fore.GREEN}root@dojo:~# {Style.RESET_ALL}")
 
-def view_map(player):
-    clear_screen()
-    print(f"{Style.BRIGHT}{Fore.MAGENTA}=== THE 12-WEEK ASCENSION MAP ===")
-    for phase, data in CURRICULUM.items():
-        print(f"\n{Style.BRIGHT}{phase}: {data['Theme']}")
-        for week in data['Weeks']:
-            status_icon = "🔒" if week['status'] == "Locked" else "✅"
-            if player.level == week['week']: status_icon = "📍"
-            print(f"  {status_icon} Week {week['week']}: {week['task']}")
-    input(f"\n{Fore.CYAN}[Press Enter to Return]")
-
 def game_loop():
     clear_screen()
-    print_slow("Initializing Neural Link...")
     player_name = input("Identify yourself, Initiate: ")
     player = Player(player_name)
     
@@ -112,20 +108,22 @@ def game_loop():
         choice = main_menu()
         
         if choice == '1':
-            print(f"\nLoading Module for Week {player.level}...")
-            print_slow(f"{Fore.YELLOW}Subject: Linux Grounding & Mindset")
-            print_slow("Mission: Clean the server logs using 'grep' and 'rm'...")
-            time.sleep(2)
+            if player.level == 1:
+                xp = execute_week1()
+                player.honor += xp
+            else:
+                print("Module locked or under construction.")
+                time.sleep(2)
             
         elif choice == '2':
-            view_map(player)
+            # Simplified map view for brevity
+            print(f"\n{Fore.MAGENTA}Current Phase: {CURRICULUM['Phase 1']['Theme']}")
+            input("[Enter]")
             
         elif choice == '3':
-            print(f"\n{Style.BRIGHT}--- {player.name.upper()}'S SOUL ---")
-            print(f"Class:  {player.path if player.path else 'Initiate'}")
-            print(f"Honor:  {player.honor}/100 (Bushido)")
-            print(f"Shadow: {player.shadow}/100 (Jungian Risk)")
-            input("\n[Press Enter]")
+            print(f"\n{Style.BRIGHT}--- {player.name.upper()} ---")
+            print(f"Honor:  {player.honor}")
+            input("[Enter]")
             
         elif choice == '4':
             print(f"{Fore.RED}Disconnecting...")
