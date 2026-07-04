@@ -552,7 +552,7 @@ def chronicle_tips(player, missions, journal_data):
         tips.append((
             f"🌱 Chain growing: {chain} day(s) — keep going!",
             "Consistent micro-practice beats long irregular sessions. "
-            "Aim to reach a 7-day chain to build lasting habit."
+            "Aim to reach a 7-day chain to build a lasting habit."
         ))
     else:
         tips.append((
@@ -645,8 +645,8 @@ def chronicle_tips(player, missions, journal_data):
         gap = next_t - player.honor
         tips.append((
             f"🎖️  {gap} honor until rank: {next_title}",
-            f"You are at {player.honor} honor. Complete {gap // 20 + 1} more "
-            "mission(s) to reach the next rank and unlock new challenges."
+            f"You are at {player.honor} honor. Keep completing missions to "
+            "reach the next rank and unlock new challenges."
         ))
 
     # ── Render ──────────────────────────────────────────────────────────────
