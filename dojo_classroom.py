@@ -346,7 +346,33 @@ def view_journal(data):
 # ─────────────────────────────────────────────
 
 
-def run_code_challenge(prompt, validator_fn, hint=""):
+def validate_answer(user_input, answer, answertype="exact"):
+    """
+    Validate user answer against expected answer(s).
+    
+    answertype can be:
+    - "exact": exact match (case-insensitive, whitespace-normalized)
+    - "contains": substring match (case-insensitive)
+    - default: treat as contains
+    """
+    user = user_input.lower().strip()
+    
+    # Handle list of acceptable answers
+    if isinstance(answer, list):
+        for ans in answer:
+            if validate_answer(user_input, ans, answertype):
+                return True
+        return False
+    
+    answer_str = str(answer).lower().strip()
+    
+    if answertype == "exact":
+        return user == answer_str
+    else:  # "contains" or default
+        return answer_str in user
+
+
+def run_code_challenge(prompt, answer, answertype="exact", hint=""):
     """Generic code challenge runner"""
     challenge_box(prompt)
     if hint:
@@ -375,8 +401,8 @@ def run_code_challenge(prompt, validator_fn, hint=""):
             hint_box(hint or "Think about what the challenge is asking.")
             continue
 
-        result = validator_fn(user_input)
         attempts += 1
+        result = validate_answer(user_input, answer, answertype)
 
         if result is True:
             print(f"\n  {Fore.GREEN}{Style.BRIGHT}✓ CORRECT!{Style.RESET_ALL}")
@@ -386,9 +412,7 @@ def run_code_challenge(prompt, validator_fn, hint=""):
             return True
         else:
             print(
-                f"\n  {Fore.RED}✗ Not quite. "
-                f"{result if isinstance(result, str) else 'Try again.'}"
-                f"{Style.RESET_ALL}"
+                f"\n  {Fore.RED}✗ Not quite. Try again.{Style.RESET_ALL}"
             )
             if attempts >= 3:
                 print(
@@ -404,11 +428,13 @@ def execute_mission(mission_data, player):
     title = mission_data["title"]
     philosophy = mission_data["philosophy"]
     economics = mission_data["economics"]
-    tech_concept = mission_data["techconcept"]
+    lesson = mission_data.get("lesson", mission_data.get("techconcept", ""))
     challenge = mission_data["challenge"]
     answer = mission_data["answer"]
+    answertype = mission_data.get("answertype", "contains")
     skill = mission_data["skill"]
-    honor_base = mission_data.get("honor_base", 20)
+    honor_base = mission_data.get("honorreward", mission_data.get("honor_base", 20))
+    hint = mission_data.get("hint", "")
 
     header(f"MISSION {num}: {title}", Fore.CYAN)
 
@@ -419,19 +445,15 @@ def execute_mission(mission_data, player):
     print(f"  {economics}\n")
 
     print(f"{Fore.CYAN}💻 TECHNICAL CONCEPT:{Style.RESET_ALL}")
-    print(f"  {tech_concept}\n")
+    print(f"  {lesson}\n")
 
     wait()
 
-    def validator(user_input):
-        if callable(answer):
-            return answer(user_input.lower())
-        return user_input.lower().strip() == answer.lower().strip()
-
     won = run_code_challenge(
         challenge,
-        validator,
-        hint="Pay careful attention to the question.")
+        answer,
+        answertype,
+        hint)
 
     if won:
         player.completed.add(mid)
