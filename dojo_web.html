@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🥋 DOJO ASCENSION v5.0 — Browser Edition</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1a3e 100%);
+            color: #e0e0e0;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #0f1419;
+            border: 2px solid #00d4ff;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(90deg, #00d4ff 0%, #0099cc 100%);
+            color: #000;
+            padding: 30px 20px;
+            text-align: center;
+            border-bottom: 3px solid #00d4ff;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 30px;
+            min-height: 500px;
+        }
+
+        .screen {
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        /* ─────────────────────────────────────────────────── */
+        /* INTRO SCREEN */
+        /* ─────────────────────────────────────────────────── */
+
+        .intro-box {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .intro-box h2 {
+            color: #00d4ff;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        .intro-box p {
+            margin: 15px 0;
+            font-size: 1.1em;
+            line-height: 1.8;
+        }
+
+        .name-input-group {
+            margin: 30px 0;
+        }
+
+        .name-input-group label {
+            display: block;
+            color: #00ff88;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .name-input-group input {
+            width: 100%;
+            max-width: 400px;
+            padding: 12px 15px;
+            background: #1a1f2e;
+            border: 2px solid #00ff88;
+            color: #00ff88;
+            font-family: inherit;
+            font-size: 1em;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .name-input-group input:focus {
+            outline: none;
+            border-color: #00d4ff;
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+
+        /* ─────────────────────────────────────────────────── */
+        /* MAIN MENU */
+        /* ─────────────────────────────────────────────────── */
+
+        .menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #00d4ff;
+        }
+
+        .menu-header h2 {
+            color: #00d4ff;
+            font-size: 1.8em;
+        }
+
+        .player-stats {
+            display: flex;
+            gap: 20px;
+            font-size: 1.1em;
+        }
+
+        .stat {
+            color: #ffff00;
+        }
+
+        .stat-label {
+            color: #888;
+            margin-right: 5px;
+        }
+
+        .menu-options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .menu-btn {
+            padding: 15px 20px;
+            background: #1a1f2e;
+            border: 2px solid #00ff88;
+            color: #00ff88;
+            font-family: inherit;
+            font-size: 1.1em;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .menu-btn:hover {
+            background: #00ff88;
+            color: #000;
+            transform: translateX(10px);
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.5);
+        }
+
+        .menu-btn .num {
+            color: #ffff00;
+            margin-right: 10px;
+        }
+
+        /* ─────────────────────────────────────────────────── */
+        /* MISSION SCREEN */
+        /* ─────────────────────────────────────────────────── */
+
+        .mission-container {
+            max-height: 70vh;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .mission-header {
+            color: #00d4ff;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #00d4ff;
+            padding-bottom: 10px;
+        }
+
+        .section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #1a1f2e;
+            border-left: 4px solid #00d4ff;
+            border-radius: 4px;
+        }
+
+        .section h3 {
+            color: #00ff88;
+            margin-bottom: 12px;
+            font-size: 1.2em;
+        }
+
+        .section.philosophy {
+            border-left-color: #ff6b9d;
+        }
+
+        .section.philosophy h3 {
+            color: #ff6b9d;
+        }
+
+        .section.economics {
+            border-left-color: #ffff00;
+        }
+
+        .section.economics h3 {
+            color: #ffff00;
+        }
+
+        .section.concept {
+            border-left-color: #00d4ff;
+        }
+
+        .section.concept h3 {
+            color: #00d4ff;
+        }
+
+        .section.challenge {
+            border-left-color: #00ff88;
+            background: #0d5a3d;
+        }
+
+        .section.challenge h3 {
+            color: #00ff88;
+        }
+
+        .section p {
+            line-height: 1.8;
+            color: #d0d0d0;
+        }
+
+        .challenge-input {
+            width: 100%;
+            padding: 12px 15px;
+            margin: 15px 0;
+            background: #0f1419;
+            border: 2px solid #00ff88;
+            color: #00ff88;
+            font-family: inherit;
+            font-size: 1em;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .challenge-input:focus {
+            outline: none;
+            border-color: #00d4ff;
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+
+        .hint-text {
+            margin-top: 15px;
+            padding: 12px;
+            background: #2d2d00;
+            border-left: 3px solid #ffff00;
+            color: #ffff00;
+            display: none;
+        }
+
+        .hint-text.show {
+            display: block;
+        }
+
+        .attempt-counter {
+            color: #ff9999;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 4px;
+            display: none;
+            font-weight: bold;
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        .feedback.success {
+            background: #0d5a3d;
+            color: #00ff88;
+            border: 1px solid #00ff88;
+        }
+
+        .feedback.error {
+            background: #5a0d0d;
+            color: #ff9999;
+            border: 1px solid #ff9999;
+        }
+
+        /* ─────────────────────────────────────────────────── */
+        /* BUTTONS */
+        /* ─────────────────────────────────────────────────── */
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: 2px solid #00d4ff;
+            background: transparent;
+            color: #00d4ff;
+            font-family: inherit;
+            font-size: 1em;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            background: #00d4ff;
+            color: #000;
+        }
+
+        .btn.primary {
+            border-color: #00ff88;
+            color: #00ff88;
+        }
+
+        .btn.primary:hover {
+            background: #00ff88;
+            color: #000;
+        }
+
+        .btn.danger {
+            border-color: #ff6b6b;
+            color: #ff6b6b;
+        }
+
+        .btn.danger:hover {
+            background: #ff6b6b;
+            color: #000;
+        }
+
+        /* ─────────────────────────────────────────────────── */
+        /* DASHBOARD */
+        /* ─────────────────────────────────────────────────── */
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .dashboard-card {
+            background: #1a1f2e;
+            border: 2px solid #00d4ff;
+            border-radius: 4px;
+            padding: 20px;
+        }
+
+        .dashboard-card h3 {
+            color: #00d4ff;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #00d4ff;
+            padding-bottom: 10px;
+        }
+
+        .skill-bar {
+            margin: 12px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .skill-name {
+            width: 100px;
+            text-align: right;
+            color: #ffff00;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .skill-fill {
+            flex: 1;
+            height: 20px;
+            background: #0f1419;
+            border: 1px solid #00d4ff;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .skill-bar-inner {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff88 0%, #00d4ff 100%);
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        .rank-display {
+            font-size: 1.5em;
+            color: #ffff00;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: #0f1419;
+            border: 1px solid #00d4ff;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-bar-inner {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b9d 0%, #00d4ff 100%);
+            width: 0%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-weight: bold;
+            transition: width 0.3s;
+        }
+
+        /* ─────────────────────────────────────────────────── */
+        /* MISSIONS LIST */
+        /* ─────────────────────────────────────────────────── */
+
+        .missions-list {
+            margin-top: 20px;
+        }
+
+        .mission-item {
+            padding: 12px;
+            margin: 8px 0;
+            background: #1a1f2e;
+            border: 1px solid #00d4ff;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .mission-item:hover {
+            background: #2a2f3e;
+            border-color: #00ff88;
+            transform: translateX(5px);
+        }
+
+        .mission-item.completed {
+            opacity: 0.6;
+        }
+
+        .mission-number {
+            color: #ffff00;
+            font-weight: bold;
+            min-width: 30px;
+        }
+
+        .mission-title {
+            flex: 1;
+            color: #d0d0d0;
+        }
+
+        .mission-status {
+            color: #00ff88;
+            font-weight: bold;
+        }
+
+        .mission-status.incomplete {
+            color: #ff9999;
+        }
+
+        /* ─────────────────────────────────────────────────── */
+        /* SCROLLBAR */
+        /* ─────────────────────────────────────────────────── */
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1a1f2e;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #00d4ff;
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00ff88;
+        }
+
+        /* ─────────────────────────────────────────────────── */
+        /* RESPONSIVE */
+        /* ─────────────────────────────────────────────────── */
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .player-stats {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🥋 DOJO ASCENSION v5.0</h1>
+            <p>A terminal-based learning system for practicing Python, Git, JSON, and Code Review</p>
+        </header>
+
+        <div class="content">
+            <!-- INTRO SCREEN -->
+            <div class="screen active" id="introScreen">
+                <div class="intro-box">
+                    <h2>Welcome, Initiate</h2>
+                    <p>You stand at the threshold of the Dojo.</p>
+                    <p>Here, code is not mere syntax—it is a framework for thinking about systems.</p>
+                    <p>By mastering these crafts, you will learn to:</p>
+                    <p>📚 <strong>Build resilient digital infrastructure</strong> (Git, version control, deployment)</p>
+                    <p>🤝 <strong>Design cooperative systems</strong> (OOP, APIs, data interoperability)</p>
+                    <p>✅ <strong>Hold systems accountable</strong> (Code review, testing, documentation)</p>
+                    <p style="margin-top: 30px; color: #888;">What is your name, seeker?</p>
+                    <div class="name-input-group">
+                        <input type="text" id="playerName" placeholder="Enter your name..." autofocus>
+                    </div>
+                    <button class="btn primary" onclick="startGame()">Enter the Dojo</button>
+                </div>
+            </div>
+
+            <!-- MAIN MENU SCREEN -->
+            <div class="screen" id="menuScreen">
+                <div class="menu-header">
+                    <div>
+                        <h2 id="menuTitle">DOJO OS v5.0</h2>
+                    </div>
+                    <div class="player-stats">
+                        <div class="stat"><span class="stat-label">⚡ Honor:</span><span id="menuHonor">0</span></div>
+                        <div class="stat"><span class="stat-label">✓ Completed:</span><span id="menuCompleted">0</span>/<span id="menuTotal">10</span></div>
+                        <div class="stat"><span class="stat-label">Rank:</span><span id="menuRank">Initiate</span></div>
+                    </div>
+                </div>
+
+                <div class="menu-options">
+                    <button class="menu-btn" onclick="startNextMission()">
+                        <span class="num">1.</span>Start Next Mission
+                    </button>
+                    <button class="menu-btn" onclick="showMissionSelect()">
+                        <span class="num">2.</span>Choose Specific Mission
+                    </button>
+                    <button class="menu-btn" onclick="showDashboard()">
+                        <span class="num">3.</span>View Progress Dashboard
+                    </button>
+                    <button class="menu-btn" onclick="showAbout()">
+                        <span class="num">4.</span>About the Dojo
+                    </button>
+                    <button class="menu-btn" onclick="resetProgress()" style="border-color: #ff6b6b; color: #ff6b6b;">
+                        <span class="num">5.</span>Reset Progress (Data Loss!)
+                    </button>
+                </div>
+            </div>
+
+            <!-- MISSION SCREEN -->
+            <div class="screen" id="missionScreen">
+                <div class="mission-container">
+                    <div class="mission-header" id="missionTitle">Mission Title</div>
+
+                    <div class="section philosophy">
+                        <h3>📜 PHILOSOPHICAL ANCHOR</h3>
+                        <p id="missionPhilosophy"></p>
+                    </div>
+
+                    <div class="section economics">
+                        <h3>🌐 ECONOMIC PARALLEL</h3>
+                        <p id="missionEconomics"></p>
+                    </div>
+
+                    <div class="section concept">
+                        <h3>💻 TECHNICAL CONCEPT</h3>
+                        <p id="missionConcept"></p>
+                    </div>
+
+                    <div class="section challenge">
+                        <h3>⚔️ CHALLENGE</h3>
+                        <p id="missionChallenge"></p>
+                        <input type="text" class="challenge-input" id="answerInput" placeholder="Type your answer here..." autofocus>
+                        <div class="attempt-counter" id="attemptCounter"></div>
+                        <div class="hint-text" id="hintBox">
+                            <strong>💡 HINT:</strong> <span id="hintText"></span>
+                        </div>
+                        <div class="feedback" id="feedback"></div>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn primary" onclick="submitAnswer()">Submit Answer</button>
+                    <button class="btn" onclick="showHint()">Show Hint</button>
+                    <button class="btn danger" onclick="backToMenu()">Back to Menu</button>
+                </div>
+            </div>
+
+            <!-- MISSION SELECT SCREEN -->
+            <div class="screen" id="selectScreen">
+                <h2 style="color: #00d4ff; margin-bottom: 20px;">Choose a Mission</h2>
+                <div class="missions-list" id="missionsList"></div>
+                <div class="button-group" style="margin-top: 30px;">
+                    <button class="btn" onclick="backToMenu()">Back to Menu</button>
+                </div>
+            </div>
+
+            <!-- DASHBOARD SCREEN -->
+            <div class="screen" id="dashboardScreen">
+                <h2 style="color: #00d4ff; margin-bottom: 20px;">PROGRESS DASHBOARD</h2>
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <h3>Player Info</h3>
+                        <p><strong>Name:</strong> <span id="dashName"></span></p>
+                        <p><strong>Rank:</strong> <span id="dashRank" class="rank-display"></span></p>
+                        <p><strong>Honor:</strong> <span id="dashHonor" style="color: #ffff00;">0</span> pts</p>
+                        <h3 style="margin-top: 20px;">Next Rank Progress</h3>
+                        <div class="progress-bar">
+                            <div class="progress-bar-inner" id="rankProgress"></div>
+                        </div>
+                        <p id="rankProgressText" style="font-size: 0.9em; color: #888;"></p>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <h3>Skill Specialization</h3>
+                        <div id="skillBars"></div>
+                    </div>
+                </div>
+
+                <div class="dashboard-card" style="margin-top: 20px;">
+                    <h3>Mission Progress</h3>
+                    <p><strong>Completed:</strong> <span id="dashCompleted">0</span> / 10</p>
+                    <p><strong>Skills Mastered:</strong> <span id="dashSkills">None yet</span></p>
+                </div>
+
+                <div class="button-group" style="margin-top: 30px;">
+                    <button class="btn" onclick="backToMenu()">Back to Menu</button>
+                </div>
+            </div>
+
+            <!-- ABOUT SCREEN -->
+            <div class="screen" id="aboutScreen">
+                <h2 style="color: #00d4ff; margin-bottom: 20px;">About the Dojo</h2>
+                <div class="section">
+                    <h3>🎯 What Is This?</h3>
+                    <p>Dojo Ascension is a learning operating system that combines:</p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li><strong>Mission-based progression</strong> — Complete 10 interconnected challenges</li>
+                        <li><strong>Competency tracking</strong> — Master specific skills (Python, Git, JSON, Architecture, Code Review)</li>
+                        <li><strong>Persistent saves</strong> — All progress stored in your browser</li>
+                        <li><strong>Cross-disciplinary context</strong> — Each mission connects code to philosophy, economics, and martial arts</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>📊 Progression System</h3>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li><strong>Honor Points</strong> — Earned by completing missions (20-30 per mission)</li>
+                        <li><strong>Ranks</strong> — Initiate → Apprentice → Practitioner → Adept → Expert → Co-Architect</li>
+                        <li><strong>Skills</strong> — Track mastery: Python, Git, JSON, Architecture, Code Review (0-5 levels each)</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>📚 10 Core Missions</h3>
+                    <table style="width: 100%; color: #d0d0d0;">
+                        <tr style="border-bottom: 1px solid #00d4ff;">
+                            <th style="text-align: left; padding: 8px; color: #00d4ff;">#</th>
+                            <th style="text-align: left; padding: 8px; color: #00d4ff;">Mission</th>
+                            <th style="text-align: left; padding: 8px; color: #00d4ff;">Skill</th>
+                            <th style="text-align: left; padding: 8px; color: #00d4ff;">Philosophy</th>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #333;">
+                            <td style="padding: 8px;">1</td>
+                            <td style="padding: 8px;">System Grounding</td>
+                            <td style="padding: 8px;">Git</td>
+                            <td style="padding: 8px;">Wu Wei</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #333;">
+                            <td style="padding: 8px;">2</td>
+                            <td style="padding: 8px;">Variables & Data Lineage</td>
+                            <td style="padding: 8px;">Python</td>
+                            <td style="padding: 8px;">Genealogy</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #333;">
+                            <td style="padding: 8px;">3</td>
+                            <td style="padding: 8px;">JSON — Data Language</td>
+                            <td style="padding: 8px;">JSON</td>
+                            <td style="padding: 8px;">Cooperation</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #333;">
+                            <td style="padding: 8px;">4</td>
+                            <td style="padding: 8px;">Functions & Jeet Kune Do</td>
+                            <td style="padding: 8px;">Python</td>
+                            <td style="padding: 8px;">Efficiency</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #333;">
+                            <td style="padding: 8px;">5</td>
+                            <td style="padding: 8px;">Git — Journalistic Integrity</td>
+                            <td style="padding: 8px;">Git</td>
+                            <td style="padding: 8px;">Accountability</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #333;">
+                            <td style="padding: 8px;">6</td>
+                            <td style="padding: 8px;">Git — Branching & Merging</td>
+                            <td style="padding: 8px;">Git</td>
+                            <td style="padding: 8px;">Wing Chun</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #333;">
+                            <td style="padding: 8px;">7</td>
+                            <td style="padding: 8px;">APIs & Digital Journalism</td>
+                            <td style="padding: 8px;">Architecture</td>
+                            <td style="padding: 8px;">Information Freedom</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #333;">
+                            <td style="padding: 8px;">8</td>
+                            <td style="padding: 8px;">File I/O — Institutional Memory</td>
+                            <td style="padding: 8px;">Python</td>
+                            <td style="padding: 8px;">Bushido</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #333;">
+                            <td style="padding: 8px;">9</td>
+                            <td style="padding: 8px;">OOP — Sociological Modeling</td>
+                            <td style="padding: 8px;">Architecture</td>
+                            <td style="padding: 8px;">Theatre</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px;">10</td>
+                            <td style="padding: 8px;">Code Review — Gentle Art</td>
+                            <td style="padding: 8px;">Review</td>
+                            <td style="padding: 8px;">BJJ</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="button-group" style="margin-top: 30px;">
+                    <button class="btn" onclick="backToMenu()">Back to Menu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ─────────────────────────────────────────────────────────
+        // DATA & STATE
+        // ─────────────────────────────────────────────────────────
+
+        let missions = [];
+        let player = {
+            name: '',
+            honor: 0,
+            completed: [],
+            skills: {
+                python: 0,
+                git: 0,
+                json: 0,
+                architecture: 0,
+                review: 0
+            }
+        };
+
+        let currentMission = null;
+        let attemptCount = 0;
+        let hintShown = false;
+
+        const RANK_THRESHOLDS = [
+            { points: 0, title: 'Initiate' },
+            { points: 50, title: 'Apprentice' },
+            { points: 150, title: 'Practitioner' },
+            { points: 300, title: 'Adept' },
+            { points: 600, title: 'Expert' },
+            { points: 1000, title: 'Co-Architect' }
+        ];
+
+        // ─────────────────────────────────────────────────────────
+        // STORAGE
+        // ─────────────────────────────────────────────────────────
+
+        function savePlayer() {
+            localStorage.setItem('dojoPlayer', JSON.stringify(player));
+        }
+
+        function loadPlayer() {
+            const saved = localStorage.getItem('dojoPlayer');
+            if (saved) {
+                player = JSON.parse(saved);
+            }
+        }
+
+        function loadMissions() {
+            // Inline mission data
+            missions = [
+                {
+                    "id": "git_system_grounding",
+                    "number": 1,
+                    "title": "System Grounding",
+                    "skill": "git",
+                    "philosophy": "Like Tai Chi, where you must feel the ground before moving, a programmer must understand their environment. 'Wu Wei' is achieved when your tools become extensions of your mind.",
+                    "economics": "Infrastructure is the basis of all macro-economic stability. Before building goods, we build roads. Here, your terminal and shell are your economic infrastructure.",
+                    "lesson": "The terminal is your direct interface with the system. Git is your tool for interacting with the open-source global supply chain of ideas.",
+                    "challenge": "Type the command to clone a git repository.",
+                    "hint": "The pattern is: git clone <repository-url>",
+                    "answer": "git clone",
+                    "answertype": "contains",
+                    "honorreward": 20
+                },
+                {
+                    "id": "python_variables_lineage",
+                    "number": 2,
+                    "title": "Variables & Data Lineage",
+                    "skill": "python",
+                    "philosophy": "Genealogy teaches us that tracing lineage reveals identity. A variable is not merely a box; it is a named node in a data lineage.",
+                    "economics": "Micro-economics teaches that resources are scarce. Memory is our system's scarcest resource. Naming variables clearly acts as a public ledger of intent.",
+                    "lesson": "In Python, variables are dynamically typed. When you assign `seed = 42`, Python allocates the value `42` in memory and points the name `seed` to it.",
+                    "challenge": "Write exactly this: assign the integer 42 to a variable named 'seed'.",
+                    "hint": "Create a variable named 'seed' on the left, an equals sign in the middle, and the integer 42 on the right.",
+                    "answer": ["seed = 42", "seed=42"],
+                    "answertype": "exact",
+                    "honorreward": 20
+                },
+                {
+                    "id": "json_data_language",
+                    "number": 3,
+                    "title": "JSON — The Data Language",
+                    "skill": "json",
+                    "philosophy": "Interoperability is what cooperation looks like in code. When diverse, self-determined systems must collaborate, they need a non-coercive, neutral language.",
+                    "economics": "Global trade requires a frictionless transactional medium. JSON acts as a universal currency of data exchange.",
+                    "lesson": "JavaScript Object Notation (JSON) is a text format built on two structures: key-value pairs (`{}`) and ordered lists (`[]`).",
+                    "challenge": "What does JSON stand for? (Type out the 3 words cleanly, no extra punctuation)",
+                    "hint": "The first word is JavaScript, followed by Object, and Notation.",
+                    "answer": "JavaScript Object Notation",
+                    "answertype": "exact",
+                    "honorreward": 20
+                },
+                {
+                    "id": "python_functions_logic",
+                    "number": 4,
+                    "title": "Functions & 'Jeet Kune Do' Logic",
+                    "skill": "python",
+                    "philosophy": "Bruce Lee's martial art champions 'the style of no style'—using only what works with maximum efficiency.",
+                    "economics": "A function is a specialized cooperative workspace. Rather than everyone building from scratch, the community delegates the task.",
+                    "lesson": "Python functions are defined using the `def` keyword, followed by the function name, parentheses, and a colon.",
+                    "challenge": "What Python keyword is used to define a function?",
+                    "hint": "It is a three-letter abbreviation of the word 'define'.",
+                    "answer": "def",
+                    "answertype": "contains",
+                    "honorreward": 20
+                },
+                {
+                    "id": "git_journalistic_integrity",
+                    "number": 5,
+                    "title": "Git — Journalistic Integrity",
+                    "skill": "git",
+                    "philosophy": "Social justice relies on historical verifiability. Without transparent tracking, systems of power silently alter agreements.",
+                    "economics": "Estonia's e-governance model achieves institutional trust because citizens can trace changes to their digital records.",
+                    "lesson": "Git records snapshots of your files. When you commit, Git records a cryptographic hash of your staging area.",
+                    "challenge": "What exact command stages all current modifications in your directory for a Git commit?",
+                    "hint": "It starts with 'git add' and ends with a symbol representing the current directory.",
+                    "answer": "git add .",
+                    "answertype": "exact",
+                    "honorreward": 20
+                },
+                {
+                    "id": "git_branching_merging",
+                    "number": 6,
+                    "title": "Git — Branching & Merging",
+                    "skill": "git",
+                    "philosophy": "In Wing Chun, Chi Sao (sticky hands) teaches practitioners to deflect and redirect, not oppose.",
+                    "economics": "Monolithic markets crash easily. Resilience requires pluralism. Branching is our R&D sandbox.",
+                    "lesson": "A branch in Git is a lightweight pointer to a commit. Creating one is fast and costs virtually nothing.",
+                    "challenge": "What command would you type to create and switch to a new branch named 'feature'?",
+                    "hint": "You can use 'git checkout -b feature' or the modern 'git switch -c feature'.",
+                    "answer": ["git checkout -b feature", "git switch -c feature"],
+                    "answertype": "exact",
+                    "honorreward": 25
+                },
+                {
+                    "id": "architecture_apis_http",
+                    "number": 7,
+                    "title": "APIs & HTTP — The Digital Journalist",
+                    "skill": "architecture",
+                    "philosophy": "Investigative journalism relies on primary sources. To hold systems accountable, we must query the source directly.",
+                    "economics": "Information asymmetry causes market failure. Open APIs democratize data, allowing independent actors to correct monopolies.",
+                    "lesson": "An API allows two programs to communicate. In Python, we use `requests` to GET data from URLs over HTTP.",
+                    "challenge": "What standard Python library is used to make HTTP requests to web APIs?",
+                    "hint": "It is a plural word meaning 'to ask for things'.",
+                    "answer": ["requests", "import requests"],
+                    "answertype": "contains",
+                    "honorreward": 25
+                },
+                {
+                    "id": "python_file_io",
+                    "number": 8,
+                    "title": "File I/O — Institutional Memory",
+                    "skill": "python",
+                    "philosophy": "The Bushido code values legacy. Without memory, a society cannot learn or grow.",
+                    "economics": "Capital accumulation requires secure storage. File I/O serves as the banking system of digital civilization.",
+                    "lesson": "Python uses `open('file.txt', 'w')` to write and `'r'` to read. The `with` keyword ensures files close safely.",
+                    "challenge": "What Python keyword is used to open a file and ensure it closes automatically?",
+                    "hint": "It is a four-letter word that pairs with 'open'.",
+                    "answer": ["with"],
+                    "answertype": "exact",
+                    "honorreward": 20
+                },
+                {
+                    "id": "architecture_oop_modeling",
+                    "number": 9,
+                    "title": "OOP — Sociological Modeling",
+                    "skill": "architecture",
+                    "philosophy": "Theatre teaches us that plays require Roles (scripts) and Actors (individuals performing). OOP applies sociology to code.",
+                    "economics": "A Class is a franchise model. An Object is the actual business in your neighborhood, instantiated from that model.",
+                    "lesson": "The `class` keyword defines blueprints. `__init__` is the constructor, and `self` refers to the specific instance.",
+                    "challenge": "What keyword do you use to define an object blueprint in Python?",
+                    "hint": "It is a five-letter word that sounds like a room where students learn.",
+                    "answer": ["class"],
+                    "answertype": "exact",
+                    "honorreward": 25
+                },
+                {
+                    "id": "review_code_gentle_art",
+                    "number": 10,
+                    "title": "Code Review — The Gentle Art",
+                    "skill": "review",
+                    "philosophy": "Brazilian Jiu-Jitsu translates to 'the gentle art.' When rolling with partners, the goal is mutual growth, not destruction.",
+                    "economics": "Quality Assurance prevents negative externalities. Code review ensures technical debt is not offloaded onto the future community.",
+                    "lesson": "On GitHub, we propose code changes for review before merging. A good review addresses correctness, efficiency, readability.",
+                    "challenge": "What is the two-word term for proposing a merge so peers can review your code on GitHub?",
+                    "hint": "It starts with the word 'pull'.",
+                    "answer": ["pull request", "pull requests", "pr"],
+                    "answertype": "contains",
+                    "honorreward": 30
+                }
+            ];
+        }
+
+        // ─────────────────────────────────────────────────────────
+        // UTILITY FUNCTIONS
+        // ─────────────────────────────────────────────────────────
+
+        function getRank() {
+            for (let i = RANK_THRESHOLDS.length - 1; i >= 0; i--) {
+                if (player.honor >= RANK_THRESHOLDS[i].points) {
+                    return RANK_THRESHOLDS[i].title;
+                }
+            }
+            return 'Initiate';
+        }
+
+        function getNextRankInfo() {
+            const currentRank = getRank();
+            let nextThreshold = RANK_THRESHOLDS[0];
+            for (const rank of RANK_THRESHOLDS) {
+                if (rank.points > player.honor) {
+                    nextThreshold = rank;
+                    break;
+                }
+            }
+            return nextThreshold;
+        }
+
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        function validateAnswer(userInput, expectedAnswer, answerType) {
+            const user = userInput.toLowerCase().trim();
+            
+            if (Array.isArray(expectedAnswer)) {
+                for (const ans of expectedAnswer) {
+                    if (validateAnswer(userInput, ans, answerType)) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            const expected = String(expectedAnswer).toLowerCase().trim();
+
+            if (answerType === "exact") {
+                return user === expected;
+            } else { // "contains"
+                return expected.includes(user) || user.includes(expected);
+            }
+        }
+
+        // ─────────────────────────────────────────────────────────
+        // SCREEN: INTRO
+        // ─────────────────────────────────────────────────────────
+
+        function startGame() {
+            const name = document.getElementById('playerName').value.trim();
+            if (!name) {
+                alert('Please enter your name!');
+                return;
+            }
+            player.name = name;
+            savePlayer();
+            updateMenuDisplay();
+            showScreen('menuScreen');
+        }
+
+        // ─────────────────────────────────────────────────────────
+        // SCREEN: MENU
+        // ─────────────────────────────────────────────────────────
+
+        function updateMenuDisplay() {
+            document.getElementById('menuTitle').textContent = `DOJO OS v5.0 | ${player.name} | ${getRank()}`;
+            document.getElementById('menuHonor').textContent = player.honor;
+            document.getElementById('menuCompleted').textContent = player.completed.length;
+            document.getElementById('menuRank').textContent = getRank();
+        }
+
+        function backToMenu() {
+            showScreen('menuScreen');
+            updateMenuDisplay();
+        }
+
+        function startNextMission() {
+            const next = missions.find(m => !player.completed.includes(m.id));
+            if (next) {
+                loadMission(next.id);
+            } else {
+                alert('🎉 All missions complete! You are a Co-Architect!');
+            }
+        }
+
+        function showMissionSelect() {
+            const list = document.getElementById('missionsList');
+            list.innerHTML = '';
+            missions.forEach(m => {
+                const isCompleted = player.completed.includes(m.id);
+                const div = document.createElement('div');
+                div.className = `mission-item ${isCompleted ? 'completed' : ''}`;
+                div.onclick = () => loadMission(m.id);
+                div.innerHTML = `
+                    <span class="mission-number">${m.number}</span>
+                    <span class="mission-title">${m.title}</span>
+                    <span class="mission-status ${!isCompleted ? 'incomplete' : ''}">
+                        ${isCompleted ? '✓ COMPLETE' : 'IN PROGRESS'}
+                    </span>
+                `;
+                list.appendChild(div);
+            });
+            showScreen('selectScreen');
+        }
+
+        function showDashboard() {
+            const rank = getRank();
+            document.getElementById('dashName').textContent = player.name;
+            document.getElementById('dashRank').textContent = rank;
+            document.getElementById('dashHonor').textContent = player.honor;
+            document.getElementById('dashCompleted').textContent = player.completed.length;
+
+            // Skills
+            const skillBars = document.getElementById('skillBars');
+            skillBars.innerHTML = '';
+            for (const [skill, level] of Object.entries(player.skills)) {
+                const bar = document.createElement('div');
+                bar.className = 'skill-bar';
+                const width = (level / 5) * 100;
+                bar.innerHTML = `
+                    <div class="skill-name">${skill.toUpperCase()}</div>
+                    <div class="skill-fill">
+                        <div class="skill-bar-inner" style="width: ${width}%"></div>
+                    </div>
+                    <span style="color: #ffff00; min-width: 30px; text-align: right;">${level}/5</span>
+                `;
+                skillBars.appendChild(bar);
+            }
+
+            // Next rank
+            const nextRank = getNextRankInfo();
+            const progress = (player.honor / nextRank.points) * 100;
+            document.getElementById('rankProgress').style.width = Math.min(progress, 100) + '%';
+            document.getElementById('rankProgressText').textContent = `${player.honor} / ${nextRank.points} honor (${nextRank.title})`;
+
+            // Skills mastered
+            const completed = missions.filter(m => player.completed.includes(m.id));
+            const masteredSkills = new Set(completed.map(m => m.skill));
+            document.getElementById('dashSkills').textContent = masteredSkills.size > 0 
+                ? Array.from(masteredSkills).join(', ') 
+                : 'None yet';
+
+            showScreen('dashboardScreen');
+        }
+
+        function showAbout() {
+            showScreen('aboutScreen');
+        }
+
+        function resetProgress() {
+            if (confirm('⚠️ This will erase all your progress. Are you absolutely sure?')) {
+                player = {
+                    name: player.name,
+                    honor: 0,
+                    completed: [],
+                    skills: {
+                        python: 0,
+                        git: 0,
+                        json: 0,
+                        architecture: 0,
+                        review: 0
+                    }
+                };
+                savePlayer();
+                updateMenuDisplay();
+                alert('✓ Progress reset.');
+            }
+        }
+
+        // ─────────────────────────────────────────────────────────
+        // SCREEN: MISSION
+        // ─────────────────────────────────────────────────────────
+
+        function loadMission(missionId) {
+            currentMission = missions.find(m => m.id === missionId);
+            if (!currentMission) return;
+
+            attemptCount = 0;
+            hintShown = false;
+            document.getElementById('answerInput').value = '';
+            document.getElementById('feedback').classList.remove('show');
+            document.getElementById('hintBox').classList.remove('show');
+            document.getElementById('attemptCounter').textContent = '';
+
+            const missionNum = currentMission.number;
+            document.getElementById('missionTitle').textContent = `MISSION ${missionNum}: ${currentMission.title}`;
+            document.getElementById('missionPhilosophy').textContent = currentMission.philosophy;
+            document.getElementById('missionEconomics').textContent = currentMission.economics;
+            document.getElementById('missionConcept').textContent = currentMission.lesson || currentMission.techconcept;
+            document.getElementById('missionChallenge').textContent = currentMission.challenge;
+            document.getElementById('hintText').textContent = currentMission.hint || 'No hint available.';
+
+            showScreen('missionScreen');
+            document.getElementById('answerInput').focus();
+        }
+
+        function submitAnswer() {
+            if (!currentMission) return;
+
+            const answer = document.getElementById('answerInput').value.trim();
+            if (!answer) {
+                showFeedback('Please enter an answer.', false);
+                return;
+            }
+
+            attemptCount++;
+
+            const isCorrect = validateAnswer(
+                answer,
+                currentMission.answer,
+                currentMission.answertype || 'contains'
+            );
+
+            if (isCorrect) {
+                player.completed.push(currentMission.id);
+                const reward = currentMission.honorreward || 20;
+                player.honor += reward;
+
+                const skill = currentMission.skill;
+                if (player.skills[skill] !== undefined) {
+                    player.skills[skill]++;
+                }
+
+                savePlayer();
+                showFeedback(`✓ CORRECT! +${reward} HONOR | ${skill.toUpperCase()} now Level ${player.skills[skill]}`, true);
+
+                setTimeout(() => {
+                    backToMenu();
+                }, 2000);
+            } else {
+                showFeedback('✗ Not quite. Try again.', false);
+                document.getElementById('attemptCounter').textContent = `Attempt ${attemptCount}`;
+
+                if (attemptCount >= 3) {
+                    document.getElementById('hintBox').classList.add('show');
+                }
+            }
+        }
+
+        function showHint() {
+            if (hintShown) return;
+            hintShown = true;
+            document.getElementById('hintBox').classList.add('show');
+        }
+
+        function showFeedback(text, isSuccess) {
+            const feedback = document.getElementById('feedback');
+            feedback.textContent = text;
+            feedback.className = `feedback show ${isSuccess ? 'success' : 'error'}`;
+        }
+
+        // ─────────────────────────────────────────────────────────
+        // INIT
+        // ─────────────────────────────────────────────────────────
+
+        function init() {
+            loadMissions();
+            loadPlayer();
+
+            if (player.name) {
+                updateMenuDisplay();
+                showScreen('menuScreen');
+            } else {
+                showScreen('introScreen');
+                document.getElementById('playerName').focus();
+            }
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && document.getElementById('missionScreen').classList.contains('active')) {
+                submitAnswer();
+            }
+        });
+
+        init();
+    </script>
+</body>
+</html>
