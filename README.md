@@ -4,6 +4,8 @@
 
 **A terminal-based learning system for practicing Python, Git, JSON, and code review through story-driven missions and deliberate practice.**
 
+**Now available in two frontends: Terminal (Python) & Browser (HTML/JavaScript)**
+
 ---
 
 ## 🎯 What Is This?
@@ -24,52 +26,75 @@ Code is not syntax—it's a framework for thinking about systems. By mastering t
 - **Hold systems accountable** (Code review, testing, documentation)
 
 ---
-Frontends and clients
+
+## Frontends and Clients
+
 The Dojo Ascension repo defines a data and logic layer for a learning game:
 
-Missions are stored as JSON (missions.json and missions/*.json).
+- **Missions are stored as JSON** (`missions.json` and `missions/*.json`)
+- **Player progress and journal entries are stored as JSON** (save files)
+- **Multiple frontends available**:
+  - Terminal / VS Code experience written in Python (`dojo_classroom.py`)
+  - Browser-based single-page app (`dojo_web.html`) — **NEW!**
 
-Player progress and journal entries are stored as JSON save files.
+We explicitly invite other frontends (RPG, mobile, desktop, etc.) that:
+- Consume the same mission schema and skill/honor model
+- Preserve the educational intent of each mission
+- Respect the project license (see LICENSE)
 
-The current client is a terminal / VS Code experience written in Python.
+If you are building a new frontend, open an issue to coordinate on data formats and progression so we stay interoperable.
 
-We explicitly invite other frontends (RPG, web, mobile, etc.) that:
-
-Consume the same mission schema and skill / honor model.
-
-Preserve the educational intent of each mission.
-
-Respect the project license (see LICENSE).
-
-If you are building a new frontend (for example, an RPG Maker version), open an issue to coordinate on data formats and progression so we stay interoperable.
 ---
 
 *Use in fundraisers and ethical businesses*
+
 We explicitly welcome:
+- Non‑profits using Dojo‑derived games in fundraisers
+- Ethical solarpunk businesses building commercial games or tools that teach with Dojo missions
+- If you distribute software that incorporates Dojo code, you must follow the GPL‑3.0 license (keep derivative code open-source, provide source to users)
+- If you want to discuss special arrangements or dual-licensing for a specific project, open an issue or contact the maintainers
 
-Non‑profits using Dojo‑derived games in fundraisers.
-
-Ethical solarpunk businesses building commercial games or tools that teach with Dojo missions.
-
-If you distribute software that incorporates Dojo code, you must follow the GPL‑3.0 license (keep derivative code open-source, provide source to users).
-
-If you want to discuss special arrangements or dual-licensing for a specific project, open an issue or contact the maintainers.
-
-
-
+---
 
 ## 🚀 Quick Start
 
-### Prerequisites
+### Option A: Play in Your Browser (Easiest)
+
+No installation required. Just download and open:
+
+```bash
+# Clone the repo
+git clone https://github.com/solarpunkopensourcelaboratory/dojo-ascension.git
+cd dojo-ascension
+
+# Open in your browser
+open dojo_web.html
+# or double-click dojo_web.html in your file explorer
+```
+
+**Features:**
+- ✅ All 10 missions available
+- ✅ Progress saves to browser storage (persists across sessions)
+- ✅ Works offline
+- ✅ Mobile responsive
+- ✅ Zero dependencies
+
+---
+
+### Option B: Play in Terminal (Python)
+
+For a deeper, reflective experience with optional journal entries:
+
+**Prerequisites:**
 - Python 3.8+
 - Git
 - 2GB free disk space
 
-### Installation
+**Installation:**
 
 ```bash
 # 1. Clone this repo
-git clone solarpunkopensourcelaboratory/dojo-ascension
+git clone https://github.com/solarpunkopensourcelaboratory/dojo-ascension
 cd dojo-ascension
 
 # 2. Install dependencies
@@ -79,54 +104,21 @@ pip install -r requirements.txt
 python dojo_classroom.py
 ```
 
-### First Time Setup
+**First Time Setup:**
 
 When you run the game, you'll be prompted to enter your name. The system will:
 1. Check your environment (Python version, Git installation, disk space)
 2. Create a save file at `~/.dojo_save.json`
 3. Optionally create a journal at `~/.dojo_journal_data.json`
 
-### Contributor Quickstart
+**Shared Workstation Tip:**
 
-If you want to help with missions or content:
-
-```bash
-python -m unittest discover -s tests
-python validate_missions.py
-```
-
-This gives you a quick sanity check before you share changes. If you add or edit missions, make sure the validator stays green and the mission index remains consistent.
-
-### Contributor Check
-
-Before sharing a new mission, run:
+On a shared machine, keep each participant's progress separate:
 
 ```bash
-python validate_missions.py
-```
-
-It validates mission files and the mission index for missing required fields and basic schema issues.
-
-### Plain-Text Repo Bundle
-
-If you want a single text file you can share with other collaborators or AI tools, run:
-
-```bash
-python refresh_repo_bundle.py
-```
-
-This regenerates [repo_bundle.txt](repo_bundle.txt) from the current repository contents.
-
-### Shared Workstation Tip
-
-On a shared machine, keep each participant's progress separate by setting a per-user data directory before launching the game:
-
-```powershell
-$env:DOJO_DATA_DIR = "$HOME\.dojo-ascension\alice"
+export DOJO_DATA_DIR="$HOME/.dojo-ascension/alice"
 python dojo_classroom.py
 ```
-
-You can also override the individual files directly with `DOJO_SAVE_FILE` and `DOJO_JOURNAL_FILE`.
 
 ---
 
@@ -154,8 +146,8 @@ You can also override the individual files directly with `DOJO_SAVE_FILE` and `D
 1. **Start Next Mission** — Play the next incomplete mission in sequence
 2. **Choose Specific Mission** — Jump to any mission you want
 3. **View Progress Dashboard** — See your skill levels and rank
-4. **Reflection Journal** — Review past journal entries and your practice chain
-5. **VSCode Integration Guide** — Learn how to pair missions with VSCode
+4. **Reflection Journal** (Terminal only) — Review past journal entries and your practice chain
+5. **VSCode Integration Guide** (Terminal only) — Learn how to pair missions with VSCode
 6. **Save Progress** — Manually save your state
 7. **Exit** — Quit (progress is auto-saved)
 
@@ -167,7 +159,7 @@ Each mission teaches a concept through:
 2. **Economic Parallel** — Understand the "cost" and "value" of the pattern
 3. **Technical Concept** — Learn the actual code syntax
 4. **Challenge** — Answer a question or write code
-5. **Reflection** (optional) — Answer Uta Hagen's 9 systems-thinking questions
+5. **Reflection** (Terminal optional) — Answer Uta Hagen's 9 systems-thinking questions
 
 ### Progression System
 
@@ -180,7 +172,7 @@ Each mission teaches a concept through:
 
 ## 💾 Progress Saves
 
-Your progress is stored in two JSON files:
+Your progress is stored in JSON files (shared between both frontends):
 
 ### `~/.dojo_save.json` (Player State)
 ```json
@@ -199,7 +191,7 @@ Your progress is stored in two JSON files:
 }
 ```
 
-### `~/.dojo_journal_data.json` (Reflection Entries)
+### `~/.dojo_journal_data.json` (Reflection Entries — Terminal only)
 ```json
 {
   "2026-06-22": {
@@ -210,7 +202,6 @@ Your progress is stored in two JSON files:
     "answers": {
       "Who am I in this circumstance?": "A programmer learning to think systematically...",
       "What do I want?": "To understand how data flows through systems..."
-      ...
     }
   }
 }
@@ -218,7 +209,7 @@ Your progress is stored in two JSON files:
 
 ---
 
-## 🔗 VSCode Integration
+## 🔗 VSCode Integration (Terminal Version)
 
 Pair each mission with VSCode for hands-on learning:
 
@@ -257,7 +248,7 @@ python dojo_classroom.py
 
 ### Data-Driven Missions
 
-Missions are stored in `missions.json` as pure data:
+Missions are stored in `missions/missions.json` as pure data:
 
 ```json
 {
@@ -266,11 +257,12 @@ Missions are stored in `missions.json` as pure data:
   "title": "System Grounding",
   "philosophy": "Like Tai Chi...",
   "economics": "Infrastructure is...",
-  "tech_concept": "The terminal...",
+  "lesson": "The terminal...",
   "challenge": "Type the command to clone a repository.",
   "answer": "git clone",
+  "answertype": "contains",
   "skill": "git",
-  "honor_base": 20
+  "honorreward": 20
 }
 ```
 
@@ -279,20 +271,55 @@ This means:
 - ✅ **Translators can localize content** without touching Python
 - ✅ **Mission packs can be shared** and loaded dynamically
 - ✅ **Save files are future-proof** (mission IDs never change)
+- ✅ **Multiple frontends can coexist** (share the same mission/player data)
 
 ### Engine Architecture
 
+**Terminal Version:**
 - `dojo_classroom.py` — Main game loop, mission loading, player management (v5.0 Dynamic Engine)
-- `missions.json` — All mission data (externalized, data-driven)
+- `missions/missions.json` — All mission data (externalized, data-driven)
 - `~/.dojo_save.json` — Player progress (persistent)
-- `~/.dojo_journal_data.json` — Reflection entries (persistent)
+- `~/.dojo_journal_data.json` — Reflection entries (persistent, optional)
+
+**Browser Version:**
+- `dojo_web.html` — Standalone single-page app (HTML/CSS/JavaScript)
+- Mission data embedded inline (no external dependencies)
+- Browser localStorage for persistent player progress
 
 ### Future Phases
 
-- **Phase 1 (Current)** — 10 core Python/Git/JSON/CodeReview missions
+- **Phase 1 (Current)** — 10 core Python/Git/JSON/CodeReview missions (Terminal + Browser)
 - **Phase 2** — `dojo_ascension.py` — Advanced multi-week curriculum (Linux, security, quant)
 - **Phase 3** — Mission packs: Journalism, Genealogy, Governance, AI Literacy
 - **Phase 4** — Community: Shared mission packs, classroom dashboards, instructor tools
+
+---
+
+## 🧪 Development & Testing
+
+### Validate Missions
+
+```bash
+python validate_missions.py
+```
+
+This checks for missing required fields, type mismatches, and schema issues.
+
+### Run Tests
+
+```bash
+python -m unittest discover -s tests
+```
+
+### Generate Repo Bundle
+
+If you want a single text file for sharing with collaborators or AI tools:
+
+```bash
+python refresh_repo_bundle.py
+```
+
+This regenerates [repo_bundle.txt](repo_bundle.txt) from the current repository contents.
 
 ---
 
@@ -303,9 +330,18 @@ This means:
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the full guide. Quick start:
 
 1. Fork the repo
-2. Add your mission(s) to `missions.json`
-3. Test locally
+2. Add your mission(s) to `missions/missions.json`
+3. Test locally: `python validate_missions.py`
 4. Submit a pull request
+
+### For Frontend Developers
+
+Want to build a new frontend (RPG, mobile, web framework, etc.)?
+
+1. Load missions from `missions/missions.json` (or embed them)
+2. Implement the same player state structure (see `~/.dojo_save.json` format)
+3. Follow the answer validation logic (see `validate_answer()` in `dojo_classroom.py`)
+4. Open an issue to discuss compatibility before building
 
 ### For Code Contributors
 
@@ -318,12 +354,15 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for the full guide. Quick start:
 
 **v5.0 (Current)**
 - ✅ Dynamic mission engine (missions.json)
+- ✅ Terminal frontend (Python)
+- ✅ Browser frontend (HTML/JavaScript) — NEW!
 - ✅ Competency-based ranking
-- ✅ Uta Hagen reflection journal (optional)
+- ✅ Uta Hagen reflection journal (Terminal only)
 - ✅ Dashboard with skill specialization
 - ✅ Persistent saves (JSON)
 - 🔜 Mission packs (Journalism, Genealogy, Governance)
 - 🔜 Classroom mode (instructor dashboard)
+- 🔜 Mobile app (iOS/Android)
 
 ---
 
@@ -333,29 +372,18 @@ GNU GENERAL PUBLIC LICENSE
 Version 3, 29 June 2007
 
 Copyright (C) 2007 Free Software Foundation, Inc. https://fsf.org/
+
 Everyone is permitted to copy and distribute verbatim copies
 of this license document, but changing it is not allowed.
 
-                        Preamble
+The GNU General Public License is a free, copileft license for software and other kinds of works.
 
+When we use your software, we must adhere to the spirit of cooperation and transparency that defines the open-source community.
 
-The GNU General Public License is a free, copyleft license for
-software and other kinds of works.
+[Full GPL-3.0 text available at: https://www.gnu.org/licenses/gpl-3.0.txt]
 
-The licenses for most software and other practical works are designed
-to take away your freedom to share and change the works.  By contrast,
-the GNU General Public License is intended to guarantee your freedom to
-share and change all versions of a program--to make sure it remains free
-software for all its users.  We, the Free Software Foundation, use the
-GNU General Public License for most of our software, some kind of works
-that we are made to share by their authors; it also applies to any other
-program released this way.  You can also use it to follow these terms
-in your own programs.
+---
 
-When we use your software, we must adhere to the spirit of cooperation
-and transparency that defines the open-source community.
-
-[... The remainder of the standard GPL-3.0 text is available at: https://www.gnu.org/licenses/gpl-3.0.txt ...]
 ## 🙏 Credits
 
 Built by and for the SolarPunk community. Inspired by:
@@ -371,7 +399,7 @@ Built by and for the SolarPunk community. Inspired by:
 
 - [GitHub Repository](https://github.com/solarpunkopensourcelaboratory/dojo-ascension)
 - [Contributing Guide](CONTRIBUTING.md)
-- [Original SolarPunk Dojo Project](https://github.com/solarpunkopensourcelaboratory/dojo-ascension)
+- [SolarPunk Open Source Laboratory](https://github.com/solarpunkopensourcelaboratory)
 
 ---
 
