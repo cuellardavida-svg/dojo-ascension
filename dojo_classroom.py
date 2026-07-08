@@ -519,6 +519,156 @@ def show_dashboard(player, missions):
     wait()
 
 # ─────────────────────────────────────────────
+#  CHRONICLE TIPS
+# ─────────────────────────────────────────────
+
+
+def chronicle_tips(player, missions, journal_data):
+    """Analyse session history and surface personalised practice tips."""
+    clear_screen()
+    header("CHRONICLE TIPS — PERSONALISED INSIGHTS", Fore.MAGENTA)
+
+    tips = []
+
+    # ── Journal / practice-chain analysis ──────────────────────────────────
+    chain = get_practice_chain(journal_data)
+    total_entries = len(journal_data)
+
+    if total_entries == 0:
+        tips.append((
+            "📔 Start your reflection journal",
+            "You haven't written any journal entries yet. After each mission "
+            "choose 'y' to journal. Even one sentence per session compounds "
+            "into powerful self-knowledge over time."
+        ))
+    elif chain == 0:
+        tips.append((
+            "🔄 Rebuild your practice chain",
+            f"You have {total_entries} past journal entr"
+            f"{'y' if total_entries == 1 else 'ies'} but your current chain "
+            "is broken. Return daily — even a 5-minute session counts."
+        ))
+    elif chain < 3:
+        tips.append((
+            f"🌱 Chain growing: {chain} day(s) — keep going!",
+            "Consistent micro-practice beats long irregular sessions. "
+            "Aim to reach a 7-day chain to build a lasting habit."
+        ))
+    else:
+        tips.append((
+            f"🔥 Practice chain: {chain} day(s) — excellent consistency!",
+            "You are showing up regularly. Now focus on depth: read your old "
+            "journal entries and look for recurring blockers to work through."
+        ))
+
+    # ── Mission-completion analysis ─────────────────────────────────────────
+    total_missions = len(missions)
+    done = len(player.completed)
+    remaining = [m for m in missions if m["id"] not in player.completed]
+
+    if done == 0:
+        tips.append((
+            "🚀 Begin your first mission",
+            "No missions completed yet — select option 1 from the menu to "
+            "start with Mission 1: System Grounding."
+        ))
+    elif done == total_missions:
+        tips.append((
+            "🏆 All missions complete — go deeper",
+            "You've finished every available mission. Re-read your journal "
+            "entries, contribute a new mission JSON to the community, or "
+            "mentor another practitioner."
+        ))
+    else:
+        next_m = remaining[0]
+        tips.append((
+            f"⚔️  Next frontier: Mission {next_m['number']} — {next_m['title']}",
+            f"You've completed {done}/{total_missions} missions. "
+            f"Your next challenge focuses on the '{next_m['skill'].upper()}' "
+            "skill — tackle it in your next session."
+        ))
+
+    # ── Skill-gap analysis ──────────────────────────────────────────────────
+    skill_levels = player.skills
+    if skill_levels:
+        weakest_skill = min(skill_levels, key=lambda s: skill_levels[s])
+        weakest_level = skill_levels[weakest_skill]
+        strongest_skill = max(skill_levels, key=lambda s: skill_levels[s])
+        strongest_level = skill_levels[strongest_skill]
+
+        if weakest_level == 0:
+            tips.append((
+                f"📉 Untouched skill: {weakest_skill.upper()}",
+                f"Your {weakest_skill.upper()} skill is at 0. Look for "
+                f"missions tagged '{weakest_skill}' to start building it."
+            ))
+        elif strongest_level - weakest_level >= 2:
+            tips.append((
+                f"⚖️  Balance your skills: lift {weakest_skill.upper()} "
+                f"(lvl {weakest_level}) toward {strongest_skill.upper()} "
+                f"(lvl {strongest_level})",
+                "A well-rounded practitioner avoids over-specialisation. "
+                f"Seek out {weakest_skill.upper()}-tagged missions to close "
+                "the gap."
+            ))
+        else:
+            tips.append((
+                f"✅ Skills are balanced (strongest: {strongest_skill.upper()} "
+                f"lvl {strongest_level})",
+                "Keep progressing evenly. Each new mission advances a "
+                "specific skill — check the mission list to plan ahead."
+            ))
+
+    # ── Reflection-quality nudge (based on journal content length) ──────────
+    if journal_data:
+        short_entries = sum(
+            1 for entry in journal_data.values()
+            if all(len(a) < 20 for a in entry.get("answers", {}).values())
+        )
+        if short_entries > 0:
+            tips.append((
+                "✍️  Go deeper in your reflections",
+                f"{short_entries} of your journal entr"
+                f"{'y has' if short_entries == 1 else 'ies have'} very short "
+                "answers. The Uta Hagen questions reward specificity — aim "
+                "for at least one full sentence per question."
+            ))
+
+    # ── Honor-rank nudge ────────────────────────────────────────────────────
+    next_thresholds = [
+        (t, title)
+        for t, title in Player.RANK_THRESHOLDS
+        if t > player.honor
+    ]
+    if next_thresholds:
+        next_t, next_title = next_thresholds[0]
+        gap = next_t - player.honor
+        tips.append((
+            f"🎖️  {gap} honor until rank: {next_title}",
+            f"You are at {player.honor} honor. Keep completing missions to "
+            "reach the next rank and unlock new challenges."
+        ))
+
+    # ── Render ──────────────────────────────────────────────────────────────
+    print(
+        f"\n{Fore.CYAN}Session snapshot for {Style.BRIGHT}{player.name}"
+        f"{Style.RESET_ALL}{Fore.CYAN} | "
+        f"{done}/{total_missions} missions | "
+        f"{total_entries} journal entr"
+        f"{'y' if total_entries == 1 else 'ies'} | "
+        f"chain {chain} day(s){Style.RESET_ALL}\n"
+    )
+    divider()
+
+    for i, (headline, detail) in enumerate(tips, 1):
+        print(f"\n{Fore.YELLOW}{Style.BRIGHT}[{i}] {headline}{Style.RESET_ALL}")
+        print(f"    {Fore.WHITE}{detail}{Style.RESET_ALL}")
+
+    divider()
+    wait()
+
+
+# ─────────────────────────────────────────────
 #  VSCODE GUIDE
 # ─────────────────────────────────────────────
 
@@ -583,6 +733,10 @@ def main_menu(player, missions):
     print(f"  {Fore.WHITE}5. VSCode Integration Guide{Style.RESET_ALL}")
     print(f"  {Fore.WHITE}6. Save Progress{Style.RESET_ALL}")
     print(f"  {Fore.WHITE}7. Exit{Style.RESET_ALL}")
+    print(
+        f"\n  {Fore.MAGENTA}/chronicle tips{Fore.WHITE} — personalised tips "
+        f"from your session history{Style.RESET_ALL}"
+    )
     return input(f"\n  {Fore.GREEN}root@dojo:~# {Style.RESET_ALL}").strip()
 
 
@@ -686,6 +840,10 @@ def game_loop():
                 f"{Style.RESET_ALL}"
             )
             sys.exit(0)
+
+        elif choice.lower() in ('/chronicle tips', '/chronicle'):
+            journal_data = load_journal_data()
+            chronicle_tips(player, missions, journal_data)
 
 
 if __name__ == "__main__":
