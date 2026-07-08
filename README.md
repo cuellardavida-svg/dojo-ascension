@@ -1,29 +1,52 @@
-# 🥋 DOJO ASCENSION v5.0
+# 🥋 Dojo Ascension: A Digital Ecology for Creators
 
 [![Contributors](https://img.shields.io/badge/contributors-welcome-brightgreen.svg)](https://github.com/solarpunkopensourcelaboratory/dojo-ascension/graphs/contributors)
 
-**A terminal-based learning system for practicing Python, Git, JSON, and code review through story-driven missions and deliberate practice.**
+> *"The world is already at your fingertips. You are here to find your voice."*
 
-**Now available in two frontends: Terminal (Python) & Browser (HTML/JavaScript)**
+Welcome to the Dojo. This is not just a codebase or a traditional programming class. This is a sanctuary for the curious, the artists, the philosophers, and the inner child eager to understand how the digital world works.
+
+Whether you are a seasoned traveler recovering from a difficult learning journey, or someone stepping into a terminal for the very first time, you belong here. We do not learn code to feed the machine. We learn code so that you can apply these instruments to your **own** arts, hobbies, and passions.
+
+Here, you will learn Python, Linux, and systems thinking through play, mentorship, and ecology. Your wings are yours to open. Let us provide the updraft.
 
 ---
 
-## 🎯 What Is This?
+## 🛤️ The 10-Minute Spark: Start Here
 
-Dojo Ascension is not just a coding tutorial—it's a **learning operating system** that combines:
+No prior experience is required. Follow these three steps to step onto the mat and begin your first mission.
 
-- **Mission-based progression** — Complete 10+ interconnected challenges
-- **Competency tracking** — Master specific skills (Python, Git, JSON, Architecture, Code Review)
-- **Reflection journal** — Optional Uta Hagen systems-thinking questions after each mission
-- **Persistent saves** — All progress stored in human-readable JSON
-- **Cross-disciplinary context** — Each mission connects code to philosophy, economics, and martial arts
+### Step 1: Claim Your Space (Clone the Dojo)
+Open your computer's terminal and copy-paste this command to bring the Dojo to your local machine:
 
-### The Philosophy
+```bash
+git clone https://github.com/solarpunkopensourcelaboratory/dojo-ascension.git
+cd dojo-ascension
+```
 
-Code is not syntax—it's a framework for thinking about systems. By mastering these crafts, you learn to:
-- **Build resilient digital infrastructure** (Git, version control, deployment)
-- **Design cooperative systems** (OOP, APIs, data interoperability)
-- **Hold systems accountable** (Code review, testing, documentation)
+### Step 2: Equip Your Gear (Install Requirements)
+
+Every explorer needs the right tools. Run this command to unpack your gear securely:
+
+```bash
+pip install -r requirements.txt
+```
+
+### Step 3: Step Onto the Mat (Enter the Classroom)
+
+You are ready. Awaken the engine and begin your journey:
+
+```bash
+python dojo_classroom.py
+```
+
+*(When the screen lights up and the Dojo welcomes you, take a breath. You have just taken your first step into a larger world.)*
+
+---
+
+## 🌱 Our Superobjective
+
+Inspired by the greatest mentors—from the theatre stage to the realms of animation—our ultimate goal is to raise the next generation of formidable, responsible, and informed creators. We believe the strongest future is built by humans and machines intelligent enough to choose what they want, in harmony with the planet that sustains us.
 
 ---
 
