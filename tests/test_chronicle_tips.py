@@ -1,7 +1,6 @@
 """Unit tests for the /chronicle tips feature in dojo_classroom.py."""
 import io
 import os
-import sys
 import tempfile
 import unittest
 from datetime import datetime, timedelta
