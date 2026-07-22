@@ -42,7 +42,8 @@ def load_learner_records(data_dir: Path) -> list[dict]:
 
         completed = payload.get("completed", [])
         skills = payload.get("skills", {})
-        learner_id = hashlib.sha256(str(path).encode("utf-8")).hexdigest()[:12]
+        stable_identity = f"{payload.get('name', '')}|{payload.get('first_session_at', '')}"
+        learner_id = hashlib.sha256(stable_identity.encode("utf-8")).hexdigest()[:12]
         session_log = payload.get("session_log", [])
 
         records.append(
@@ -65,8 +66,6 @@ def load_learner_records(data_dir: Path) -> list[dict]:
 
 
 def infer_pathway_stage(completed: int) -> str:
-    if completed == 0:
-        return "beginner_confidence"
     if completed < 3:
         return "beginner_confidence"
     if completed < 6:

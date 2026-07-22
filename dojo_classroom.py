@@ -454,7 +454,7 @@ def run_code_challenge(prompt, answer, answertype="exact", hint=""):
                 )
 
 
-def execute_mission(mission_data, player):
+def execute_mission(mission_data, player, missions=None):
     """Execute a mission from the data structure"""
     mid = mission_data["id"]
     num = mission_data["number"]
@@ -489,7 +489,7 @@ def execute_mission(mission_data, player):
         hint)
 
     if won:
-        missions = load_missions()
+        missions = missions or load_missions()
         first_completion = mid not in player.completed
         player.completed.add(mid)
         if first_completion:
@@ -536,8 +536,6 @@ def get_pathway_stage(player, missions):
     """Translate raw progress into a learner-facing pathway."""
     completed = len(player.completed)
     total = len(missions)
-    if completed == 0:
-        return "Beginner confidence"
     if completed < min(3, total):
         return "Beginner confidence"
     if completed < min(6, total):
@@ -897,7 +895,7 @@ def game_loop():
                     break
 
             if next_mission:
-                execute_mission(next_mission, player)
+                execute_mission(next_mission, player, missions)
             else:
                 print(
                     f"\n{Fore.GREEN}✓ All missions complete! You are a Co-Architect!{Style.RESET_ALL}")
@@ -920,7 +918,7 @@ def game_loop():
                 mission = next(
                     (m for m in missions if m["number"] == num), None)
                 if mission:
-                    execute_mission(mission, player)
+                    execute_mission(mission, player, missions)
                 else:
                     print(f"{Fore.RED}Mission not found.{Style.RESET_ALL}")
                     time.sleep(2)

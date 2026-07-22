@@ -1071,10 +1071,19 @@
 
         function getPathwayStage() {
             const done = player.completed.length;
-            if (done === 0 || done < 3) return 'Beginner confidence';
+            if (done < 3) return 'Beginner confidence';
             if (done < 6) return 'Contributor readiness';
             if (done < missions.length) return 'Mission authoring';
             return 'Facilitator readiness';
+        }
+
+        function getCurrentRankFloor() {
+            for (let i = RANK_THRESHOLDS.length - 1; i >= 0; i--) {
+                if (RANK_THRESHOLDS[i].points <= player.honor) {
+                    return RANK_THRESHOLDS[i];
+                }
+            }
+            return RANK_THRESHOLDS[0];
         }
 
         function getMomentumMessage() {
@@ -1208,7 +1217,7 @@
             // Next rank
             const nextRank = getNextRankInfo();
             if (nextRank) {
-                const previousRank = [...RANK_THRESHOLDS].reverse().find(rank => rank.points <= player.honor) || RANK_THRESHOLDS[0];
+                const previousRank = getCurrentRankFloor();
                 const span = Math.max(nextRank.points - previousRank.points, 1);
                 const progress = ((player.honor - previousRank.points) / span) * 100;
                 document.getElementById('rankProgress').style.width = Math.min(Math.max(progress, 0), 100) + '%';
@@ -1317,9 +1326,8 @@
                     player.completed.push(currentMission.id);
                     const reward = currentMission.honorreward || 20;
                     player.honor += reward;
-                    const skill = currentMission.skill;
-                    if (player.skills[skill] !== undefined) {
-                        player.skills[skill]++;
+                    if (player.skills[currentMission.skill] !== undefined) {
+                        player.skills[currentMission.skill]++;
                     }
                 }
                 player.last_mission_at = timestampNow();
