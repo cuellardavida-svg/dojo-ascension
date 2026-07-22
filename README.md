@@ -1,6 +1,14 @@
 # 🥋 Dojo Ascension: A Digital Ecology for Creators
 
+**Learn Python, Git, and systems thinking through play, mentorship, and ecology — no prior experience required.**
+
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![Python 3.8+](https://img.shields.io/badge/python-3.8%2B-brightgreen.svg)](https://www.python.org/downloads/)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+[![Good First Issues](https://img.shields.io/badge/good%20first%20issues-open-purple.svg)](https://github.com/solarpunkopensourcelaboratory/dojo-ascension/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)
 [![Contributors](https://img.shields.io/badge/contributors-welcome-brightgreen.svg)](https://github.com/solarpunkopensourcelaboratory/dojo-ascension/graphs/contributors)
+
+**New here?** → [Start a good first issue](https://github.com/solarpunkopensourcelaboratory/dojo-ascension/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) · [Read the Contributing Guide](CONTRIBUTING.md) · [Open in a Codespace](https://github.com/solarpunkopensourcelaboratory/dojo-ascension) (zero local setup)
 
 > *"The world is already at your fingertips. You are here to find your voice."*
 
@@ -459,6 +467,11 @@ Want to build a new frontend (RPG, mobile, web framework, etc.)?
 
 - Bug fixes and feature requests welcome
 - See [CONTRIBUTING.md](CONTRIBUTING.md) for development setup
+- **Zero-setup option:** click **Code → Codespaces → Create codespace** to get a ready-made Python environment in your browser (see [.devcontainer/devcontainer.json](.devcontainer/devcontainer.json))
+
+### Contributors
+
+We credit everyone who contributes code, missions, translations, accessibility, docs, facilitation, or review. See [CONTRIBUTORS.md](CONTRIBUTORS.md).
 
 ---
 
