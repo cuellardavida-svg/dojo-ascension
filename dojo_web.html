@@ -153,6 +153,18 @@
             margin-top: 30px;
         }
 
+        .menu-brief {
+            margin-top: 24px;
+            padding: 16px;
+            background: #1a1f2e;
+            border-left: 4px solid #ff6b9d;
+            border-radius: 4px;
+        }
+
+        .menu-brief p {
+            margin: 8px 0;
+        }
+
         .menu-btn {
             padding: 15px 20px;
             background: #1a1f2e;
@@ -385,6 +397,17 @@
             padding-bottom: 10px;
         }
 
+        .pathway-badge {
+            display: inline-block;
+            padding: 6px 10px;
+            background: #2a1f3e;
+            color: #ff9de1;
+            border: 1px solid #ff6b9d;
+            border-radius: 999px;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
         .skill-bar {
             margin: 12px 0;
             display: flex;
@@ -553,7 +576,7 @@
     <div class="container">
         <header>
             <h1>🥋 DOJO ASCENSION v5.0</h1>
-            <p>A terminal-based learning system for practicing Python, Git, JSON, and Code Review</p>
+            <p>Low-overhead digital literacy infrastructure for cohorts, classrooms, libraries, and community labs</p>
         </header>
 
         <div class="content">
@@ -562,11 +585,12 @@
                 <div class="intro-box">
                     <h2>Welcome, Initiate</h2>
                     <p>You stand at the threshold of the Dojo.</p>
-                    <p>Here, code is not mere syntax—it is a framework for thinking about systems.</p>
+                    <p>Here, code is not mere syntax—it is a framework for thinking about systems, stewardship, and community infrastructure.</p>
                     <p>By mastering these crafts, you will learn to:</p>
                     <p>📚 <strong>Build resilient digital infrastructure</strong> (Git, version control, deployment)</p>
                     <p>🤝 <strong>Design cooperative systems</strong> (OOP, APIs, data interoperability)</p>
                     <p>✅ <strong>Hold systems accountable</strong> (Code review, testing, documentation)</p>
+                    <p>🌱 <strong>Join a mission-aligned learning pathway</strong> from beginner confidence to contributor readiness</p>
                     <p style="margin-top: 30px; color: #888;">What is your name, seeker?</p>
                     <div class="name-input-group">
                         <input type="text" id="playerName" placeholder="Enter your name..." autofocus>
@@ -604,6 +628,12 @@
                     <button class="menu-btn" onclick="resetProgress()" style="border-color: #ff6b6b; color: #ff6b6b;">
                         <span class="num">5.</span>Reset Progress (Data Loss!)
                     </button>
+                </div>
+
+                <div class="menu-brief">
+                    <p><strong>Pathway:</strong> <span id="menuPathway">Beginner confidence</span></p>
+                    <p><strong>Next mission:</strong> <span id="menuNextMission">Mission 1. System Grounding</span></p>
+                    <p><strong>Momentum:</strong> <span id="menuMomentum">Return tomorrow or bring a peer to keep your practice alive.</span></p>
                 </div>
             </div>
 
@@ -683,6 +713,15 @@
                     <p><strong>Skills Mastered:</strong> <span id="dashSkills">None yet</span></p>
                 </div>
 
+                <div class="dashboard-card" style="margin-top: 20px;">
+                    <h3>Momentum & Pathway</h3>
+                    <div id="dashPathway" class="pathway-badge">Beginner confidence</div>
+                    <p><strong>Sessions logged:</strong> <span id="dashSessions">0</span></p>
+                    <p><strong>Next mission:</strong> <span id="dashNextMission">Mission 1. System Grounding</span></p>
+                    <p><strong>Last mission win:</strong> <span id="dashLastMission">No completions yet</span></p>
+                    <p><strong>Cohort cue:</strong> <span id="dashCohortCue">Invite a facilitator or peer to join your next session.</span></p>
+                </div>
+
                 <div class="button-group" style="margin-top: 30px;">
                     <button class="btn" onclick="backToMenu()">Back to Menu</button>
                 </div>
@@ -693,12 +732,13 @@
                 <h2 style="color: #00d4ff; margin-bottom: 20px;">About the Dojo</h2>
                 <div class="section">
                     <h3>🎯 What Is This?</h3>
-                    <p>Dojo Ascension is a learning operating system that combines:</p>
+                    <p>Dojo Ascension is a lightweight learning operating system that combines:</p>
                     <ul style="margin-left: 20px; margin-top: 10px;">
                         <li><strong>Mission-based progression</strong> — Complete 10 interconnected challenges</li>
                         <li><strong>Competency tracking</strong> — Master specific skills (Python, Git, JSON, Architecture, Code Review)</li>
                         <li><strong>Persistent saves</strong> — All progress stored in your browser</li>
                         <li><strong>Cross-disciplinary context</strong> — Each mission connects code to philosophy, economics, and martial arts</li>
+                        <li><strong>Institutional efficiency</strong> — Reusable curriculum for classrooms, libraries, cohorts, and nonprofits without a heavyweight LMS</li>
                     </ul>
                 </div>
 
@@ -796,18 +836,7 @@
         // ─────────────────────────────────────────────────────────
 
         let missions = [];
-        let player = {
-            name: '',
-            honor: 0,
-            completed: [],
-            skills: {
-                python: 0,
-                git: 0,
-                json: 0,
-                architecture: 0,
-                review: 0
-            }
-        };
+        let player = {};
 
         let currentMission = null;
         let attemptCount = 0;
@@ -833,7 +862,9 @@
         function loadPlayer() {
             const saved = localStorage.getItem('dojoPlayer');
             if (saved) {
-                player = JSON.parse(saved);
+                player = ensurePlayerDefaults(JSON.parse(saved));
+            } else {
+                player = ensurePlayerDefaults();
             }
         }
 
@@ -997,15 +1028,63 @@
         }
 
         function getNextRankInfo() {
-            const currentRank = getRank();
-            let nextThreshold = RANK_THRESHOLDS[0];
-            for (const rank of RANK_THRESHOLDS) {
-                if (rank.points > player.honor) {
-                    nextThreshold = rank;
-                    break;
-                }
+            return RANK_THRESHOLDS.find(rank => rank.points > player.honor) || null;
+        }
+
+        function timestampNow() {
+            return new Date().toISOString();
+        }
+
+        function ensurePlayerDefaults(candidate = {}) {
+            return {
+                name: candidate.name || '',
+                honor: candidate.honor || 0,
+                completed: Array.isArray(candidate.completed) ? candidate.completed : [],
+                skills: {
+                    python: candidate.skills?.python || 0,
+                    git: candidate.skills?.git || 0,
+                    json: candidate.skills?.json || 0,
+                    architecture: candidate.skills?.architecture || 0,
+                    review: candidate.skills?.review || 0
+                },
+                first_session_at: candidate.first_session_at || null,
+                last_session_at: candidate.last_session_at || null,
+                last_mission_at: candidate.last_mission_at || null,
+                session_count: candidate.session_count || 0,
+                session_log: Array.isArray(candidate.session_log) ? candidate.session_log : []
+            };
+        }
+
+        function startSession() {
+            const stamp = timestampNow();
+            if (!player.first_session_at) {
+                player.first_session_at = stamp;
             }
-            return nextThreshold;
+            player.last_session_at = stamp;
+            player.session_count += 1;
+            player.session_log = [...player.session_log, stamp].slice(-60);
+        }
+
+        function getNextMission() {
+            return missions.find(m => !player.completed.includes(m.id)) || null;
+        }
+
+        function getPathwayStage() {
+            const done = player.completed.length;
+            if (done === 0 || done < 3) return 'Beginner confidence';
+            if (done < 6) return 'Contributor readiness';
+            if (done < missions.length) return 'Mission authoring';
+            return 'Facilitator readiness';
+        }
+
+        function getMomentumMessage() {
+            if (player.completed.length === 0) {
+                return 'Complete Mission 1 today to build your first win.';
+            }
+            if (player.completed.length < missions.length) {
+                return 'Return tomorrow or bring a peer to keep your practice alive.';
+            }
+            return 'You finished the core path. Mentor, document, or author a mission next.';
         }
 
         function showScreen(screenId) {
@@ -1044,7 +1123,8 @@
                 alert('Please enter your name!');
                 return;
             }
-            player.name = name;
+            player = ensurePlayerDefaults({ ...player, name });
+            startSession();
             savePlayer();
             updateMenuDisplay();
             showScreen('menuScreen');
@@ -1059,6 +1139,12 @@
             document.getElementById('menuHonor').textContent = player.honor;
             document.getElementById('menuCompleted').textContent = player.completed.length;
             document.getElementById('menuRank').textContent = getRank();
+            document.getElementById('menuPathway').textContent = getPathwayStage();
+            document.getElementById('menuMomentum').textContent = getMomentumMessage();
+            const nextMission = getNextMission();
+            document.getElementById('menuNextMission').textContent = nextMission
+                ? `Mission ${nextMission.number}. ${nextMission.title}`
+                : 'Core pathway complete — mentor, document, or author a mission';
         }
 
         function backToMenu() {
@@ -1067,7 +1153,7 @@
         }
 
         function startNextMission() {
-            const next = missions.find(m => !player.completed.includes(m.id));
+            const next = getNextMission();
             if (next) {
                 loadMission(next.id);
             } else {
@@ -1121,9 +1207,16 @@
 
             // Next rank
             const nextRank = getNextRankInfo();
-            const progress = (player.honor / nextRank.points) * 100;
-            document.getElementById('rankProgress').style.width = Math.min(progress, 100) + '%';
-            document.getElementById('rankProgressText').textContent = `${player.honor} / ${nextRank.points} honor (${nextRank.title})`;
+            if (nextRank) {
+                const previousRank = [...RANK_THRESHOLDS].reverse().find(rank => rank.points <= player.honor) || RANK_THRESHOLDS[0];
+                const span = Math.max(nextRank.points - previousRank.points, 1);
+                const progress = ((player.honor - previousRank.points) / span) * 100;
+                document.getElementById('rankProgress').style.width = Math.min(Math.max(progress, 0), 100) + '%';
+                document.getElementById('rankProgressText').textContent = `${player.honor} / ${nextRank.points} honor (${nextRank.title})`;
+            } else {
+                document.getElementById('rankProgress').style.width = '100%';
+                document.getElementById('rankProgressText').textContent = 'Core pathway complete — Co-Architect reached';
+            }
 
             // Skills mastered
             const completed = missions.filter(m => player.completed.includes(m.id));
@@ -1131,6 +1224,15 @@
             document.getElementById('dashSkills').textContent = masteredSkills.size > 0 
                 ? Array.from(masteredSkills).join(', ') 
                 : 'None yet';
+
+            const nextMission = getNextMission();
+            document.getElementById('dashPathway').textContent = getPathwayStage();
+            document.getElementById('dashSessions').textContent = player.session_count;
+            document.getElementById('dashNextMission').textContent = nextMission
+                ? `Mission ${nextMission.number}. ${nextMission.title}`
+                : 'Core pathway complete — mentor, document, or author a mission';
+            document.getElementById('dashLastMission').textContent = player.last_mission_at || 'No completions yet';
+            document.getElementById('dashCohortCue').textContent = getMomentumMessage();
 
             showScreen('dashboardScreen');
         }
@@ -1141,6 +1243,7 @@
 
         function resetProgress() {
             if (confirm('⚠️ This will erase all your progress. Are you absolutely sure?')) {
+                const freshStart = timestampNow();
                 player = {
                     name: player.name,
                     honor: 0,
@@ -1151,7 +1254,12 @@
                         json: 0,
                         architecture: 0,
                         review: 0
-                    }
+                    },
+                    first_session_at: freshStart,
+                    last_session_at: freshStart,
+                    last_mission_at: null,
+                    session_count: 1,
+                    session_log: [freshStart]
                 };
                 savePlayer();
                 updateMenuDisplay();
@@ -1204,17 +1312,25 @@
             );
 
             if (isCorrect) {
-                player.completed.push(currentMission.id);
-                const reward = currentMission.honorreward || 20;
-                player.honor += reward;
-
-                const skill = currentMission.skill;
-                if (player.skills[skill] !== undefined) {
-                    player.skills[skill]++;
+                const firstCompletion = !player.completed.includes(currentMission.id);
+                if (firstCompletion) {
+                    player.completed.push(currentMission.id);
+                    const reward = currentMission.honorreward || 20;
+                    player.honor += reward;
+                    const skill = currentMission.skill;
+                    if (player.skills[skill] !== undefined) {
+                        player.skills[skill]++;
+                    }
                 }
-
+                player.last_mission_at = timestampNow();
                 savePlayer();
-                showFeedback(`✓ CORRECT! +${reward} HONOR | ${skill.toUpperCase()} now Level ${player.skills[skill]}`, true);
+                const skill = currentMission.skill;
+                const nextMission = getNextMission();
+                const reward = currentMission.honorreward || 20;
+                const successText = firstCompletion
+                    ? `✓ CORRECT! +${reward} HONOR | ${skill.toUpperCase()} now Level ${player.skills[skill]} | Next: ${nextMission ? `Mission ${nextMission.number}` : 'mentor or author'}`
+                    : `✓ CORRECT! Review complete. Honor is only awarded once per mission to keep progress trustworthy.`;
+                showFeedback(successText, true);
 
                 setTimeout(() => {
                     backToMenu();
@@ -1250,6 +1366,8 @@
             loadPlayer();
 
             if (player.name) {
+                startSession();
+                savePlayer();
                 updateMenuDisplay();
                 showScreen('menuScreen');
             } else {

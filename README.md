@@ -59,6 +59,12 @@ Key outcomes we track:
 - Mission completion (median missions completed per active learner)
 - Contributor growth (unique merged PR authors per month)
 
+Why organizations adopt it:
+- Lightweight browser + terminal delivery
+- Shared mission schema instead of a heavyweight LMS rebuild
+- Local-first learner data for low-resource environments
+- Contributor pathways for educators, writers, reviewers, translators, and facilitators
+
 ---
 
 ## Frontends and Clients
@@ -87,6 +93,25 @@ We explicitly welcome:
 - Ethical solarpunk businesses building commercial games or tools that teach with Dojo missions
 - If you distribute software that incorporates Dojo code, you must follow the GPL‑3.0 license (keep derivative code open-source, provide source to users)
 - If you want to discuss special arrangements or dual-licensing for a specific project, open an issue or contact the maintainers
+
+---
+
+## 🏫 Organizational Efficiency & Public Value
+
+Dojo Ascension is designed as **mission-aligned digital literacy infrastructure**:
+
+- **Low overhead** — no database or paid SaaS required for core use
+- **Low resource** — browser edition works offline; terminal edition runs on basic Python setups
+- **Reusable curriculum** — JSON missions can be expanded without a large engineering team
+- **Interoperable** — multiple frontends can share the same learner and mission model
+- **Local-first** — institutions can pilot cohorts without sending learner data to a third-party service
+
+This makes the project useful for:
+- libraries
+- classrooms
+- community technology labs
+- mutual-aid networks
+- small nonprofits and fellowships
 
 ---
 
@@ -201,6 +226,7 @@ Each mission teaches a concept through:
 - **Ranks** — Initiate → Apprentice → Practitioner → Adept → Expert → Co-Architect
 - **Skills** — Track mastery: Python, Git, JSON, Architecture, Code Review (0-5 levels each)
 - **Practice Chain** — Consecutive days of journaling (rewards deliberate practice, not perfection)
+- **Pathways** — Beginner confidence → Contributor readiness → Mission authoring → Facilitator readiness
 
 ---
 
@@ -375,6 +401,17 @@ python refresh_repo_bundle.py
 
 This regenerates [repo_bundle.txt](repo_bundle.txt) from the current repository contents.
 
+### Pilot Reporting Utilities
+
+For cohort reporting and grant evidence:
+
+```bash
+python export_learner_data.py --data-dir ~/.dojo_ascension --format json
+python measure_retention.py --data-dir ~/.dojo_ascension
+```
+
+These commands aggregate anonymized learner outcomes from local save files.
+
 ---
 
 ## 🤝 Contributing
@@ -403,6 +440,10 @@ Good first mission path for non-coders:
 - Public metrics: [docs/METRICS.md](docs/METRICS.md)
 - Pilot program: [docs/PILOT_PROGRAM.md](docs/PILOT_PROGRAM.md)
 - Funding kit: [docs/FUNDING_KIT.md](docs/FUNDING_KIT.md)
+- Impact measurement: [docs/IMPACT_MEASUREMENT.md](docs/IMPACT_MEASUREMENT.md)
+- Learner privacy: [docs/DATA_PRIVACY.md](docs/DATA_PRIVACY.md)
+- Accessibility testing: [docs/ACCESSIBILITY_TESTING.md](docs/ACCESSIBILITY_TESTING.md)
+- Roadmap: [ROADMAP.md](ROADMAP.md)
 - Monthly updates: [CHANGELOG.md](CHANGELOG.md)
 
 ### For Frontend Developers
@@ -434,6 +475,20 @@ Want to build a new frontend (RPG, mobile, web framework, etc.)?
 - 🔜 Mission packs (Journalism, Genealogy, Governance)
 - 🔜 Classroom mode (instructor dashboard)
 - 🔜 Mobile app (iOS/Android)
+
+---
+
+## 🔧 Maintenance & Sustainability
+
+Dojo Ascension is intentionally small, legible, and inexpensive to maintain.
+
+- **Minimal dependencies** — only small Python packages plus the standard library
+- **No required cloud backend** — core use stays local-first
+- **Transparent governance** — decisions, response times, and merge baselines are documented
+- **Grant-ready evidence** — privacy, pilot, and impact docs are part of the repository
+- **Community maintenance model** — contributors can help through code, curriculum, accessibility, documentation, facilitation, and translation
+
+Funding primarily supports maintenance, accessibility, curriculum expansion, pilot operations, and community stewardship.
 
 ---
 
