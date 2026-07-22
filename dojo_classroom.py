@@ -266,6 +266,8 @@ class Player:
             self.first_session_at = current
         self.last_session_at = current
         self.session_count += 1
+        # Keep a bounded recent log so cohort metrics stay useful without
+        # allowing save files to grow forever on long-running installs.
         self.session_log = (self.session_log + [current])[-60:]
         self.save_state(quiet=True)
 

@@ -76,6 +76,7 @@ def infer_pathway_stage(completed: int) -> str:
 
 
 def returned_within_days(session_log: list[str], days: int) -> bool:
+    """Return whether a learner had an early return within N days of session 1."""
     parsed = [parse_iso(item) for item in session_log]
     parsed = [item for item in parsed if item is not None]
     if len(parsed) < 2:

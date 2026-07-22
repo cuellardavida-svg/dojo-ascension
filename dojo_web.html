@@ -1062,6 +1062,8 @@
             }
             player.last_session_at = stamp;
             player.session_count += 1;
+            // Keep only recent sessions so browser storage remains bounded while
+            // still supporting cohort-level early-return reporting.
             player.session_log = [...player.session_log, stamp].slice(-60);
         }
 
