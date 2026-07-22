@@ -1,12 +1,18 @@
 # Dojo Ascension — One-Page Mission & Funding Story
 
 ## Public promise
-Dojo Ascension helps beginners, artists, educators, and career changers learn practical digital skills through missions that connect code to social and ecological responsibility.
+Dojo Ascension helps beginners, artists, educators, libraries, community labs, and small nonprofits teach practical digital skills through missions that connect code to social and ecological responsibility.
 
 Learners gain:
 - Basic fluency in Python, Git, JSON, and systems thinking
 - A habit of reflective practice, not just task completion
 - A contribution path into open source, even without formal CS training
+
+Organizations gain:
+- A lightweight digital-literacy system that works in browsers or Python terminals
+- Reusable curriculum and learner-state formats without buying a heavyweight LMS
+- A contributor pathway that supports educators, writers, reviewers, translators, and facilitators
+- Local-first deployment with minimal infrastructure, low dependency risk, and low operating cost
 
 Why this is uniquely solarpunk:
 - Teaches technology as stewardship, transparency, and community infrastructure
@@ -31,6 +37,14 @@ Why this is uniquely solarpunk:
 - Curriculum and mission pack expansion
 - Accessibility and localization improvements
 - Community operations (reviews, pilot facilitation, monthly reporting)
+- Privacy-preserving impact measurement and pilot evidence collection
+
+## Efficiency story for adopters
+- No database or paid SaaS is required for core use
+- Browser and terminal clients reuse the same curriculum model
+- Mission content can be expanded by non-programmers using JSON templates
+- Local learner saves make classroom pilots possible in low-connectivity environments
+- Small teams can facilitate cohorts without building custom onboarding infrastructure
 
 ## Accountability loop
 Each month, maintainers publish a short update with:

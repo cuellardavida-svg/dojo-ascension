@@ -73,6 +73,17 @@ UTA_HAGEN_QUESTIONS = [
     "What have I discovered?"
 ]
 
+SESSION_LOG_RETENTION_LIMIT = 60
+PATHWAY_STAGE_THRESHOLDS = (
+    (3, "Beginner confidence"),
+    (6, "Contributor readiness"),
+)
+
+
+def current_timestamp_iso():
+    """Return an ISO timestamp for learner-state and impact metrics."""
+    return datetime.now().isoformat()
+
 # ─────────────────────────────────────────────
 #  UI & FORMATTING
 # ─────────────────────────────────────────────
@@ -183,7 +194,13 @@ class Player:
             "architecture": 0,
             "review": 0
         }
+        self.first_session_at = None
+        self.last_session_at = None
+        self.last_mission_at = None
+        self.session_count = 0
+        self.session_log = []
         self.load_state()
+        self.start_session()
 
     def get_rank(self):
         """Competency-based rank"""
@@ -194,6 +211,7 @@ class Player:
 
     def add_honor(self, points, skill=None):
         self.honor += points
+        self.last_mission_at = current_timestamp_iso()
         print(
             f"\n{Fore.YELLOW}⚡ +{points} HONOR POINTS | Total: {self.honor}{Style.RESET_ALL}")
 
@@ -206,20 +224,26 @@ class Player:
 
         self.save_state()
 
-    def save_state(self):
+    def save_state(self, quiet=False):
         """Persist player progress to JSON"""
         state = {
             "name": self.name,
             "honor": self.honor,
             "completed": list(self.completed),
             "skills": self.skills,
-            "last_save": datetime.now().isoformat()
+            "first_session_at": self.first_session_at,
+            "last_session_at": self.last_session_at,
+            "last_mission_at": self.last_mission_at,
+            "session_count": self.session_count,
+            "session_log": self.session_log,
+            "last_save": current_timestamp_iso()
         }
         try:
             SAVE_FILE.parent.mkdir(parents=True, exist_ok=True)
             with open(SAVE_FILE, 'w', encoding='utf-8') as f:
                 json.dump(state, f, indent=2)
-            print(f"{Fore.GREEN}✓ Progress saved to {SAVE_FILE}{Style.RESET_ALL}")
+            if not quiet:
+                print(f"{Fore.GREEN}✓ Progress saved to {SAVE_FILE}{Style.RESET_ALL}")
         except OSError as e:
             print(f"{Fore.RED}Error saving progress: {e}{Style.RESET_ALL}")
 
@@ -233,8 +257,27 @@ class Player:
                 self.honor = state.get("honor", 0)
                 self.completed = set(state.get("completed", []))
                 self.skills = state.get("skills", self.skills)
+                self.first_session_at = state.get("first_session_at")
+                self.last_session_at = state.get("last_session_at")
+                self.last_mission_at = state.get("last_mission_at")
+                self.session_count = state.get("session_count", 0)
+                self.session_log = state.get("session_log", [])
             except (OSError, json.JSONDecodeError):
                 pass  # Default to new player if corrupted
+
+    def start_session(self):
+        """Record a learner session for retention and cohort reporting."""
+        current = current_timestamp_iso()
+        if not self.first_session_at:
+            self.first_session_at = current
+        self.last_session_at = current
+        self.session_count += 1
+        # Keep a bounded recent log so cohort metrics stay useful without
+        # allowing save files to grow forever on long-running installs.
+        self.session_log = (
+            self.session_log + [current]
+        )[-SESSION_LOG_RETENTION_LIMIT:]
+        self.save_state(quiet=True)
 
 # ─────────────────────────────────────────────
 #  UTA HAGEN JOURNAL SYSTEM
@@ -421,7 +464,7 @@ def run_code_challenge(prompt, answer, answertype="exact", hint=""):
                 )
 
 
-def execute_mission(mission_data, player):
+def execute_mission(mission_data, player, missions):
     """Execute a mission from the data structure"""
     mid = mission_data["id"]
     num = mission_data["number"]
@@ -456,9 +499,33 @@ def execute_mission(mission_data, player):
         hint)
 
     if won:
+        first_completion = mid not in player.completed
         player.completed.add(mid)
-        player.add_honor(honor_base, skill)
-        print(f"\n{Fore.CYAN}✓ Mission {num} Complete!{Style.RESET_ALL}")
+        if first_completion:
+            player.add_honor(honor_base, skill)
+            print(f"\n{Fore.CYAN}✓ Mission {num} Complete!{Style.RESET_ALL}")
+        else:
+            player.last_mission_at = current_timestamp_iso()
+            player.save_state(quiet=True)
+            print(
+                f"\n{Fore.CYAN}✓ Mission {num} reviewed again."
+                f"{Style.RESET_ALL}"
+            )
+            print(
+                f"{Fore.YELLOW}Honor is only awarded on the first completion so "
+                f"your progress stays trustworthy for pilots and cohorts."
+                f"{Style.RESET_ALL}"
+            )
+        next_mission = get_next_mission(missions=missions, completed_ids=player.completed)
+        if next_mission:
+            print(
+                f"{Fore.MAGENTA}Next step: Mission {next_mission['number']} — "
+                f"{next_mission['title']}.{Style.RESET_ALL}"
+            )
+        print(
+            f"{Fore.BLUE}Pathway track: {get_pathway_stage(player, missions)}"
+            f"{Style.RESET_ALL}"
+        )
         journal_reflection(mid, title, player)
         return True
     else:
@@ -467,6 +534,23 @@ def execute_mission(mission_data, player):
             f"{Style.RESET_ALL}"
         )
         return False
+
+
+def get_next_mission(missions, completed_ids):
+    """Return the next unfinished mission in curriculum order."""
+    return next((m for m in missions if m["id"] not in completed_ids), None)
+
+
+def get_pathway_stage(player, missions):
+    """Translate raw progress into a learner-facing pathway."""
+    completed = len(player.completed)
+    total = len(missions)
+    for threshold, stage in PATHWAY_STAGE_THRESHOLDS:
+        if completed < min(threshold, total):
+            return stage
+    if completed < total:
+        return "Mission authoring"
+    return "Facilitator readiness"
 
 # ─────────────────────────────────────────────
 #  DASHBOARD
@@ -503,6 +587,26 @@ def show_dashboard(player, missions):
     print(
         f"  Skills Mastered: {', '.join(sorted(completed_skills)) or 'None yet'}\n"
     )
+
+    journal_data = load_journal_data()
+    chain = get_practice_chain(journal_data)
+    next_mission = get_next_mission(missions, player.completed)
+
+    divider()
+    print(f"\n{Fore.MAGENTA}MOMENTUM & PATHWAY:{Style.RESET_ALL}")
+    print(f"  Pathway Track : {get_pathway_stage(player, missions)}")
+    print(f"  Sessions Logged: {player.session_count}")
+    print(f"  Practice Chain: {chain} day(s)")
+    if next_mission:
+        print(
+            f"  Next Mission  : {next_mission['number']}. "
+            f"{next_mission['title']} ({next_mission['skill']})"
+        )
+    else:
+        print("  Next Mission  : Completed core pathway — mentor, document, or author a mission")
+    if player.last_mission_at:
+        print(f"  Last Win      : {player.last_mission_at}")
+    print("  Cohort Prompt : Invite a peer or facilitator to join your next session")
 
     # Show next rank threshold
     next_thresholds = [
@@ -726,6 +830,16 @@ def main_menu(player, missions):
         f"\n  {Fore.YELLOW}⚡ Honor: {player.honor}  |  Completed: "
         f"{len(player.completed)}/{len(missions)}{Style.RESET_ALL}\n"
     )
+    next_mission = get_next_mission(missions, player.completed)
+    print(
+        f"  {Fore.MAGENTA}Pathway: {get_pathway_stage(player, missions)}"
+        f"{Style.RESET_ALL}"
+    )
+    if next_mission:
+        print(
+            f"  {Fore.CYAN}Next recommended mission: {next_mission['number']}. "
+            f"{next_mission['title']}{Style.RESET_ALL}\n"
+        )
     print(f"  {Fore.WHITE}1. Start Next Mission{Style.RESET_ALL}")
     print(f"  {Fore.WHITE}2. Choose Specific Mission{Style.RESET_ALL}")
     print(f"  {Fore.WHITE}3. View Progress Dashboard{Style.RESET_ALL}")
@@ -789,7 +903,7 @@ def game_loop():
                     break
 
             if next_mission:
-                execute_mission(next_mission, player)
+                execute_mission(next_mission, player, missions)
             else:
                 print(
                     f"\n{Fore.GREEN}✓ All missions complete! You are a Co-Architect!{Style.RESET_ALL}")
@@ -812,7 +926,7 @@ def game_loop():
                 mission = next(
                     (m for m in missions if m["number"] == num), None)
                 if mission:
-                    execute_mission(mission, player)
+                    execute_mission(mission, player, missions)
                 else:
                     print(f"{Fore.RED}Mission not found.{Style.RESET_ALL}")
                     time.sleep(2)

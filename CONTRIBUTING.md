@@ -53,6 +53,25 @@ Non-programmers and subject-matter experts are welcome here. If you understand a
 - Create video walkthroughs
 - Write blog posts about the Dojo philosophy
 
+### 5. **Facilitation, Accessibility, and Cohort Support**
+
+- Run a small pilot cohort in a library, classroom, or community lab
+- Review learner prompts for clarity and accessibility
+- Capture pilot feedback with the repository templates
+- Help summarize outcomes in `CHANGELOG.md`
+
+## 🧭 Contributor Pathways
+
+Choose the track that fits your confidence and experience:
+
+- **First-time coder** — run `python newcomer.py`, complete 1 mission, then fix one small issue
+- **Mission writer / educator** — start with `missions/mission_template.json`, then use the mission rubric
+- **Accessibility reviewer** — use `docs/ACCESSIBILITY_BASELINE.md` and `docs/ACCESSIBILITY_TESTING.md`
+- **Translator / editor** — improve readability, translation readiness, and learner prompts
+- **Organizer / facilitator** — run a cohort, gather feedback, and publish a short pilot summary
+
+See [ROADMAP.md](ROADMAP.md) for the current “now / next / later” priorities.
+
 ---
 
 ## 📝 How to Add a Mission
@@ -225,6 +244,15 @@ If you use GitHub Desktop, keep each account's clone in a separate folder and si
    ```
    - Confirm your mission ID appears in `"completed"`
    - Confirm honor points were awarded
+
+### Pilot-friendly reporting commands
+
+```bash
+python export_learner_data.py --data-dir ~/.dojo_ascension --format json
+python measure_retention.py --data-dir ~/.dojo_ascension
+```
+
+Use these during cohorts to produce anonymized baseline metrics for `CHANGELOG.md` and pilot summaries.
 
 ---
 
