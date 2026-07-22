@@ -10,6 +10,12 @@ import json
 from datetime import datetime
 from pathlib import Path
 
+PATHWAY_STAGE_THRESHOLDS = (
+    (3, "Beginner confidence"),
+    (6, "Contributor readiness"),
+    (10, "Mission authoring"),
+)
+
 
 def parse_iso(value: str | None) -> datetime | None:
     if not value:
@@ -66,13 +72,10 @@ def load_learner_records(data_dir: Path) -> list[dict]:
 
 
 def infer_pathway_stage(completed: int) -> str:
-    if completed < 3:
-        return "beginner_confidence"
-    if completed < 6:
-        return "contributor_readiness"
-    if completed < 10:
-        return "mission_authoring"
-    return "facilitator_readiness"
+    for threshold, stage in PATHWAY_STAGE_THRESHOLDS:
+        if completed < threshold:
+            return stage
+    return "Facilitator readiness"
 
 
 def returned_within_days(session_log: list[str], days: int) -> bool:

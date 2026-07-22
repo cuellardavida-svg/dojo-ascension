@@ -73,6 +73,8 @@ UTA_HAGEN_QUESTIONS = [
     "What have I discovered?"
 ]
 
+SESSION_LOG_RETENTION_LIMIT = 60
+
 
 def iso_now():
     """Return an ISO timestamp for learner-state and impact metrics."""
@@ -268,7 +270,9 @@ class Player:
         self.session_count += 1
         # Keep a bounded recent log so cohort metrics stay useful without
         # allowing save files to grow forever on long-running installs.
-        self.session_log = (self.session_log + [current])[-60:]
+        self.session_log = (
+            self.session_log + [current]
+        )[-SESSION_LOG_RETENTION_LIMIT:]
         self.save_state(quiet=True)
 
 # ─────────────────────────────────────────────

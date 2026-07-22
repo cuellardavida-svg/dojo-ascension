@@ -851,6 +851,8 @@
             { points: 1000, title: 'Co-Architect' }
         ];
 
+        const SESSION_LOG_RETENTION_LIMIT = 60;
+
         // ─────────────────────────────────────────────────────────
         // STORAGE
         // ─────────────────────────────────────────────────────────
@@ -1028,7 +1030,12 @@
         }
 
         function getNextRankInfo() {
-            return RANK_THRESHOLDS.find(rank => rank.points > player.honor) || null;
+            for (const rank of RANK_THRESHOLDS) {
+                if (rank.points > player.honor) {
+                    return rank;
+                }
+            }
+            return null;
         }
 
         function timestampNow() {
@@ -1064,7 +1071,7 @@
             player.session_count += 1;
             // Keep only recent sessions so browser storage remains bounded while
             // still supporting cohort-level early-return reporting.
-            player.session_log = [...player.session_log, stamp].slice(-60);
+            player.session_log = [...player.session_log, stamp].slice(-SESSION_LOG_RETENTION_LIMIT);
         }
 
         function getNextMission() {
