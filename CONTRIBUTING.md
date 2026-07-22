@@ -6,6 +6,20 @@ Welcome, fellow cultivator of code and community. Whether you're a beginner lear
 
 ---
 
+## ⚡ One-Command Contributor Onboarding
+
+Use these exact commands:
+
+```bash
+python newcomer.py
+python newcomer.py --play
+```
+
+- `python newcomer.py` installs dependencies, runs tests, and validates missions.
+- `python newcomer.py --play` does the same and then launches the game.
+
+---
+
 ## 🎯 How You Can Contribute
 
 ### 1. **Add a Mission** (Easiest!)
@@ -46,6 +60,7 @@ Non-programmers and subject-matter experts are welcome here. If you understand a
 ### The Mission JSON Format
 
 All missions live in `missions.json`. To add a new mission, add a JSON object to the `"missions"` array.
+Start from [`missions/mission_template.json`](missions/mission_template.json), then review with [`missions/MISSION_REVIEW_RUBRIC.md`](missions/MISSION_REVIEW_RUBRIC.md).
 
 #### Minimal Example
 
@@ -210,6 +225,40 @@ If you use GitHub Desktop, keep each account's clone in a separate folder and si
    ```
    - Confirm your mission ID appears in `"completed"`
    - Confirm honor points were awarded
+
+---
+
+## ✅ PR Quality Baseline (Required)
+
+All PRs must pass:
+
+```bash
+python -m unittest discover -s tests
+python validate_missions.py
+```
+
+Mission/content PRs must complete the Definition of Done checklist in [`.github/pull_request_template.md`](.github/pull_request_template.md).
+
+---
+
+## 🌍 Accessibility & Inclusion Guardrails
+
+Use [`docs/ACCESSIBILITY_BASELINE.md`](docs/ACCESSIBILITY_BASELINE.md) as the baseline for:
+- Plain language and low-jargon writing
+- Inclusive examples and learner-friendly prompts
+- Lightweight web checks (keyboard flow, contrast, readable layout)
+
+---
+
+## 🐣 Good First Mission Pathway (Non-Coders)
+
+1. Copy [`missions/mission_template.json`](missions/mission_template.json)
+2. Fill one mission with a familiar topic
+3. Keep challenge + answer short and testable
+4. Add one hint
+5. Self-review with [`missions/MISSION_REVIEW_RUBRIC.md`](missions/MISSION_REVIEW_RUBRIC.md)
+6. Run `python newcomer.py`
+7. Open a PR and request mission/content review
 
 ---
 

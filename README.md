@@ -50,6 +50,17 @@ Inspired by the greatest mentors—from the theatre stage to the realms of anima
 
 ---
 
+## 🌻 Mission & Funding Snapshot
+
+See the one-page public promise and measurable outcomes in [FUNDING_ONE_PAGER.md](FUNDING_ONE_PAGER.md).
+
+Key outcomes we track:
+- Learner retention (14-day return rate)
+- Mission completion (median missions completed per active learner)
+- Contributor growth (unique merged PR authors per month)
+
+---
+
 ## Frontends and Clients
 
 The Dojo Ascension repo defines a data and logic layer for a learning game:
@@ -320,6 +331,18 @@ This means:
 
 ## 🧪 Development & Testing
 
+### One-Command Contributor Onboarding
+
+Use these exact commands:
+
+```bash
+python newcomer.py
+python newcomer.py --play
+```
+
+- `python newcomer.py` installs dependencies, runs tests, and validates missions.
+- `python newcomer.py --play` does the same and then launches the game.
+
 ### Validate Missions
 
 ```bash
@@ -333,6 +356,14 @@ This checks for missing required fields, type mismatches, and schema issues.
 ```bash
 python -m unittest discover -s tests
 ```
+
+### PR Merge Baseline (Required)
+
+Every PR must pass:
+- `python -m unittest discover -s tests`
+- `python validate_missions.py`
+
+For mission/content PRs, also complete the Definition of Done in [.github/pull_request_template.md](.github/pull_request_template.md).
 
 ### Generate Repo Bundle
 
@@ -353,9 +384,26 @@ This regenerates [repo_bundle.txt](repo_bundle.txt) from the current repository 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the full guide. Quick start:
 
 1. Fork the repo
-2. Add your mission(s) to `missions/missions.json`
-3. Test locally: `python validate_missions.py`
-4. Submit a pull request
+2. Use `missions/mission_template.json` to draft a mission
+3. Review with `missions/MISSION_REVIEW_RUBRIC.md`
+4. Test locally: `python newcomer.py`
+5. Add your mission(s) to `missions/missions.json`
+6. Submit a pull request
+
+Good first mission path for non-coders:
+- Start with one recall/application mission
+- Keep challenge and answer short
+- Add one optional hint
+- Ask for review using the mission rubric
+- Use plain language and inclusive examples (see [docs/ACCESSIBILITY_BASELINE.md](docs/ACCESSIBILITY_BASELINE.md))
+
+### Project Governance, Metrics, and Roadmap
+
+- Governance and response times: [docs/GOVERNANCE.md](docs/GOVERNANCE.md)
+- Public metrics: [docs/METRICS.md](docs/METRICS.md)
+- Pilot program: [docs/PILOT_PROGRAM.md](docs/PILOT_PROGRAM.md)
+- Funding kit: [docs/FUNDING_KIT.md](docs/FUNDING_KIT.md)
+- Monthly updates: [CHANGELOG.md](CHANGELOG.md)
 
 ### For Frontend Developers
 
@@ -422,6 +470,9 @@ Built by and for the SolarPunk community. Inspired by:
 
 - [GitHub Repository](https://github.com/solarpunkopensourcelaboratory/dojo-ascension)
 - [Contributing Guide](CONTRIBUTING.md)
+- [Mission & Funding One-Pager](FUNDING_ONE_PAGER.md)
+- [Governance](docs/GOVERNANCE.md)
+- [Public Metrics](docs/METRICS.md)
 - [SolarPunk Open Source Laboratory](https://github.com/solarpunkopensourcelaboratory)
 
 ---
