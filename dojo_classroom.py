@@ -464,7 +464,7 @@ def run_code_challenge(prompt, answer, answertype="exact", hint=""):
                 )
 
 
-def execute_mission(mission_data, player, missions=None):
+def execute_mission(mission_data, player, missions):
     """Execute a mission from the data structure"""
     mid = mission_data["id"]
     num = mission_data["number"]
@@ -499,7 +499,6 @@ def execute_mission(mission_data, player, missions=None):
         hint)
 
     if won:
-        missions = missions or load_missions()
         first_completion = mid not in player.completed
         player.completed.add(mid)
         if first_completion:

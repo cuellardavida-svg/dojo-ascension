@@ -57,9 +57,9 @@ class ImpactMetricTests(unittest.TestCase):
              patch("dojo_classroom.run_code_challenge", return_value=True), \
              patch("dojo_classroom.journal_reflection"), \
              patch("dojo_classroom.load_missions", return_value=[mission]):
-            execute_mission(mission, player)
+            execute_mission(mission, player, [mission])
             honor_after_first = player.honor
-            execute_mission(mission, player)
+            execute_mission(mission, player, [mission])
 
         self.assertEqual(honor_after_first, 20)
         self.assertEqual(player.honor, honor_after_first)

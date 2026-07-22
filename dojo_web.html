@@ -576,7 +576,7 @@
     <div class="container">
         <header>
             <h1>🥋 DOJO ASCENSION v5.0</h1>
-            <p>Low-overhead digital literacy infrastructure for cohorts, classrooms, libraries, and community labs</p>
+            <p>Low-overhead digital literacy infrastructure for cohorts, classrooms, libraries, and community labs teaching Python, Git, JSON, and Code Review</p>
         </header>
 
         <div class="content">
@@ -1331,10 +1331,10 @@
             );
 
             if (isCorrect) {
+                const reward = currentMission.honorreward || 20;
                 const firstCompletion = !player.completed.includes(currentMission.id);
                 if (firstCompletion) {
                     player.completed.push(currentMission.id);
-                    const reward = currentMission.honorreward || 20;
                     player.honor += reward;
                     if (player.skills[currentMission.skill] !== undefined) {
                         player.skills[currentMission.skill]++;
@@ -1344,7 +1344,6 @@
                 savePlayer();
                 const skill = currentMission.skill;
                 const nextMission = getNextMission();
-                const reward = currentMission.honorreward || 20;
                 const successText = firstCompletion
                     ? `✓ CORRECT! +${reward} HONOR | ${skill.toUpperCase()} now Level ${player.skills[skill]} | Next: ${nextMission ? `Mission ${nextMission.number}` : 'mentor or author'}`
                     : `✓ CORRECT! Review complete. Honor is only awarded once per mission to keep progress trustworthy.`;
