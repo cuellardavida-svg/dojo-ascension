@@ -9,7 +9,7 @@
       "philosophy": "Like Tai Chi, where you must feel the ground before moving, a programmer must understand their environment. 'Wu Wei' is achieved when your tools become extensions of your mind.",
       "economics": "Infrastructure is the basis of all macro-economic stability. Before building goods, we build roads. Here, your terminal and shell are your economic infrastructure.",
       "techconcept": "The terminal is your direct interface with the system. Git is your tool for interacting with the open-source global supply chain of ideas.",
-      "lesson": "Before you write any code, you need to know where you are and how to move. The terminal lets you navigate, inspect, and control your environment.",
+      "lesson": "Before you write any code, you need to know where you are and how to move. The terminal lets you navigate, inspect, and control your environment. Git uses that same terminal to connect your local work to remote repositories and collaborators.",
       "challenge": "Type the command to clone a git repository.",
       "hint": "The pattern is: git clone <repository-url>",
       "answer": "git clone",
@@ -17,9 +17,175 @@
       "honorreward": 20,
       "bonusfirsttry": 5
     },
-    { ... mission02 fields ... },
-    { ... mission03 fields ... },
-    ...
-    { ... mission10 fields ... }
+    {
+      "id": "python_variables_lineage",
+      "number": 2,
+      "title": "Variables & Data Lineage",
+      "skill": "python",
+      "tag": "Python Core",
+      "philosophy": "Genealogy teaches us that tracing lineage reveals identity. Analogy: A variable is not merely a box; it is a named node in a data lineage. Just as ancestral lineages carry traits forward in families, variables preserve and carry state across time in an execution scope.",
+      "economics": "Micro-economics teaches that resources are scarce and optimization is mandatory. Memory is our system's scarcest resource. Analogy: Naming variables clearly acts as a public ledger of memory allocation, preventing 'naming inflation' (where poorly named variables clog developer cognitive capacity).",
+      "techconcept": "In Python, variables are dynamically typed. When you assign `seed = 42`, Python allocates the value `42` in memory and points the name `seed` to it. The `=` operator does not mean equality (like in math); it represents assignment, setting the flow of data.",
+      "lesson": "In this lesson, you will practice basic variable assignment. Remember, Python is case-sensitive, and variable names should ideally use snake_case to maintain community readability standards.",
+      "challenge": "Write exactly this: assign the integer 42 to a variable named 'seed'.",
+      "hint": "Create a variable named 'seed' on the left, an equals sign in the middle, and the integer 42 on the right.",
+      "answer": [
+        "seed = 42",
+        "seed=42"
+      ],
+      "answertype": "exact",
+      "honorreward": 20,
+      "bonusfirsttry": 5
+    },
+    {
+      "id": "json_data_language",
+      "number": 3,
+      "title": "JSON — The Data Language",
+      "skill": "json",
+      "tag": "JSON Data",
+      "philosophy": "Interoperability is what cooperation looks like in code. When diverse, self-determined systems must collaborate, they need a non-coercive, neutral language to exchange state. JSON represents this shared public language.",
+      "economics": "Analogy: Global trade requires a frictionless transactional medium. JSON acts as a universal, lightweight currency of data exchange, allowing a Python server in Estonia to instantly trade structured information with a Javascript browser in Mexico without currency exchange fees (data translation overhead).",
+      "techconcept": "JavaScript Object Notation (JSON) is a text format built on two structures: key-value pairs (`{}`) and ordered lists (`[]`). Every key must be a double-quoted string. Unlike Python, JSON uses lowercase `true`, `false`, and `null` instead of `True`, `False`, and `None`.",
+      "lesson": "Understanding how JSON maps to native programming data structures is critical for web services, API communications, and saving user state securely.",
+      "challenge": "What does JSON stand for? (Type out the 3 words cleanly, no extra punctuation)",
+      "hint": "The first word is JavaScript, followed by the word for an entity (Object), and ending with representation (Notation).",
+      "answer": "JavaScript Object Notation",
+      "answertype": "exact",
+      "honorreward": 20,
+      "bonusfirsttry": 5
+    },
+    {
+      "id": "python_functions_logic",
+      "number": 4,
+      "title": "Functions & 'Jeet Kune Do' Logic",
+      "skill": "python",
+      "tag": "Python Core",
+      "philosophy": "Bruce Lee's martial art, Jeet Kune Do, champions 'the style of no style'—using only what works and discarding the rest with maximum efficiency. Analogy: A Python function encapsulates this logic. It is a precise, clean strike of logic that does exactly what is required with no wasted energy or syntactic clutter.",
+      "economics": "Analogy: A function is a specialized cooperative workspace. Rather than every citizen building their own solar panels from scratch (repetitive code), the community delegates the task to a specialized workshop (a function) that takes raw materials (inputs) and yields finished utility (returns).",
+      "techconcept": "Python functions are defined using the `def` keyword, followed by the function name, parentheses containing parameters, and a colon. Code blocks must be indented (PEP 8 recommends 4 spaces). The `return` keyword is vital; it passes computed results back to the caller.",
+      "lesson": "In this lesson, we isolate execution logic. Functions allow us to practice the DRY principle (Don't Repeat Yourself), which prevents intellectual duplication in software ecosystems.",
+      "challenge": "What Python keyword is used to define a function?",
+      "hint": "It is a three-letter abbreviation of the word 'define'.",
+      "answer": "def",
+      "answertype": "contains",
+      "honorreward": 20,
+      "bonusfirsttry": 5
+    },
+    {
+      "id": "git_journalistic_integrity",
+      "number": 5,
+      "title": "Git — Journalistic Integrity",
+      "skill": "git",
+      "tag": "Git Version Control",
+      "philosophy": "Social justice relies on historical verifiability. Without transparent tracking of changes, systems of power can silently alter agreements. Analogy: Git is our cryptographic, immutable ledger of journalistic truth, preserving the timeline of who altered the system, when, and why.",
+      "economics": "Estonia's e-governance model achieves high institutional trust because citizens can trace exactly who accesses or changes their digital records. Analogy: Git operates on a similar mathematical foundation (Merkle trees), creating a trust infrastructure where bad faith changes are structurally impossible to hide.",
+      "techconcept": "Git does not track file differences; it tracks snapshots of your files. When you commit, Git records a cryptographic SHA-1 hash of your current staging area. The three stages of Git are: Working Directory (modifying files) -> Staging Area (`git add`) -> Git Repository (`git commit`).",
+      "lesson": "We will practice the foundational Git workflow. Staging your files before committing is like proofreading your article before sending it to the press.",
+      "challenge": "What exact command stages all current modifications in your directory for a Git commit?",
+      "hint": "It starts with 'git add' and ends with a symbol representing the current directory.",
+      "answer": "git add .",
+      "answertype": "exact",
+      "honorreward": 20,
+      "bonusfirsttry": 5
+    },
+    {
+      "id": "git_branching_merging",
+      "number": 6,
+      "title": "Git — Branching & Merging",
+      "skill": "git",
+      "tag": "Git Version Control",
+      "philosophy": "In Wing Chun, the exercise of Chi Sao (sticky hands) teaches practitioners to remain in sensitive physical contact with their opponent, feeling changes in pressure and deflecting force dynamically. Analogy: Git branching and merging is our technical Chi Sao. It allows multiple developers to work in parallel flows of time, sensitively merging their inputs while resolving systemic merge conflicts smoothly.",
+      "economics": "In economic development, monolithic markets crash easily. Resilience requires pluralism. Analogy: Branching is our R&D sandbox. By isolating a feature branch, we allow safe experimentation without risking the stability of our primary economy (the `main` branch).",
+      "techconcept": "A branch in Git is simply a lightweight, movable pointer to a specific commit. Creating a branch is fast and consumes virtually zero disk space because Git only records the new pointer, not a full duplicate copy of your files.",
+      "lesson": "In this lesson, you will practice creating isolated lines of development. Modern Git workflows use `git switch` or `git checkout` to move between these lines of code safely.",
+      "challenge": "What command would you type to create and switch to a new branch named 'feature'?",
+      "hint": "You can use 'git checkout' with a specific flag, or the modern 'git switch' with its creation flag.",
+      "answer": [
+        "git checkout -b feature",
+        "git switch -c feature"
+      ],
+      "answertype": "exact",
+      "honorreward": 25,
+      "bonusfirsttry": 5
+    },
+    {
+      "id": "architecture_apis_http",
+      "number": 7,
+      "title": "APIs & HTTP — The Digital Journalist",
+      "skill": "architecture",
+      "tag": "Python+JSON",
+      "philosophy": "Investigative journalism relies on primary sources. To hold systems accountable, we cannot wait to be spoon-fed data; we must query the source directly. Analogy: APIs act as the Freedom of Information Act (FOIA) of the digital world.",
+      "economics": "Information asymmetry causes market failure. Open APIs democratize data, allowing independent actors to build tools that correct corporate or governmental monopolies on knowledge.",
+      "techconcept": "An API (Application Programming Interface) allows two programs to talk. In Python, we use the `requests` library to GET data from URLs over HTTP. A 200 status code means success; a 404 means not found.",
+      "lesson": "You will practice querying a system. Knowing how to request data programmatically is the foundational skill for building web scrapers, automation bots, and data journalism pipelines.",
+      "challenge": "What standard Python library is used to make HTTP requests to web APIs?",
+      "hint": "It is a plural word meaning 'to ask for things'.",
+      "answer": [
+        "requests",
+        "import requests"
+      ],
+      "answertype": "contains",
+      "honorreward": 25,
+      "bonusfirsttry": 5
+    },
+    {
+      "id": "python_file_io",
+      "number": 8,
+      "title": "File I/O — Institutional Memory",
+      "skill": "python",
+      "tag": "Python+JSON",
+      "philosophy": "The Bushido code values legacy. Without memory, a society cannot learn or grow. Analogy: Writing data to a file ensures that your digital actions echo into the future, much like Estonia's resilient national data registry.",
+      "economics": "Capital accumulation requires secure storage. If a program loses all its data when it closes, it cannot generate generational wealth. Analogy: File I/O serves as the banking system of our program.",
+      "techconcept": "Python uses `open('file.txt', 'w')` to write to a file, and `'r'` to read. Using the `with` keyword creates a 'context manager'—it ensures the file is safely closed when we are done, preventing memory leaks and data corruption.",
+      "lesson": "We will test your understanding of context managers. Safe File I/O is exactly how our Dojo OS saves your honor points, practice chain, and journal entries behind the scenes!",
+      "challenge": "What Python keyword is used to open a file and ensure it closes automatically?",
+      "hint": "It is a four-letter word that pairs with 'open'.",
+      "answer": [
+        "with"
+      ],
+      "answertype": "exact",
+      "honorreward": 20,
+      "bonusfirsttry": 5
+    },
+    {
+      "id": "architecture_oop_modeling",
+      "number": 9,
+      "title": "OOP — Sociological Modeling",
+      "skill": "architecture",
+      "tag": "Python OOP",
+      "philosophy": "Theatre teaches us that a play requires Roles (scripts/blueprints) and Actors (individuals performing the role). Analogy: Object-Oriented Programming (OOP) applies sociology to code: defining community blueprints so individual actors can interact.",
+      "economics": "Analogy: A Class is a franchise business model (like the concept of a cooperative bakery). An Object is the actual physical bakery in your neighborhood, instantiated from that model.",
+      "techconcept": "We use the `class` keyword to define blueprints. Inside a class, `__init__` is the constructor method that sets up the initial state of the object, and `self` refers to the specific actor performing the script.",
+      "lesson": "Mastering OOP is essential for building large-scale architecture. It allows us to group data (attributes) and behavior (methods) into logical, cooperative units—just like the `Player` class running this very game.",
+      "challenge": "What keyword do you use to define an object blueprint in Python?",
+      "hint": "It is a five-letter word that sounds like a room where students learn.",
+      "answer": [
+        "class"
+      ],
+      "answertype": "exact",
+      "honorreward": 25,
+      "bonusfirsttry": 5
+    },
+    {
+      "id": "review_code_gentle_art",
+      "number": 10,
+      "title": "Code Review — The Gentle Art",
+      "skill": "review",
+      "tag": "ModernTech",
+      "philosophy": "Brazilian Jiu-Jitsu (BJJ) translates to 'the gentle art.' When we roll with our training partners, the goal is not destruction, but mutual growth. Analogy: Code review is our digital tatami mat; we test each other's code to find weaknesses before the real world does.",
+      "economics": "Quality Assurance (QA) prevents negative externalities. Reviewing code ensures that technical debt is not offloaded onto the future community or end-users. It is an act of communal maintenance.",
+      "techconcept": "On platforms like GitHub, we propose our code changes for review before they are merged into the main project. A good review addresses Correctness, Efficiency, Readability, and Edge Cases.",
+      "lesson": "This is the final initiation. To be a Co-Architect, you must know how to collaborate gracefully. You must propose your changes to the community.",
+      "challenge": "What is the two-word term for proposing a merge so peers can review your code on GitHub?",
+      "hint": "It starts with the word 'pull'.",
+      "answer": [
+        "pull request",
+        "pull requests",
+        "pr"
+      ],
+      "answertype": "contains",
+      "honorreward": 30,
+      "bonusfirsttry": 10
+    }
   ]
 }

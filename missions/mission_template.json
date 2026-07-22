@@ -1,0 +1,17 @@
+{
+  "id": "your_mission_id",
+  "number": 11,
+  "title": "Your Mission Title",
+  "skill": "python",
+  "tag": "Python",
+  "philosophy": "2-4 sentences connecting this concept to a real-world human context.",
+  "economics": "2-3 sentences explaining resource, governance, or infrastructure implications.",
+  "techconcept": "Plain-language technical concept with optional short example.",
+  "lesson": "A brief learner-oriented explanation of what they should understand after this mission.",
+  "challenge": "Clear prompt for what the learner must answer or do.",
+  "hint": "Helpful hint shown after repeated failed attempts.",
+  "answer": "Expected answer text",
+  "answertype": "contains",
+  "honorreward": 20,
+  "bonusfirsttry": 5
+}
