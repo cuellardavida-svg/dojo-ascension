@@ -74,9 +74,13 @@ UTA_HAGEN_QUESTIONS = [
 ]
 
 SESSION_LOG_RETENTION_LIMIT = 60
+PATHWAY_STAGE_THRESHOLDS = (
+    (3, "Beginner confidence"),
+    (6, "Contributor readiness"),
+)
 
 
-def iso_now():
+def current_timestamp_iso():
     """Return an ISO timestamp for learner-state and impact metrics."""
     return datetime.now().isoformat()
 
@@ -207,7 +211,7 @@ class Player:
 
     def add_honor(self, points, skill=None):
         self.honor += points
-        self.last_mission_at = iso_now()
+        self.last_mission_at = current_timestamp_iso()
         print(
             f"\n{Fore.YELLOW}⚡ +{points} HONOR POINTS | Total: {self.honor}{Style.RESET_ALL}")
 
@@ -232,7 +236,7 @@ class Player:
             "last_mission_at": self.last_mission_at,
             "session_count": self.session_count,
             "session_log": self.session_log,
-            "last_save": iso_now()
+            "last_save": current_timestamp_iso()
         }
         try:
             SAVE_FILE.parent.mkdir(parents=True, exist_ok=True)
@@ -263,7 +267,7 @@ class Player:
 
     def start_session(self):
         """Record a learner session for retention and cohort reporting."""
-        current = iso_now()
+        current = current_timestamp_iso()
         if not self.first_session_at:
             self.first_session_at = current
         self.last_session_at = current
@@ -502,7 +506,7 @@ def execute_mission(mission_data, player, missions=None):
             player.add_honor(honor_base, skill)
             print(f"\n{Fore.CYAN}✓ Mission {num} Complete!{Style.RESET_ALL}")
         else:
-            player.last_mission_at = iso_now()
+            player.last_mission_at = current_timestamp_iso()
             player.save_state(quiet=True)
             print(
                 f"\n{Fore.CYAN}✓ Mission {num} reviewed again."
@@ -542,10 +546,9 @@ def get_pathway_stage(player, missions):
     """Translate raw progress into a learner-facing pathway."""
     completed = len(player.completed)
     total = len(missions)
-    if completed < min(3, total):
-        return "Beginner confidence"
-    if completed < min(6, total):
-        return "Contributor readiness"
+    for threshold, stage in PATHWAY_STAGE_THRESHOLDS:
+        if completed < min(threshold, total):
+            return stage
     if completed < total:
         return "Mission authoring"
     return "Facilitator readiness"

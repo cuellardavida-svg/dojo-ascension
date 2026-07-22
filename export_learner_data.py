@@ -58,7 +58,7 @@ def load_learner_records(data_dir: Path) -> list[dict]:
                 "missions_completed": len(completed),
                 "honor": payload.get("honor", 0),
                 "skills_mastered": len([k for k, v in skills.items() if v > 0]),
-                "pathway_stage": infer_pathway_stage(len(completed)),
+                "pathway_stage": get_pathway_stage(len(completed)),
                 "first_session_at": payload.get("first_session_at"),
                 "last_session_at": payload.get("last_session_at"),
                 "last_mission_at": payload.get("last_mission_at"),
@@ -71,7 +71,7 @@ def load_learner_records(data_dir: Path) -> list[dict]:
     return records
 
 
-def infer_pathway_stage(completed: int) -> str:
+def get_pathway_stage(completed: int) -> str:
     for threshold, stage in PATHWAY_STAGE_THRESHOLDS:
         if completed < threshold:
             return stage
@@ -144,7 +144,7 @@ def export_csv(output: Path, records: list[dict]) -> None:
         "returned_within_14_days",
     ]
     with output.open("w", encoding="utf-8", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=fieldnames)
+        writer = csv.DictWriter(handle, fieldnames=fieldnames, extrasaction="ignore")
         writer.writeheader()
         writer.writerows(records)
 
