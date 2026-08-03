@@ -1,4 +1,4 @@
-===== .devcontainer\devcontainer.json =====
+===== .devcontainer/devcontainer.json =====
 {
   "name": "Dojo Ascension",
   "image": "mcr.microsoft.com/devcontainers/python:3.11",
@@ -22,7 +22,7 @@
   "remoteUser": "vscode"
 }
 
-===== .github\ISSUE_TEMPLATE\bug_report.md =====
+===== .github/ISSUE_TEMPLATE/bug_report.md =====
 ---
 name: Bug report
 about: Create a report to help us improve
@@ -62,7 +62,7 @@ If applicable, add screenshots to help explain your problem.
 **Additional context**
 Add any other context about the problem here.
 
-===== .github\ISSUE_TEMPLATE\feature_request.md =====
+===== .github/ISSUE_TEMPLATE/feature_request.md =====
 ---
 name: Feature request
 about: Suggest an idea for this project
@@ -84,7 +84,7 @@ A clear and concise description of any alternative solutions or features you've 
 **Additional context**
 Add any other context or screenshots about the feature request here.
 
-===== .github\ISSUE_TEMPLATE\pilot_feedback.md =====
+===== .github/ISSUE_TEMPLATE/pilot_feedback.md =====
 ---
 name: Pilot feedback
 about: Capture cohort outcomes, friction points, and inclusion signals
@@ -113,7 +113,7 @@ assignees: ''
 
 **What should change before the next cohort?**
 
-===== .github\pull_request_template.md =====
+===== .github/pull_request_template.md =====
 ## Summary
 Describe what this PR changes and why.
 
@@ -142,7 +142,7 @@ Describe what this PR changes and why.
 - Related issue(s):
 - Related docs/roadmap updates:
 
-===== .github\workflows\refresh-repo-bundle.yml =====
+===== .github/workflows/refresh-repo-bundle.yml =====
 name: Refresh Repo Bundle
 
 on:
@@ -188,7 +188,7 @@ jobs:
           git commit -m "chore: refresh repo bundle [skip ci]"
           git push
 
-===== .github\workflows\validate.yml =====
+===== .github/workflows/validate.yml =====
 name: Validate Dojo Ascension
 
 on:
@@ -2229,7 +2229,675 @@ Listed by first contribution date (derived from git history).
 *Want to see your name here? See [CONTRIBUTING.md](CONTRIBUTING.md) for pathways: mission writer,
 translator, facilitator, accessibility reviewer, and code contributor. Every merged pull request counts.*
 
-===== demo\dojo_demo_save.json =====
+===== FUNDING_ONE_PAGER.md =====
+# Dojo Ascension — One-Page Mission & Funding Story
+
+## Public promise
+Dojo Ascension helps beginners, artists, educators, libraries, community labs, and small nonprofits teach practical digital skills through missions that connect code to social and ecological responsibility.
+
+Learners gain:
+- Basic fluency in Python, Git, JSON, and systems thinking
+- A habit of reflective practice, not just task completion
+- A contribution path into open source, even without formal CS training
+
+Organizations gain:
+- A lightweight digital-literacy system that works in browsers or Python terminals
+- Reusable curriculum and learner-state formats without buying a heavyweight LMS
+- A contributor pathway that supports educators, writers, reviewers, translators, and facilitators
+- Local-first deployment with minimal infrastructure, low dependency risk, and low operating cost
+
+Why this is uniquely solarpunk:
+- Teaches technology as stewardship, transparency, and community infrastructure
+- Frames coding as a civic and creative tool, not only a job pipeline
+- Welcomes interdisciplinary mission authors (journalism, governance, genealogy, climate, arts)
+
+## Measurable outcomes (public)
+1. **Learner retention**
+   - Metric: % of learners who return within 14 days after first mission
+   - Initial target: 40%+
+
+2. **Mission completion**
+   - Metric: median number of completed missions per active learner per month
+   - Initial target: 3+
+
+3. **Contributor growth**
+   - Metric: number of unique contributors with merged PRs each month
+   - Initial target: 5+ contributors/month
+
+## What funding supports first
+- Core maintenance and bug fixing
+- Curriculum and mission pack expansion
+- Accessibility and localization improvements
+- Community operations (reviews, pilot facilitation, monthly reporting)
+- Privacy-preserving impact measurement and pilot evidence collection
+
+## Efficiency story for adopters
+- No database or paid SaaS is required for core use
+- Browser and terminal clients reuse the same curriculum model
+- Mission content can be expanded by non-programmers using JSON templates
+- Local learner saves make classroom pilots possible in low-connectivity environments
+- Small teams can facilitate cohorts without building custom onboarding infrastructure
+
+## Accountability loop
+Each month, maintainers publish a short update with:
+- Progress on the 3 measurable outcomes
+- What shipped, what was learned, and what changed next
+- Risks or blockers that need support
+
+===== Makefile =====
+.PHONY: setup play test validate check newcomer
+
+setup:
+	python -m pip install --upgrade pip
+	python -m pip install -r requirements.txt
+
+play:
+	python dojo_classroom.py
+
+test:
+	python -m unittest discover -s tests
+
+validate:
+	python validate_missions.py
+
+check: test validate
+
+newcomer: setup check
+	@echo "✅ Ready. Run 'make play' or 'python newcomer.py --play' to start the dojo."
+
+===== README.md =====
+# 🥋 Dojo Ascension: A Digital Ecology for Creators
+
+**Learn Python, Git, and systems thinking through play, mentorship, and ecology — no prior experience required.**
+
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![Python 3.8+](https://img.shields.io/badge/python-3.8%2B-brightgreen.svg)](https://www.python.org/downloads/)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+[![Good First Issues](https://img.shields.io/badge/good%20first%20issues-open-purple.svg)](https://github.com/solarpunkopensourcelaboratory/dojo-ascension/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)
+[![Contributors](https://img.shields.io/badge/contributors-welcome-brightgreen.svg)](https://github.com/solarpunkopensourcelaboratory/dojo-ascension/graphs/contributors)
+
+**New here?** → [Start a good first issue](https://github.com/solarpunkopensourcelaboratory/dojo-ascension/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) · [Read the Contributing Guide](CONTRIBUTING.md) · [Open in a Codespace](https://github.com/solarpunkopensourcelaboratory/dojo-ascension) (zero local setup)
+
+> *"The world is already at your fingertips. You are here to find your voice."*
+
+Welcome to the Dojo. This is not just a codebase or a traditional programming class. This is a sanctuary for the curious, the artists, the philosophers, and the inner child eager to understand how the digital world works.
+
+Whether you are a seasoned traveler recovering from a difficult learning journey, or someone stepping into a terminal for the very first time, you belong here. We do not learn code to feed the machine. We learn code so that you can apply these instruments to your **own** arts, hobbies, and passions.
+
+Here, you will learn Python, Linux, and systems thinking through play, mentorship, and ecology. Your wings are yours to open. Let us provide the updraft.
+
+---
+
+## 🛤️ The 10-Minute Spark: Start Here
+
+No prior experience is required. Follow these three steps to step onto the mat and begin your first mission.
+
+### Step 1: Claim Your Space (Clone the Dojo)
+Open your computer's terminal and copy-paste this command to bring the Dojo to your local machine:
+
+```bash
+git clone https://github.com/solarpunkopensourcelaboratory/dojo-ascension.git
+cd dojo-ascension
+```
+
+### Step 2: Equip Your Gear (Install Requirements)
+
+Every explorer needs the right tools. Run this command to unpack your gear securely:
+
+```bash
+pip install -r requirements.txt
+```
+
+### Step 3: Step Onto the Mat (Enter the Classroom)
+
+You are ready. Awaken the engine and begin your journey:
+
+```bash
+python dojo_classroom.py
+```
+
+*(When the screen lights up and the Dojo welcomes you, take a breath. You have just taken your first step into a larger world.)*
+
+---
+
+## 🌱 Our Superobjective
+
+Inspired by the greatest mentors—from the theatre stage to the realms of animation—our ultimate goal is to raise the next generation of formidable, responsible, and informed creators. We believe the strongest future is built by humans and machines intelligent enough to choose what they want, in harmony with the planet that sustains us.
+
+---
+
+## 🌻 Mission & Funding Snapshot
+
+See the one-page public promise and measurable outcomes in [FUNDING_ONE_PAGER.md](FUNDING_ONE_PAGER.md).
+
+Key outcomes we track:
+- Learner retention (14-day return rate)
+- Mission completion (median missions completed per active learner)
+- Contributor growth (unique merged PR authors per month)
+
+Why organizations adopt it:
+- Lightweight browser + terminal delivery
+- Shared mission schema instead of a heavyweight LMS rebuild
+- Local-first learner data for low-resource environments
+- Contributor pathways for educators, writers, reviewers, translators, and facilitators
+
+---
+
+## Frontends and Clients
+
+The Dojo Ascension repo defines a data and logic layer for a learning game:
+
+- **Missions are stored as JSON** (`missions.json` and `missions/*.json`)
+- **Player progress and journal entries are stored as JSON** (save files)
+- **Multiple frontends available**:
+  - Terminal / VS Code experience written in Python (`dojo_classroom.py`)
+  - Browser-based single-page app (`dojo_web.html`) — **NEW!**
+
+We explicitly invite other frontends (RPG, mobile, desktop, etc.) that:
+- Consume the same mission schema and skill/honor model
+- Preserve the educational intent of each mission
+- Respect the project license (see LICENSE)
+
+If you are building a new frontend, open an issue to coordinate on data formats and progression so we stay interoperable.
+
+---
+
+*Use in fundraisers and ethical businesses*
+
+We explicitly welcome:
+- Non‑profits using Dojo‑derived games in fundraisers
+- Ethical solarpunk businesses building commercial games or tools that teach with Dojo missions
+- If you distribute software that incorporates Dojo code, you must follow the GPL‑3.0 license (keep derivative code open-source, provide source to users)
+- If you want to discuss special arrangements or dual-licensing for a specific project, open an issue or contact the maintainers
+
+---
+
+## 🏫 Organizational Efficiency & Public Value
+
+Dojo Ascension is designed as **mission-aligned digital literacy infrastructure**:
+
+- **Low overhead** — no database or paid SaaS required for core use
+- **Low resource** — browser edition works offline; terminal edition runs on basic Python setups
+- **Reusable curriculum** — JSON missions can be expanded without a large engineering team
+- **Interoperable** — multiple frontends can share the same learner and mission model
+- **Local-first** — institutions can pilot cohorts without sending learner data to a third-party service
+
+This makes the project useful for:
+- libraries
+- classrooms
+- community technology labs
+- mutual-aid networks
+- small nonprofits and fellowships
+
+---
+
+## 🚀 Quick Start
+
+### Option A: Play in Your Browser (Easiest)
+
+No installation required. Just download and open:
+
+```bash
+# Clone the repo
+git clone https://github.com/solarpunkopensourcelaboratory/dojo-ascension.git
+cd dojo-ascension
+
+# Open in your browser
+open dojo_web.html
+# or double-click dojo_web.html in your file explorer
+```
+
+**Features:**
+- ✅ All 10 missions available
+- ✅ Progress saves to browser storage (persists across sessions)
+- ✅ Works offline
+- ✅ Mobile responsive
+- ✅ Zero dependencies
+
+---
+
+### Option B: Play in Terminal (Python)
+
+For a deeper, reflective experience with optional journal entries:
+
+**Prerequisites:**
+- Python 3.8+
+- Git
+- 2GB free disk space
+
+**Installation:**
+
+```bash
+# 1. Clone this repo
+git clone https://github.com/solarpunkopensourcelaboratory/dojo-ascension
+cd dojo-ascension
+
+# 2. Install dependencies
+pip install -r requirements.txt
+
+# 3. Launch the Dojo
+python dojo_classroom.py
+```
+
+**First Time Setup:**
+
+When you run the game, you'll be prompted to enter your name. The system will:
+1. Check your environment (Python version, Git installation, disk space)
+2. Create a save file at `~/.dojo_save.json`
+3. Optionally create a journal at `~/.dojo_journal_data.json`
+
+**Shared Workstation Tip:**
+
+On a shared machine, keep each participant's progress separate:
+
+```bash
+export DOJO_DATA_DIR="$HOME/.dojo-ascension/alice"
+python dojo_classroom.py
+```
+
+---
+
+## 📖 Curriculum (10 Core Missions)
+
+| # | Mission | Skill | Philosophy |
+|---|---------|-------|------------|
+| 1 | System Grounding | Git | Wu Wei: Your tools become extensions of your mind |
+| 2 | Variables & Data Lineage | Python | Genealogy: Tracing lineage reveals identity |
+| 3 | JSON — Data Language | JSON | Cornel West: Justice is cooperation in code |
+| 4 | Functions & Jeet Kune Do | Python | Bruce Lee: Maximum efficiency with minimum effort |
+| 5 | Git — Journalistic Integrity | Git | Activism: Git is an immutable ledger of truth |
+| 6 | Git — Branching & Merging | Git | Wing Chun: Deflect and redirect, don't oppose |
+| 7 | APIs & Digital Journalism | Architecture | Freedom of Information: Query the source directly |
+| 8 | File I/O — Institutional Memory | Python | Bushido: Legacy ensures society can learn |
+| 9 | OOP — Sociological Modeling | Architecture | Theatre: Roles and Actors in a cooperative |
+| 10 | Code Review — Gentle Art | Review | BJJ: Testing each other's code before production |
+
+---
+
+## 🎮 How to Play
+
+### Main Menu Options
+
+1. **Start Next Mission** — Play the next incomplete mission in sequence
+2. **Choose Specific Mission** — Jump to any mission you want
+3. **View Progress Dashboard** — See your skill levels and rank
+4. **Reflection Journal** (Terminal only) — Review past journal entries and your practice chain
+5. **VSCode Integration Guide** (Terminal only) — Learn how to pair missions with VSCode
+6. **Save Progress** — Manually save your state
+7. **Exit** — Quit (progress is auto-saved)
+
+### Mission Flow
+
+Each mission teaches a concept through:
+
+1. **Philosophical Anchor** — Connect code to a real-world principle
+2. **Economic Parallel** — Understand the "cost" and "value" of the pattern
+3. **Technical Concept** — Learn the actual code syntax
+4. **Challenge** — Answer a question or write code
+5. **Reflection** (Terminal optional) — Answer Uta Hagen's 9 systems-thinking questions
+
+### Progression System
+
+- **Honor Points** — Earned by completing missions (20-30 per mission)
+- **Ranks** — Initiate → Apprentice → Practitioner → Adept → Expert → Co-Architect
+- **Skills** — Track mastery: Python, Git, JSON, Architecture, Code Review (0-5 levels each)
+- **Practice Chain** — Consecutive days of journaling (rewards deliberate practice, not perfection)
+- **Pathways** — Beginner confidence → Contributor readiness → Mission authoring → Facilitator readiness
+
+---
+
+## 💾 Progress Saves
+
+Your progress is stored in JSON files (shared between both frontends):
+
+### `~/.dojo_save.json` (Player State)
+```json
+{
+  "name": "David",
+  "honor": 150,
+  "completed": ["git_system_grounding", "python_variables"],
+  "skills": {
+    "python": 2,
+    "git": 3,
+    "json": 1,
+    "architecture": 0,
+    "review": 0
+  },
+  "last_save": "2026-06-22T18:40:02Z"
+}
+```
+
+### `~/.dojo_journal_data.json` (Reflection Entries — Terminal only)
+```json
+{
+  "2026-06-22": {
+    "timestamp": "2026-06-22T18:42:15Z",
+    "mission_id": "python_variables",
+    "mission_title": "Variables & Data Lineage",
+    "player_rank": "Apprentice",
+    "answers": {
+      "Who am I in this circumstance?": "A programmer learning to think systematically...",
+      "What do I want?": "To understand how data flows through systems..."
+    }
+  }
+}
+```
+
+---
+
+## 🔗 VSCode Integration (Terminal Version)
+
+Pair each mission with VSCode for hands-on learning:
+
+### One-Time Setup
+
+1. Install [VSCode](https://code.visualstudio.com)
+2. Install extensions:
+   - **Python** (by Microsoft) — Run and debug Python code
+   - **GitLens** — View Git history and blame
+   - **Prettier** — Auto-format JSON
+   - **Python Indent** — Smart indentation
+
+### Workflow
+
+```bash
+# In VSCode terminal:
+python dojo_classroom.py
+
+# In another VSCode editor:
+# 1. Complete a mission in the terminal
+# 2. Open ~/dojo_demo.json or other files created by missions
+# 3. Experiment and modify them
+# 4. Run code with F5 to see results
+```
+
+### Official Tutorials to Pair With
+
+- **Missions 1-4** → [Python Quick Start](https://code.visualstudio.com/docs/python/python-quick-start)
+- **Missions 5-6** → [Source Control](https://code.visualstudio.com/docs/sourcecontrol/overview)
+- **Missions 7-8** → [Debugging](https://code.visualstudio.com/docs/python/debugging)
+- **Missions 9-10** → [Testing](https://code.visualstudio.com/docs/python/testing)
+
+---
+
+## 📚 Architecture (v5.0)
+
+### Data-Driven Missions
+
+Missions are stored in `missions/missions.json` as pure data:
+
+```json
+{
+  "id": "git_system_grounding",
+  "number": 1,
+  "title": "System Grounding",
+  "philosophy": "Like Tai Chi...",
+  "economics": "Infrastructure is...",
+  "lesson": "The terminal...",
+  "challenge": "Type the command to clone a repository.",
+  "answer": "git clone",
+  "answertype": "contains",
+  "skill": "git",
+  "honorreward": 20
+}
+```
+
+This means:
+- ✅ **Non-programmers can contribute missions** (educators, subject-matter experts)
+- ✅ **Translators can localize content** without touching Python
+- ✅ **Mission packs can be shared** and loaded dynamically
+- ✅ **Save files are future-proof** (mission IDs never change)
+- ✅ **Multiple frontends can coexist** (share the same mission/player data)
+
+### Engine Architecture
+
+**Terminal Version:**
+- `dojo_classroom.py` — Main game loop, mission loading, player management (v5.0 Dynamic Engine)
+- `missions/missions.json` — All mission data (externalized, data-driven)
+- `~/.dojo_save.json` — Player progress (persistent)
+- `~/.dojo_journal_data.json` — Reflection entries (persistent, optional)
+
+**Browser Version:**
+- `dojo_web.html` — Standalone single-page app (HTML/CSS/JavaScript)
+- Mission data embedded inline (no external dependencies)
+- Browser localStorage for persistent player progress
+
+### Future Phases
+
+- **Phase 1 (Current)** — 10 core Python/Git/JSON/CodeReview missions (Terminal + Browser)
+- **Phase 2** — `dojo_ascension.py` — Advanced multi-week curriculum (Linux, security, quant)
+- **Phase 3** — Mission packs: Journalism, Genealogy, Governance, AI Literacy
+- **Phase 4** — Community: Shared mission packs, classroom dashboards, instructor tools
+
+---
+
+## 🧪 Development & Testing
+
+### One-Command Contributor Onboarding
+
+Use these exact commands:
+
+```bash
+python newcomer.py
+python newcomer.py --play
+```
+
+- `python newcomer.py` installs dependencies, runs tests, and validates missions.
+- `python newcomer.py --play` does the same and then launches the game.
+
+### Validate Missions
+
+```bash
+python validate_missions.py
+```
+
+This checks for missing required fields, type mismatches, and schema issues.
+
+### Run Tests
+
+```bash
+python -m unittest discover -s tests
+```
+
+### PR Merge Baseline (Required)
+
+Every PR must pass:
+- `python -m unittest discover -s tests`
+- `python validate_missions.py`
+
+For mission/content PRs, also complete the Definition of Done in [.github/pull_request_template.md](.github/pull_request_template.md).
+
+### Generate Repo Bundle
+
+If you want a single text file for sharing with collaborators or AI tools:
+
+```bash
+python refresh_repo_bundle.py
+```
+
+This regenerates [repo_bundle.txt](repo_bundle.txt) from the current repository contents.
+For fast AI orientation, also see [llms.txt](llms.txt) and [CONTEXT.md](CONTEXT.md).
+
+### AI Collaborators
+
+Use these canonical, low-token entry points when working with agentic tools:
+
+- [llms.txt](llms.txt) - compact project manifest with key files and commands
+- [CONTEXT.md](CONTEXT.md) - onboarding context, structure, CI overview, and tone
+- [repo_bundle.txt](repo_bundle.txt) - full plain-text repository snapshot
+
+Public Pages URLs for URL-based tools:
+
+- https://solarpunkopensourcelaboratory.github.io/dojo-ascension/
+- https://solarpunkopensourcelaboratory.github.io/dojo-ascension/llms.txt
+- https://solarpunkopensourcelaboratory.github.io/dojo-ascension/CONTEXT.md
+- https://solarpunkopensourcelaboratory.github.io/dojo-ascension/repo_bundle.txt
+
+### Pilot Reporting Utilities
+
+For cohort reporting and grant evidence:
+
+```bash
+python export_learner_data.py --data-dir ~/.dojo_ascension --format json
+python measure_retention.py --data-dir ~/.dojo_ascension
+```
+
+These commands aggregate anonymized learner outcomes from local save files.
+
+---
+
+## 🤝 Contributing
+
+### For Mission Writers
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the full guide. Quick start:
+
+1. Fork the repo
+2. Use `missions/mission_template.json` to draft a mission
+3. Review with `missions/MISSION_REVIEW_RUBRIC.md`
+4. Test locally: `python newcomer.py`
+5. Add your mission(s) to `missions/missions.json`
+6. Submit a pull request
+
+Good first mission path for non-coders:
+- Start with one recall/application mission
+- Keep challenge and answer short
+- Add one optional hint
+- Ask for review using the mission rubric
+- Use plain language and inclusive examples (see [docs/ACCESSIBILITY_BASELINE.md](docs/ACCESSIBILITY_BASELINE.md))
+
+### Project Governance, Metrics, and Roadmap
+
+- Governance and response times: [docs/GOVERNANCE.md](docs/GOVERNANCE.md)
+- Public metrics: [docs/METRICS.md](docs/METRICS.md)
+- Pilot program: [docs/PILOT_PROGRAM.md](docs/PILOT_PROGRAM.md)
+- Funding kit: [docs/FUNDING_KIT.md](docs/FUNDING_KIT.md)
+- Impact measurement: [docs/IMPACT_MEASUREMENT.md](docs/IMPACT_MEASUREMENT.md)
+- Learner privacy: [docs/DATA_PRIVACY.md](docs/DATA_PRIVACY.md)
+- Accessibility testing: [docs/ACCESSIBILITY_TESTING.md](docs/ACCESSIBILITY_TESTING.md)
+- Roadmap: [ROADMAP.md](ROADMAP.md)
+- Monthly updates: [CHANGELOG.md](CHANGELOG.md)
+
+### For Frontend Developers
+
+Want to build a new frontend (RPG, mobile, web framework, etc.)?
+
+1. Load missions from `missions/missions.json` (or embed them)
+2. Implement the same player state structure (see `~/.dojo_save.json` format)
+3. Follow the answer validation logic (see `validate_answer()` in `dojo_classroom.py`)
+4. Open an issue to discuss compatibility before building
+
+### For Code Contributors
+
+- Bug fixes and feature requests welcome
+- See [CONTRIBUTING.md](CONTRIBUTING.md) for development setup
+- **Zero-setup option:** click **Code → Codespaces → Create codespace** to get a ready-made Python environment in your browser (see [.devcontainer/devcontainer.json](.devcontainer/devcontainer.json))
+
+### Contributors
+
+We credit everyone who contributes code, missions, translations, accessibility, docs, facilitation, or review. See [CONTRIBUTORS.md](CONTRIBUTORS.md).
+
+---
+
+## 📋 Project Status
+
+**v5.0 (Current)**
+- ✅ Dynamic mission engine (missions.json)
+- ✅ Terminal frontend (Python)
+- ✅ Browser frontend (HTML/JavaScript) — NEW!
+- ✅ Competency-based ranking
+- ✅ Uta Hagen reflection journal (Terminal only)
+- ✅ Dashboard with skill specialization
+- ✅ Persistent saves (JSON)
+- 🔜 Mission packs (Journalism, Genealogy, Governance)
+- 🔜 Classroom mode (instructor dashboard)
+- 🔜 Mobile app (iOS/Android)
+
+---
+
+## 🔧 Maintenance & Sustainability
+
+Dojo Ascension is intentionally small, legible, and inexpensive to maintain.
+
+- **Minimal dependencies** — only small Python packages plus the standard library
+- **No required cloud backend** — core use stays local-first
+- **Transparent governance** — decisions, response times, and merge baselines are documented
+- **Grant-ready evidence** — privacy, pilot, and impact docs are part of the repository
+- **Community maintenance model** — contributors can help through code, curriculum, accessibility, documentation, facilitation, and translation
+
+Funding primarily supports maintenance, accessibility, curriculum expansion, pilot operations, and community stewardship.
+
+---
+
+## 📖 License
+
+GNU GENERAL PUBLIC LICENSE
+Version 3, 29 June 2007
+
+Copyright (C) 2007 Free Software Foundation, Inc. https://fsf.org/
+
+Everyone is permitted to copy and distribute verbatim copies
+of this license document, but changing it is not allowed.
+
+The GNU General Public License is a free, copileft license for software and other kinds of works.
+
+When we use your software, we must adhere to the spirit of cooperation and transparency that defines the open-source community.
+
+[Full GPL-3.0 text available at: https://www.gnu.org/licenses/gpl-3.0.txt]
+
+---
+
+## 🙏 Credits
+
+Built by and for the SolarPunk community. Inspired by:
+- **Uta Hagen's acting techniques** (systems thinking)
+- **Cornel West's philosophy** (public justice)
+- **Bruce Lee's martial philosophy** (efficiency)
+- **Estonia's e-governance model** (resilience)
+- **Brazilian Jiu-Jitsu** (collaborative learning)
+
+---
+
+## 🔗 Links
+
+- [GitHub Repository](https://github.com/solarpunkopensourcelaboratory/dojo-ascension)
+- [Contributing Guide](CONTRIBUTING.md)
+- [Mission & Funding One-Pager](FUNDING_ONE_PAGER.md)
+- [Governance](docs/GOVERNANCE.md)
+- [Public Metrics](docs/METRICS.md)
+- [SolarPunk Open Source Laboratory](https://github.com/solarpunkopensourcelaboratory)
+
+---
+
+**Let us never stop learning from Galileo.** — SolarPunk Opensource Laboratory
+
+===== ROADMAP.md =====
+# Roadmap
+
+## Now
+- Run one publishable pilot cohort
+- Improve learner retention, momentum cues, and pathway clarity
+- Strengthen contributor pathways for educators, writers, translators, facilitators, and coders
+- Maintain monthly public metrics and updates
+
+## Next
+- Mission packs for journalism, governance, genealogy, and AI literacy
+- Better cohort tooling and classroom-mode support
+- Accessibility and localization expansion
+
+## Later
+- Instructor dashboards
+- broader multi-client ecosystem growth
+- mobile and other alternative frontends
+
+## Funding priorities
+- Core maintenance and testing reliability
+- Curriculum expansion and review
+- Accessibility and localization work
+- Pilot facilitation and impact reporting
+- Community stewardship and contributor support
+
+===== demo/dojo_demo_save.json =====
 {
   "name": "DemoPlayer",
   "honor": 75,
@@ -2244,7 +2912,7 @@ translator, facilitator, accessibility reviewer, and code contributor. Every mer
   "last_save": "2026-07-01T12:00:00Z"
 }
 
-===== docs\ACCESSIBILITY_BASELINE.md =====
+===== docs/ACCESSIBILITY_BASELINE.md =====
 # Accessibility & Inclusion Baseline
 
 ## Content standards
@@ -2263,7 +2931,7 @@ For changes touching `dojo_web.html`, verify:
 - Hint helps without giving away answer immediately
 - Examples avoid assumptions about class, region, or prior privilege
 
-===== docs\ACCESSIBILITY_TESTING.md =====
+===== docs/ACCESSIBILITY_TESTING.md =====
 # Accessibility Testing
 
 Use this alongside `docs/ACCESSIBILITY_BASELINE.md` when changing learner-facing content or interfaces.
@@ -2290,7 +2958,7 @@ Use this alongside `docs/ACCESSIBILITY_BASELINE.md` when changing learner-facing
 - note where extra facilitator intervention was needed
 - turn recurring confusion into documentation or mission updates
 
-===== docs\DATA_PRIVACY.md =====
+===== docs/DATA_PRIVACY.md =====
 # Learner Data & Privacy
 
 Dojo Ascension is designed to support low-overhead educational use without requiring a central tracking service.
@@ -2344,7 +3012,7 @@ This repository is structured to make privacy-preserving classroom use feasible:
 
 Organizations remain responsible for their own policies, consent practices, and compliance reviews.
 
-===== docs\FUNDING_KIT.md =====
+===== docs/FUNDING_KIT.md =====
 # Starter Funding Kit
 
 ## Narrative packet
@@ -2370,7 +3038,7 @@ Organizations remain responsible for their own policies, consent practices, and 
 - One example of contributor growth beyond code (mission writing, accessibility, translation, facilitation)
 - One concrete efficiency story for adopting organizations
 
-===== docs\GOVERNANCE.md =====
+===== docs/GOVERNANCE.md =====
 # Governance and Delivery
 
 ## Reviewer roles
@@ -2413,7 +3081,7 @@ If maintainers disagree, choose the option with:
 - Localization and translation infrastructure
 - Multi-client ecosystem growth
 
-===== docs\IMPACT_MEASUREMENT.md =====
+===== docs/IMPACT_MEASUREMENT.md =====
 # Impact Measurement
 
 This document turns the public metrics into a repeatable reporting workflow for pilots, grants, fellowships, and nonprofit adoption.
@@ -2474,7 +3142,7 @@ Source:
 - contribution outcomes
 - next experiment
 
-===== docs\METRICS.md =====
+===== docs/METRICS.md =====
 # Public Metrics
 
 Track these monthly in `CHANGELOG.md`.
@@ -2510,7 +3178,7 @@ Use one monthly entry with:
 - At least one pilot or cohort note when a cohort is active
 - One contributor/community signal (new mission author, new reviewer, translation help, accessibility feedback, etc.)
 
-===== docs\PILOT_PROGRAM.md =====
+===== docs/PILOT_PROGRAM.md =====
 # Tiny Pilot Program
 
 ## Goal
@@ -5129,61 +5797,6 @@ def main() -> int:
 if __name__ == "__main__":
     raise SystemExit(main())
 
-===== FUNDING_ONE_PAGER.md =====
-# Dojo Ascension — One-Page Mission & Funding Story
-
-## Public promise
-Dojo Ascension helps beginners, artists, educators, libraries, community labs, and small nonprofits teach practical digital skills through missions that connect code to social and ecological responsibility.
-
-Learners gain:
-- Basic fluency in Python, Git, JSON, and systems thinking
-- A habit of reflective practice, not just task completion
-- A contribution path into open source, even without formal CS training
-
-Organizations gain:
-- A lightweight digital-literacy system that works in browsers or Python terminals
-- Reusable curriculum and learner-state formats without buying a heavyweight LMS
-- A contributor pathway that supports educators, writers, reviewers, translators, and facilitators
-- Local-first deployment with minimal infrastructure, low dependency risk, and low operating cost
-
-Why this is uniquely solarpunk:
-- Teaches technology as stewardship, transparency, and community infrastructure
-- Frames coding as a civic and creative tool, not only a job pipeline
-- Welcomes interdisciplinary mission authors (journalism, governance, genealogy, climate, arts)
-
-## Measurable outcomes (public)
-1. **Learner retention**
-   - Metric: % of learners who return within 14 days after first mission
-   - Initial target: 40%+
-
-2. **Mission completion**
-   - Metric: median number of completed missions per active learner per month
-   - Initial target: 3+
-
-3. **Contributor growth**
-   - Metric: number of unique contributors with merged PRs each month
-   - Initial target: 5+ contributors/month
-
-## What funding supports first
-- Core maintenance and bug fixing
-- Curriculum and mission pack expansion
-- Accessibility and localization improvements
-- Community operations (reviews, pilot facilitation, monthly reporting)
-- Privacy-preserving impact measurement and pilot evidence collection
-
-## Efficiency story for adopters
-- No database or paid SaaS is required for core use
-- Browser and terminal clients reuse the same curriculum model
-- Mission content can be expanded by non-programmers using JSON templates
-- Local learner saves make classroom pilots possible in low-connectivity environments
-- Small teams can facilitate cohorts without building custom onboarding infrastructure
-
-## Accountability loop
-Each month, maintainers publish a short update with:
-- Progress on the 3 measurable outcomes
-- What shipped, what was learned, and what changed next
-- Risks or blockers that need support
-
 ===== llms.txt =====
 Dojo Ascension - AI Collaborator Manifest
 
@@ -5223,27 +5836,6 @@ Project Tone
 
 Follow-Up (Deferred)
 - Segmented bundles: bundle_missions.txt, bundle_docs.txt, bundle_code.txt
-
-===== Makefile =====
-.PHONY: setup play test validate check newcomer
-
-setup:
-	python -m pip install --upgrade pip
-	python -m pip install -r requirements.txt
-
-play:
-	python dojo_classroom.py
-
-test:
-	python -m unittest discover -s tests
-
-validate:
-	python validate_missions.py
-
-check: test validate
-
-newcomer: setup check
-	@echo "✅ Ready. Run 'make play' or 'python newcomer.py --play' to start the dojo."
 
 ===== measure_retention.py =====
 #!/usr/bin/env python3
@@ -5301,197 +5893,7 @@ def main() -> int:
 if __name__ == "__main__":
     raise SystemExit(main())
 
-===== missions\mission01.json =====
-{
-  "id": "git_system_grounding",
-  "number": 1,
-  "title": "System Grounding",
-  "skill": "git",
-  "tag": "Git",
-  "philosophy": "Like Tai Chi, where you must feel the ground before moving, a programmer must understand their environment. 'Wu Wei' is achieved when your tools become extensions of your mind.",
-  "economics": "Infrastructure is the basis of all macro-economic stability. Before building goods, we build roads. Here, your terminal and shell are your economic infrastructure.",
-  "techconcept": "The terminal is your direct interface with the system. Git is your tool for interacting with the open-source global supply chain of ideas.",
-  "lesson": "Before you write any code, you need to know where you are and how to move. The terminal lets you navigate, inspect, and control your environment. Git uses that same terminal to connect your local work to remote repositories and collaborators.",
-  "challenge": "Type the command to clone a git repository.",
-  "hint": "The pattern is: git clone <repository-url>",
-  "answer": "git clone",
-  "answertype": "contains",
-  "honorreward": 20,
-  "bonusfirsttry": 5
-}
-
-===== missions\mission02.json =====
-{
-  "id": "python_variables_lineage",
-  "number": 2,
-  "title": "Variables & Data Lineage",
-  "skill": "python",
-  "tag": "Python Core",
-  "philosophy": "Genealogy teaches us that tracing lineage reveals identity. Analogy: A variable is not merely a box; it is a named node in a data lineage. Just as ancestral lineages carry traits forward in families, variables preserve and carry state across time in an execution scope.",
-  "economics": "Micro-economics teaches that resources are scarce and optimization is mandatory. Memory is our system's scarcest resource. Analogy: Naming variables clearly acts as a public ledger of memory allocation, preventing 'naming inflation' (where poorly named variables clog developer cognitive capacity).",
-  "techconcept": "In Python, variables are dynamically typed. When you assign `seed = 42`, Python allocates the value `42` in memory and points the name `seed` to it. The `=` operator does not mean equality (like in math); it represents assignment, setting the flow of data.",
-  "lesson": "In this lesson, you will practice basic variable assignment. Remember, Python is case-sensitive, and variable names should ideally use snake_case to maintain community readability standards.",
-  "challenge": "Write exactly this: assign the integer 42 to a variable named 'seed'.",
-  "hint": "Create a variable named 'seed' on the left, an equals sign in the middle, and the integer 42 on the right.",
-  "answer": ["seed = 42", "seed=42"],
-  "answertype": "exact",
-  "honorreward": 20,
-  "bonusfirsttry": 5
-}
-
-===== missions\mission03.json =====
-{
-  "id": "json_data_language",
-  "number": 3,
-  "title": "JSON — The Data Language",
-  "skill": "json",
-  "tag": "JSON Data",
-  "philosophy": "Interoperability is what cooperation looks like in code. When diverse, self-determined systems must collaborate, they need a non-coercive, neutral language to exchange state. JSON represents this shared public language.",
-  "economics": "Analogy: Global trade requires a frictionless transactional medium. JSON acts as a universal, lightweight currency of data exchange, allowing a Python server in Estonia to instantly trade structured information with a Javascript browser in Mexico without currency exchange fees (data translation overhead).",
-  "techconcept": "JavaScript Object Notation (JSON) is a text format built on two structures: key-value pairs (`{}`) and ordered lists (`[]`). Every key must be a double-quoted string. Unlike Python, JSON uses lowercase `true`, `false`, and `null` instead of `True`, `False`, and `None`.",
-  "lesson": "Understanding how JSON maps to native programming data structures is critical for web services, API communications, and saving user state securely.",
-  "challenge": "What does JSON stand for? (Type out the 3 words cleanly, no extra punctuation)",
-  "hint": "The first word is JavaScript, followed by the word for an entity (Object), and ending with representation (Notation).",
-  "answer": "JavaScript Object Notation",
-  "answertype": "exact",
-  "honorreward": 20,
-  "bonusfirsttry": 5
-}
-
-===== missions\mission04.json =====
-{
-  "id": "python_functions_logic",
-  "number": 4,
-  "title": "Functions & 'Jeet Kune Do' Logic",
-  "skill": "python",
-  "tag": "Python Core",
-  "philosophy": "Bruce Lee's martial art, Jeet Kune Do, champions 'the style of no style'—using only what works and discarding the rest with maximum efficiency. Analogy: A Python function encapsulates this logic. It is a precise, clean strike of logic that does exactly what is required with no wasted energy or syntactic clutter.",
-  "economics": "Analogy: A function is a specialized cooperative workspace. Rather than every citizen building their own solar panels from scratch (repetitive code), the community delegates the task to a specialized workshop (a function) that takes raw materials (inputs) and yields finished utility (returns).",
-  "techconcept": "Python functions are defined using the `def` keyword, followed by the function name, parentheses containing parameters, and a colon. Code blocks must be indented (PEP 8 recommends 4 spaces). The `return` keyword is vital; it passes computed results back to the caller.",
-  "lesson": "In this lesson, we isolate execution logic. Functions allow us to practice the DRY principle (Don't Repeat Yourself), which prevents intellectual duplication in software ecosystems.",
-  "challenge": "What Python keyword is used to define a function?",
-  "hint": "It is a three-letter abbreviation of the word 'define'.",
-  "answer": "def",
-  "answertype": "contains",
-  "honorreward": 20,
-  "bonusfirsttry": 5
-}
-
-===== missions\mission05.json =====
-{
-  "id": "git_journalistic_integrity",
-  "number": 5,
-  "title": "Git — Journalistic Integrity",
-  "skill": "git",
-  "tag": "Git Version Control",
-  "philosophy": "Social justice relies on historical verifiability. Without transparent tracking of changes, systems of power can silently alter agreements. Analogy: Git is our cryptographic, immutable ledger of journalistic truth, preserving the timeline of who altered the system, when, and why.",
-  "economics": "Estonia's e-governance model achieves high institutional trust because citizens can trace exactly who accesses or changes their digital records. Analogy: Git operates on a similar mathematical foundation (Merkle trees), creating a trust infrastructure where bad faith changes are structurally impossible to hide.",
-  "techconcept": "Git does not track file differences; it tracks snapshots of your files. When you commit, Git records a cryptographic SHA-1 hash of your current staging area. The three stages of Git are: Working Directory (modifying files) -> Staging Area (`git add`) -> Git Repository (`git commit`).",
-  "lesson": "We will practice the foundational Git workflow. Staging your files before committing is like proofreading your article before sending it to the press.",
-  "challenge": "What exact command stages all current modifications in your directory for a Git commit?",
-  "hint": "It starts with 'git add' and ends with a symbol representing the current directory.",
-  "answer": "git add .",
-  "answertype": "exact",
-  "honorreward": 20,
-  "bonusfirsttry": 5
-}
-
-===== missions\mission06.json =====
-{
-  "id": "git_branching_merging",
-  "number": 6,
-  "title": "Git — Branching & Merging",
-  "skill": "git",
-  "tag": "Git Version Control",
-  "philosophy": "In Wing Chun, the exercise of Chi Sao (sticky hands) teaches practitioners to remain in sensitive physical contact with their opponent, feeling changes in pressure and deflecting force dynamically. Analogy: Git branching and merging is our technical Chi Sao. It allows multiple developers to work in parallel flows of time, sensitively merging their inputs while resolving systemic merge conflicts smoothly.",
-  "economics": "In economic development, monolithic markets crash easily. Resilience requires pluralism. Analogy: Branching is our R&D sandbox. By isolating a feature branch, we allow safe experimentation without risking the stability of our primary economy (the `main` branch).",
-  "techconcept": "A branch in Git is simply a lightweight, movable pointer to a specific commit. Creating a branch is fast and consumes virtually zero disk space because Git only records the new pointer, not a full duplicate copy of your files.",
-  "lesson": "In this lesson, you will practice creating isolated lines of development. Modern Git workflows use `git switch` or `git checkout` to move between these lines of code safely.",
-  "challenge": "What command would you type to create and switch to a new branch named 'feature'?",
-  "hint": "You can use 'git checkout' with a specific flag, or the modern 'git switch' with its creation flag.",
-  "answer": ["git checkout -b feature", "git switch -c feature"],
-  "answertype": "exact",
-  "honorreward": 25,
-  "bonusfirsttry": 5
-}
-
-===== missions\mission07.json =====
-{
-  "id": "architecture_apis_http",
-  "number": 7,
-  "title": "APIs & HTTP — The Digital Journalist",
-  "skill": "architecture",
-  "tag": "Python+JSON",
-  "philosophy": "Investigative journalism relies on primary sources. To hold systems accountable, we cannot wait to be spoon-fed data; we must query the source directly. Analogy: APIs act as the Freedom of Information Act (FOIA) of the digital world.",
-  "economics": "Information asymmetry causes market failure. Open APIs democratize data, allowing independent actors to build tools that correct corporate or governmental monopolies on knowledge.",
-  "techconcept": "An API (Application Programming Interface) allows two programs to talk. In Python, we use the `requests` library to GET data from URLs over HTTP. A 200 status code means success; a 404 means not found.",
-  "lesson": "You will practice querying a system. Knowing how to request data programmatically is the foundational skill for building web scrapers, automation bots, and data journalism pipelines.",
-  "challenge": "What standard Python library is used to make HTTP requests to web APIs?",
-  "hint": "It is a plural word meaning 'to ask for things'.",
-  "answer": ["requests", "import requests"],
-  "answertype": "contains",
-  "honorreward": 25,
-  "bonusfirsttry": 5
-}
-
-===== missions\mission08.json =====
-{
-  "id": "python_file_io",
-  "number": 8,
-  "title": "File I/O — Institutional Memory",
-  "skill": "python",
-  "tag": "Python+JSON",
-  "philosophy": "The Bushido code values legacy. Without memory, a society cannot learn or grow. Analogy: Writing data to a file ensures that your digital actions echo into the future, much like Estonia's resilient national data registry.",
-  "economics": "Capital accumulation requires secure storage. If a program loses all its data when it closes, it cannot generate generational wealth. Analogy: File I/O serves as the banking system of our program.",
-  "techconcept": "Python uses `open('file.txt', 'w')` to write to a file, and `'r'` to read. Using the `with` keyword creates a 'context manager'—it ensures the file is safely closed when we are done, preventing memory leaks and data corruption.",
-  "lesson": "We will test your understanding of context managers. Safe File I/O is exactly how our Dojo OS saves your honor points, practice chain, and journal entries behind the scenes!",
-  "challenge": "What Python keyword is used to open a file and ensure it closes automatically?",
-  "hint": "It is a four-letter word that pairs with 'open'.",
-  "answer": ["with"],
-  "answertype": "exact",
-  "honorreward": 20,
-  "bonusfirsttry": 5
-}
-
-===== missions\mission09.json =====
-{
-  "id": "architecture_oop_modeling",
-  "number": 9,
-  "title": "OOP — Sociological Modeling",
-  "skill": "architecture",
-  "tag": "Python OOP",
-  "philosophy": "Theatre teaches us that a play requires Roles (scripts/blueprints) and Actors (individuals performing the role). Analogy: Object-Oriented Programming (OOP) applies sociology to code: defining community blueprints so individual actors can interact.",
-  "economics": "Analogy: A Class is a franchise business model (like the concept of a cooperative bakery). An Object is the actual physical bakery in your neighborhood, instantiated from that model.",
-  "techconcept": "We use the `class` keyword to define blueprints. Inside a class, `__init__` is the constructor method that sets up the initial state of the object, and `self` refers to the specific actor performing the script.",
-  "lesson": "Mastering OOP is essential for building large-scale architecture. It allows us to group data (attributes) and behavior (methods) into logical, cooperative units—just like the `Player` class running this very game.",
-  "challenge": "What keyword do you use to define an object blueprint in Python?",
-  "hint": "It is a five-letter word that sounds like a room where students learn.",
-  "answer": ["class"],
-  "answertype": "exact",
-  "honorreward": 25,
-  "bonusfirsttry": 5
-}
-
-===== missions\mission10.json =====
-{
-  "id": "review_code_gentle_art",
-  "number": 10,
-  "title": "Code Review — The Gentle Art",
-  "skill": "review",
-  "tag": "ModernTech",
-  "philosophy": "Brazilian Jiu-Jitsu (BJJ) translates to 'the gentle art.' When we roll with our training partners, the goal is not destruction, but mutual growth. Analogy: Code review is our digital tatami mat; we test each other's code to find weaknesses before the real world does.",
-  "economics": "Quality Assurance (QA) prevents negative externalities. Reviewing code ensures that technical debt is not offloaded onto the future community or end-users. It is an act of communal maintenance.",
-  "techconcept": "On platforms like GitHub, we propose our code changes for review before they are merged into the main project. A good review addresses Correctness, Efficiency, Readability, and Edge Cases.",
-  "lesson": "This is the final initiation. To be a Co-Architect, you must know how to collaborate gracefully. You must propose your changes to the community.",
-  "challenge": "What is the two-word term for proposing a merge so peers can review your code on GitHub?",
-  "hint": "It starts with the word 'pull'.",
-  "answer": ["pull request", "pull requests", "pr"],
-  "answertype": "contains",
-  "honorreward": 30,
-  "bonusfirsttry": 10
-}
-
-===== missions\MISSION_REVIEW_RUBRIC.md =====
+===== missions/MISSION_REVIEW_RUBRIC.md =====
 # Mission Review Rubric (Minimal)
 
 Use this for mission/content PRs.
@@ -5515,7 +5917,197 @@ Use this for mission/content PRs.
 - [ ] `python -m unittest discover -s tests` passes
 - [ ] `python validate_missions.py` passes
 
-===== missions\mission_template.json =====
+===== missions/mission01.json =====
+{
+  "id": "git_system_grounding",
+  "number": 1,
+  "title": "System Grounding",
+  "skill": "git",
+  "tag": "Git",
+  "philosophy": "Like Tai Chi, where you must feel the ground before moving, a programmer must understand their environment. 'Wu Wei' is achieved when your tools become extensions of your mind.",
+  "economics": "Infrastructure is the basis of all macro-economic stability. Before building goods, we build roads. Here, your terminal and shell are your economic infrastructure.",
+  "techconcept": "The terminal is your direct interface with the system. Git is your tool for interacting with the open-source global supply chain of ideas.",
+  "lesson": "Before you write any code, you need to know where you are and how to move. The terminal lets you navigate, inspect, and control your environment. Git uses that same terminal to connect your local work to remote repositories and collaborators.",
+  "challenge": "Type the command to clone a git repository.",
+  "hint": "The pattern is: git clone <repository-url>",
+  "answer": "git clone",
+  "answertype": "contains",
+  "honorreward": 20,
+  "bonusfirsttry": 5
+}
+
+===== missions/mission02.json =====
+{
+  "id": "python_variables_lineage",
+  "number": 2,
+  "title": "Variables & Data Lineage",
+  "skill": "python",
+  "tag": "Python Core",
+  "philosophy": "Genealogy teaches us that tracing lineage reveals identity. Analogy: A variable is not merely a box; it is a named node in a data lineage. Just as ancestral lineages carry traits forward in families, variables preserve and carry state across time in an execution scope.",
+  "economics": "Micro-economics teaches that resources are scarce and optimization is mandatory. Memory is our system's scarcest resource. Analogy: Naming variables clearly acts as a public ledger of memory allocation, preventing 'naming inflation' (where poorly named variables clog developer cognitive capacity).",
+  "techconcept": "In Python, variables are dynamically typed. When you assign `seed = 42`, Python allocates the value `42` in memory and points the name `seed` to it. The `=` operator does not mean equality (like in math); it represents assignment, setting the flow of data.",
+  "lesson": "In this lesson, you will practice basic variable assignment. Remember, Python is case-sensitive, and variable names should ideally use snake_case to maintain community readability standards.",
+  "challenge": "Write exactly this: assign the integer 42 to a variable named 'seed'.",
+  "hint": "Create a variable named 'seed' on the left, an equals sign in the middle, and the integer 42 on the right.",
+  "answer": ["seed = 42", "seed=42"],
+  "answertype": "exact",
+  "honorreward": 20,
+  "bonusfirsttry": 5
+}
+
+===== missions/mission03.json =====
+{
+  "id": "json_data_language",
+  "number": 3,
+  "title": "JSON — The Data Language",
+  "skill": "json",
+  "tag": "JSON Data",
+  "philosophy": "Interoperability is what cooperation looks like in code. When diverse, self-determined systems must collaborate, they need a non-coercive, neutral language to exchange state. JSON represents this shared public language.",
+  "economics": "Analogy: Global trade requires a frictionless transactional medium. JSON acts as a universal, lightweight currency of data exchange, allowing a Python server in Estonia to instantly trade structured information with a Javascript browser in Mexico without currency exchange fees (data translation overhead).",
+  "techconcept": "JavaScript Object Notation (JSON) is a text format built on two structures: key-value pairs (`{}`) and ordered lists (`[]`). Every key must be a double-quoted string. Unlike Python, JSON uses lowercase `true`, `false`, and `null` instead of `True`, `False`, and `None`.",
+  "lesson": "Understanding how JSON maps to native programming data structures is critical for web services, API communications, and saving user state securely.",
+  "challenge": "What does JSON stand for? (Type out the 3 words cleanly, no extra punctuation)",
+  "hint": "The first word is JavaScript, followed by the word for an entity (Object), and ending with representation (Notation).",
+  "answer": "JavaScript Object Notation",
+  "answertype": "exact",
+  "honorreward": 20,
+  "bonusfirsttry": 5
+}
+
+===== missions/mission04.json =====
+{
+  "id": "python_functions_logic",
+  "number": 4,
+  "title": "Functions & 'Jeet Kune Do' Logic",
+  "skill": "python",
+  "tag": "Python Core",
+  "philosophy": "Bruce Lee's martial art, Jeet Kune Do, champions 'the style of no style'—using only what works and discarding the rest with maximum efficiency. Analogy: A Python function encapsulates this logic. It is a precise, clean strike of logic that does exactly what is required with no wasted energy or syntactic clutter.",
+  "economics": "Analogy: A function is a specialized cooperative workspace. Rather than every citizen building their own solar panels from scratch (repetitive code), the community delegates the task to a specialized workshop (a function) that takes raw materials (inputs) and yields finished utility (returns).",
+  "techconcept": "Python functions are defined using the `def` keyword, followed by the function name, parentheses containing parameters, and a colon. Code blocks must be indented (PEP 8 recommends 4 spaces). The `return` keyword is vital; it passes computed results back to the caller.",
+  "lesson": "In this lesson, we isolate execution logic. Functions allow us to practice the DRY principle (Don't Repeat Yourself), which prevents intellectual duplication in software ecosystems.",
+  "challenge": "What Python keyword is used to define a function?",
+  "hint": "It is a three-letter abbreviation of the word 'define'.",
+  "answer": "def",
+  "answertype": "contains",
+  "honorreward": 20,
+  "bonusfirsttry": 5
+}
+
+===== missions/mission05.json =====
+{
+  "id": "git_journalistic_integrity",
+  "number": 5,
+  "title": "Git — Journalistic Integrity",
+  "skill": "git",
+  "tag": "Git Version Control",
+  "philosophy": "Social justice relies on historical verifiability. Without transparent tracking of changes, systems of power can silently alter agreements. Analogy: Git is our cryptographic, immutable ledger of journalistic truth, preserving the timeline of who altered the system, when, and why.",
+  "economics": "Estonia's e-governance model achieves high institutional trust because citizens can trace exactly who accesses or changes their digital records. Analogy: Git operates on a similar mathematical foundation (Merkle trees), creating a trust infrastructure where bad faith changes are structurally impossible to hide.",
+  "techconcept": "Git does not track file differences; it tracks snapshots of your files. When you commit, Git records a cryptographic SHA-1 hash of your current staging area. The three stages of Git are: Working Directory (modifying files) -> Staging Area (`git add`) -> Git Repository (`git commit`).",
+  "lesson": "We will practice the foundational Git workflow. Staging your files before committing is like proofreading your article before sending it to the press.",
+  "challenge": "What exact command stages all current modifications in your directory for a Git commit?",
+  "hint": "It starts with 'git add' and ends with a symbol representing the current directory.",
+  "answer": "git add .",
+  "answertype": "exact",
+  "honorreward": 20,
+  "bonusfirsttry": 5
+}
+
+===== missions/mission06.json =====
+{
+  "id": "git_branching_merging",
+  "number": 6,
+  "title": "Git — Branching & Merging",
+  "skill": "git",
+  "tag": "Git Version Control",
+  "philosophy": "In Wing Chun, the exercise of Chi Sao (sticky hands) teaches practitioners to remain in sensitive physical contact with their opponent, feeling changes in pressure and deflecting force dynamically. Analogy: Git branching and merging is our technical Chi Sao. It allows multiple developers to work in parallel flows of time, sensitively merging their inputs while resolving systemic merge conflicts smoothly.",
+  "economics": "In economic development, monolithic markets crash easily. Resilience requires pluralism. Analogy: Branching is our R&D sandbox. By isolating a feature branch, we allow safe experimentation without risking the stability of our primary economy (the `main` branch).",
+  "techconcept": "A branch in Git is simply a lightweight, movable pointer to a specific commit. Creating a branch is fast and consumes virtually zero disk space because Git only records the new pointer, not a full duplicate copy of your files.",
+  "lesson": "In this lesson, you will practice creating isolated lines of development. Modern Git workflows use `git switch` or `git checkout` to move between these lines of code safely.",
+  "challenge": "What command would you type to create and switch to a new branch named 'feature'?",
+  "hint": "You can use 'git checkout' with a specific flag, or the modern 'git switch' with its creation flag.",
+  "answer": ["git checkout -b feature", "git switch -c feature"],
+  "answertype": "exact",
+  "honorreward": 25,
+  "bonusfirsttry": 5
+}
+
+===== missions/mission07.json =====
+{
+  "id": "architecture_apis_http",
+  "number": 7,
+  "title": "APIs & HTTP — The Digital Journalist",
+  "skill": "architecture",
+  "tag": "Python+JSON",
+  "philosophy": "Investigative journalism relies on primary sources. To hold systems accountable, we cannot wait to be spoon-fed data; we must query the source directly. Analogy: APIs act as the Freedom of Information Act (FOIA) of the digital world.",
+  "economics": "Information asymmetry causes market failure. Open APIs democratize data, allowing independent actors to build tools that correct corporate or governmental monopolies on knowledge.",
+  "techconcept": "An API (Application Programming Interface) allows two programs to talk. In Python, we use the `requests` library to GET data from URLs over HTTP. A 200 status code means success; a 404 means not found.",
+  "lesson": "You will practice querying a system. Knowing how to request data programmatically is the foundational skill for building web scrapers, automation bots, and data journalism pipelines.",
+  "challenge": "What standard Python library is used to make HTTP requests to web APIs?",
+  "hint": "It is a plural word meaning 'to ask for things'.",
+  "answer": ["requests", "import requests"],
+  "answertype": "contains",
+  "honorreward": 25,
+  "bonusfirsttry": 5
+}
+
+===== missions/mission08.json =====
+{
+  "id": "python_file_io",
+  "number": 8,
+  "title": "File I/O — Institutional Memory",
+  "skill": "python",
+  "tag": "Python+JSON",
+  "philosophy": "The Bushido code values legacy. Without memory, a society cannot learn or grow. Analogy: Writing data to a file ensures that your digital actions echo into the future, much like Estonia's resilient national data registry.",
+  "economics": "Capital accumulation requires secure storage. If a program loses all its data when it closes, it cannot generate generational wealth. Analogy: File I/O serves as the banking system of our program.",
+  "techconcept": "Python uses `open('file.txt', 'w')` to write to a file, and `'r'` to read. Using the `with` keyword creates a 'context manager'—it ensures the file is safely closed when we are done, preventing memory leaks and data corruption.",
+  "lesson": "We will test your understanding of context managers. Safe File I/O is exactly how our Dojo OS saves your honor points, practice chain, and journal entries behind the scenes!",
+  "challenge": "What Python keyword is used to open a file and ensure it closes automatically?",
+  "hint": "It is a four-letter word that pairs with 'open'.",
+  "answer": ["with"],
+  "answertype": "exact",
+  "honorreward": 20,
+  "bonusfirsttry": 5
+}
+
+===== missions/mission09.json =====
+{
+  "id": "architecture_oop_modeling",
+  "number": 9,
+  "title": "OOP — Sociological Modeling",
+  "skill": "architecture",
+  "tag": "Python OOP",
+  "philosophy": "Theatre teaches us that a play requires Roles (scripts/blueprints) and Actors (individuals performing the role). Analogy: Object-Oriented Programming (OOP) applies sociology to code: defining community blueprints so individual actors can interact.",
+  "economics": "Analogy: A Class is a franchise business model (like the concept of a cooperative bakery). An Object is the actual physical bakery in your neighborhood, instantiated from that model.",
+  "techconcept": "We use the `class` keyword to define blueprints. Inside a class, `__init__` is the constructor method that sets up the initial state of the object, and `self` refers to the specific actor performing the script.",
+  "lesson": "Mastering OOP is essential for building large-scale architecture. It allows us to group data (attributes) and behavior (methods) into logical, cooperative units—just like the `Player` class running this very game.",
+  "challenge": "What keyword do you use to define an object blueprint in Python?",
+  "hint": "It is a five-letter word that sounds like a room where students learn.",
+  "answer": ["class"],
+  "answertype": "exact",
+  "honorreward": 25,
+  "bonusfirsttry": 5
+}
+
+===== missions/mission10.json =====
+{
+  "id": "review_code_gentle_art",
+  "number": 10,
+  "title": "Code Review — The Gentle Art",
+  "skill": "review",
+  "tag": "ModernTech",
+  "philosophy": "Brazilian Jiu-Jitsu (BJJ) translates to 'the gentle art.' When we roll with our training partners, the goal is not destruction, but mutual growth. Analogy: Code review is our digital tatami mat; we test each other's code to find weaknesses before the real world does.",
+  "economics": "Quality Assurance (QA) prevents negative externalities. Reviewing code ensures that technical debt is not offloaded onto the future community or end-users. It is an act of communal maintenance.",
+  "techconcept": "On platforms like GitHub, we propose our code changes for review before they are merged into the main project. A good review addresses Correctness, Efficiency, Readability, and Edge Cases.",
+  "lesson": "This is the final initiation. To be a Co-Architect, you must know how to collaborate gracefully. You must propose your changes to the community.",
+  "challenge": "What is the two-word term for proposing a merge so peers can review your code on GitHub?",
+  "hint": "It starts with the word 'pull'.",
+  "answer": ["pull request", "pull requests", "pr"],
+  "answertype": "contains",
+  "honorreward": 30,
+  "bonusfirsttry": 10
+}
+
+===== missions/mission_template.json =====
 {
   "id": "your_mission_id",
   "number": 11,
@@ -5534,7 +6126,7 @@ Use this for mission/content PRs.
   "bonusfirsttry": 5
 }
 
-===== missions\missions.json =====
+===== missions/missions.json =====
 {
   "missions": [
     {
@@ -5776,572 +6368,6 @@ def main() -> int:
 if __name__ == "__main__":
     raise SystemExit(main())
 
-===== README.md =====
-# 🥋 Dojo Ascension: A Digital Ecology for Creators
-
-**Learn Python, Git, and systems thinking through play, mentorship, and ecology — no prior experience required.**
-
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-[![Python 3.8+](https://img.shields.io/badge/python-3.8%2B-brightgreen.svg)](https://www.python.org/downloads/)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
-[![Good First Issues](https://img.shields.io/badge/good%20first%20issues-open-purple.svg)](https://github.com/solarpunkopensourcelaboratory/dojo-ascension/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)
-[![Contributors](https://img.shields.io/badge/contributors-welcome-brightgreen.svg)](https://github.com/solarpunkopensourcelaboratory/dojo-ascension/graphs/contributors)
-
-**New here?** → [Start a good first issue](https://github.com/solarpunkopensourcelaboratory/dojo-ascension/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) · [Read the Contributing Guide](CONTRIBUTING.md) · [Open in a Codespace](https://github.com/solarpunkopensourcelaboratory/dojo-ascension) (zero local setup)
-
-> *"The world is already at your fingertips. You are here to find your voice."*
-
-Welcome to the Dojo. This is not just a codebase or a traditional programming class. This is a sanctuary for the curious, the artists, the philosophers, and the inner child eager to understand how the digital world works.
-
-Whether you are a seasoned traveler recovering from a difficult learning journey, or someone stepping into a terminal for the very first time, you belong here. We do not learn code to feed the machine. We learn code so that you can apply these instruments to your **own** arts, hobbies, and passions.
-
-Here, you will learn Python, Linux, and systems thinking through play, mentorship, and ecology. Your wings are yours to open. Let us provide the updraft.
-
----
-
-## 🛤️ The 10-Minute Spark: Start Here
-
-No prior experience is required. Follow these three steps to step onto the mat and begin your first mission.
-
-### Step 1: Claim Your Space (Clone the Dojo)
-Open your computer's terminal and copy-paste this command to bring the Dojo to your local machine:
-
-```bash
-git clone https://github.com/solarpunkopensourcelaboratory/dojo-ascension.git
-cd dojo-ascension
-```
-
-### Step 2: Equip Your Gear (Install Requirements)
-
-Every explorer needs the right tools. Run this command to unpack your gear securely:
-
-```bash
-pip install -r requirements.txt
-```
-
-### Step 3: Step Onto the Mat (Enter the Classroom)
-
-You are ready. Awaken the engine and begin your journey:
-
-```bash
-python dojo_classroom.py
-```
-
-*(When the screen lights up and the Dojo welcomes you, take a breath. You have just taken your first step into a larger world.)*
-
----
-
-## 🌱 Our Superobjective
-
-Inspired by the greatest mentors—from the theatre stage to the realms of animation—our ultimate goal is to raise the next generation of formidable, responsible, and informed creators. We believe the strongest future is built by humans and machines intelligent enough to choose what they want, in harmony with the planet that sustains us.
-
----
-
-## 🌻 Mission & Funding Snapshot
-
-See the one-page public promise and measurable outcomes in [FUNDING_ONE_PAGER.md](FUNDING_ONE_PAGER.md).
-
-Key outcomes we track:
-- Learner retention (14-day return rate)
-- Mission completion (median missions completed per active learner)
-- Contributor growth (unique merged PR authors per month)
-
-Why organizations adopt it:
-- Lightweight browser + terminal delivery
-- Shared mission schema instead of a heavyweight LMS rebuild
-- Local-first learner data for low-resource environments
-- Contributor pathways for educators, writers, reviewers, translators, and facilitators
-
----
-
-## Frontends and Clients
-
-The Dojo Ascension repo defines a data and logic layer for a learning game:
-
-- **Missions are stored as JSON** (`missions.json` and `missions/*.json`)
-- **Player progress and journal entries are stored as JSON** (save files)
-- **Multiple frontends available**:
-  - Terminal / VS Code experience written in Python (`dojo_classroom.py`)
-  - Browser-based single-page app (`dojo_web.html`) — **NEW!**
-
-We explicitly invite other frontends (RPG, mobile, desktop, etc.) that:
-- Consume the same mission schema and skill/honor model
-- Preserve the educational intent of each mission
-- Respect the project license (see LICENSE)
-
-If you are building a new frontend, open an issue to coordinate on data formats and progression so we stay interoperable.
-
----
-
-*Use in fundraisers and ethical businesses*
-
-We explicitly welcome:
-- Non‑profits using Dojo‑derived games in fundraisers
-- Ethical solarpunk businesses building commercial games or tools that teach with Dojo missions
-- If you distribute software that incorporates Dojo code, you must follow the GPL‑3.0 license (keep derivative code open-source, provide source to users)
-- If you want to discuss special arrangements or dual-licensing for a specific project, open an issue or contact the maintainers
-
----
-
-## 🏫 Organizational Efficiency & Public Value
-
-Dojo Ascension is designed as **mission-aligned digital literacy infrastructure**:
-
-- **Low overhead** — no database or paid SaaS required for core use
-- **Low resource** — browser edition works offline; terminal edition runs on basic Python setups
-- **Reusable curriculum** — JSON missions can be expanded without a large engineering team
-- **Interoperable** — multiple frontends can share the same learner and mission model
-- **Local-first** — institutions can pilot cohorts without sending learner data to a third-party service
-
-This makes the project useful for:
-- libraries
-- classrooms
-- community technology labs
-- mutual-aid networks
-- small nonprofits and fellowships
-
----
-
-## 🚀 Quick Start
-
-### Option A: Play in Your Browser (Easiest)
-
-No installation required. Just download and open:
-
-```bash
-# Clone the repo
-git clone https://github.com/solarpunkopensourcelaboratory/dojo-ascension.git
-cd dojo-ascension
-
-# Open in your browser
-open dojo_web.html
-# or double-click dojo_web.html in your file explorer
-```
-
-**Features:**
-- ✅ All 10 missions available
-- ✅ Progress saves to browser storage (persists across sessions)
-- ✅ Works offline
-- ✅ Mobile responsive
-- ✅ Zero dependencies
-
----
-
-### Option B: Play in Terminal (Python)
-
-For a deeper, reflective experience with optional journal entries:
-
-**Prerequisites:**
-- Python 3.8+
-- Git
-- 2GB free disk space
-
-**Installation:**
-
-```bash
-# 1. Clone this repo
-git clone https://github.com/solarpunkopensourcelaboratory/dojo-ascension
-cd dojo-ascension
-
-# 2. Install dependencies
-pip install -r requirements.txt
-
-# 3. Launch the Dojo
-python dojo_classroom.py
-```
-
-**First Time Setup:**
-
-When you run the game, you'll be prompted to enter your name. The system will:
-1. Check your environment (Python version, Git installation, disk space)
-2. Create a save file at `~/.dojo_save.json`
-3. Optionally create a journal at `~/.dojo_journal_data.json`
-
-**Shared Workstation Tip:**
-
-On a shared machine, keep each participant's progress separate:
-
-```bash
-export DOJO_DATA_DIR="$HOME/.dojo-ascension/alice"
-python dojo_classroom.py
-```
-
----
-
-## 📖 Curriculum (10 Core Missions)
-
-| # | Mission | Skill | Philosophy |
-|---|---------|-------|------------|
-| 1 | System Grounding | Git | Wu Wei: Your tools become extensions of your mind |
-| 2 | Variables & Data Lineage | Python | Genealogy: Tracing lineage reveals identity |
-| 3 | JSON — Data Language | JSON | Cornel West: Justice is cooperation in code |
-| 4 | Functions & Jeet Kune Do | Python | Bruce Lee: Maximum efficiency with minimum effort |
-| 5 | Git — Journalistic Integrity | Git | Activism: Git is an immutable ledger of truth |
-| 6 | Git — Branching & Merging | Git | Wing Chun: Deflect and redirect, don't oppose |
-| 7 | APIs & Digital Journalism | Architecture | Freedom of Information: Query the source directly |
-| 8 | File I/O — Institutional Memory | Python | Bushido: Legacy ensures society can learn |
-| 9 | OOP — Sociological Modeling | Architecture | Theatre: Roles and Actors in a cooperative |
-| 10 | Code Review — Gentle Art | Review | BJJ: Testing each other's code before production |
-
----
-
-## 🎮 How to Play
-
-### Main Menu Options
-
-1. **Start Next Mission** — Play the next incomplete mission in sequence
-2. **Choose Specific Mission** — Jump to any mission you want
-3. **View Progress Dashboard** — See your skill levels and rank
-4. **Reflection Journal** (Terminal only) — Review past journal entries and your practice chain
-5. **VSCode Integration Guide** (Terminal only) — Learn how to pair missions with VSCode
-6. **Save Progress** — Manually save your state
-7. **Exit** — Quit (progress is auto-saved)
-
-### Mission Flow
-
-Each mission teaches a concept through:
-
-1. **Philosophical Anchor** — Connect code to a real-world principle
-2. **Economic Parallel** — Understand the "cost" and "value" of the pattern
-3. **Technical Concept** — Learn the actual code syntax
-4. **Challenge** — Answer a question or write code
-5. **Reflection** (Terminal optional) — Answer Uta Hagen's 9 systems-thinking questions
-
-### Progression System
-
-- **Honor Points** — Earned by completing missions (20-30 per mission)
-- **Ranks** — Initiate → Apprentice → Practitioner → Adept → Expert → Co-Architect
-- **Skills** — Track mastery: Python, Git, JSON, Architecture, Code Review (0-5 levels each)
-- **Practice Chain** — Consecutive days of journaling (rewards deliberate practice, not perfection)
-- **Pathways** — Beginner confidence → Contributor readiness → Mission authoring → Facilitator readiness
-
----
-
-## 💾 Progress Saves
-
-Your progress is stored in JSON files (shared between both frontends):
-
-### `~/.dojo_save.json` (Player State)
-```json
-{
-  "name": "David",
-  "honor": 150,
-  "completed": ["git_system_grounding", "python_variables"],
-  "skills": {
-    "python": 2,
-    "git": 3,
-    "json": 1,
-    "architecture": 0,
-    "review": 0
-  },
-  "last_save": "2026-06-22T18:40:02Z"
-}
-```
-
-### `~/.dojo_journal_data.json` (Reflection Entries — Terminal only)
-```json
-{
-  "2026-06-22": {
-    "timestamp": "2026-06-22T18:42:15Z",
-    "mission_id": "python_variables",
-    "mission_title": "Variables & Data Lineage",
-    "player_rank": "Apprentice",
-    "answers": {
-      "Who am I in this circumstance?": "A programmer learning to think systematically...",
-      "What do I want?": "To understand how data flows through systems..."
-    }
-  }
-}
-```
-
----
-
-## 🔗 VSCode Integration (Terminal Version)
-
-Pair each mission with VSCode for hands-on learning:
-
-### One-Time Setup
-
-1. Install [VSCode](https://code.visualstudio.com)
-2. Install extensions:
-   - **Python** (by Microsoft) — Run and debug Python code
-   - **GitLens** — View Git history and blame
-   - **Prettier** — Auto-format JSON
-   - **Python Indent** — Smart indentation
-
-### Workflow
-
-```bash
-# In VSCode terminal:
-python dojo_classroom.py
-
-# In another VSCode editor:
-# 1. Complete a mission in the terminal
-# 2. Open ~/dojo_demo.json or other files created by missions
-# 3. Experiment and modify them
-# 4. Run code with F5 to see results
-```
-
-### Official Tutorials to Pair With
-
-- **Missions 1-4** → [Python Quick Start](https://code.visualstudio.com/docs/python/python-quick-start)
-- **Missions 5-6** → [Source Control](https://code.visualstudio.com/docs/sourcecontrol/overview)
-- **Missions 7-8** → [Debugging](https://code.visualstudio.com/docs/python/debugging)
-- **Missions 9-10** → [Testing](https://code.visualstudio.com/docs/python/testing)
-
----
-
-## 📚 Architecture (v5.0)
-
-### Data-Driven Missions
-
-Missions are stored in `missions/missions.json` as pure data:
-
-```json
-{
-  "id": "git_system_grounding",
-  "number": 1,
-  "title": "System Grounding",
-  "philosophy": "Like Tai Chi...",
-  "economics": "Infrastructure is...",
-  "lesson": "The terminal...",
-  "challenge": "Type the command to clone a repository.",
-  "answer": "git clone",
-  "answertype": "contains",
-  "skill": "git",
-  "honorreward": 20
-}
-```
-
-This means:
-- ✅ **Non-programmers can contribute missions** (educators, subject-matter experts)
-- ✅ **Translators can localize content** without touching Python
-- ✅ **Mission packs can be shared** and loaded dynamically
-- ✅ **Save files are future-proof** (mission IDs never change)
-- ✅ **Multiple frontends can coexist** (share the same mission/player data)
-
-### Engine Architecture
-
-**Terminal Version:**
-- `dojo_classroom.py` — Main game loop, mission loading, player management (v5.0 Dynamic Engine)
-- `missions/missions.json` — All mission data (externalized, data-driven)
-- `~/.dojo_save.json` — Player progress (persistent)
-- `~/.dojo_journal_data.json` — Reflection entries (persistent, optional)
-
-**Browser Version:**
-- `dojo_web.html` — Standalone single-page app (HTML/CSS/JavaScript)
-- Mission data embedded inline (no external dependencies)
-- Browser localStorage for persistent player progress
-
-### Future Phases
-
-- **Phase 1 (Current)** — 10 core Python/Git/JSON/CodeReview missions (Terminal + Browser)
-- **Phase 2** — `dojo_ascension.py` — Advanced multi-week curriculum (Linux, security, quant)
-- **Phase 3** — Mission packs: Journalism, Genealogy, Governance, AI Literacy
-- **Phase 4** — Community: Shared mission packs, classroom dashboards, instructor tools
-
----
-
-## 🧪 Development & Testing
-
-### One-Command Contributor Onboarding
-
-Use these exact commands:
-
-```bash
-python newcomer.py
-python newcomer.py --play
-```
-
-- `python newcomer.py` installs dependencies, runs tests, and validates missions.
-- `python newcomer.py --play` does the same and then launches the game.
-
-### Validate Missions
-
-```bash
-python validate_missions.py
-```
-
-This checks for missing required fields, type mismatches, and schema issues.
-
-### Run Tests
-
-```bash
-python -m unittest discover -s tests
-```
-
-### PR Merge Baseline (Required)
-
-Every PR must pass:
-- `python -m unittest discover -s tests`
-- `python validate_missions.py`
-
-For mission/content PRs, also complete the Definition of Done in [.github/pull_request_template.md](.github/pull_request_template.md).
-
-### Generate Repo Bundle
-
-If you want a single text file for sharing with collaborators or AI tools:
-
-```bash
-python refresh_repo_bundle.py
-```
-
-This regenerates [repo_bundle.txt](repo_bundle.txt) from the current repository contents.
-For fast AI orientation, also see [llms.txt](llms.txt) and [CONTEXT.md](CONTEXT.md).
-
-### AI Collaborators
-
-Use these canonical, low-token entry points when working with agentic tools:
-
-- [llms.txt](llms.txt) - compact project manifest with key files and commands
-- [CONTEXT.md](CONTEXT.md) - onboarding context, structure, CI overview, and tone
-- [repo_bundle.txt](repo_bundle.txt) - full plain-text repository snapshot
-
-Public Pages URLs for URL-based tools:
-
-- https://solarpunkopensourcelaboratory.github.io/dojo-ascension/
-- https://solarpunkopensourcelaboratory.github.io/dojo-ascension/llms.txt
-- https://solarpunkopensourcelaboratory.github.io/dojo-ascension/CONTEXT.md
-- https://solarpunkopensourcelaboratory.github.io/dojo-ascension/repo_bundle.txt
-
-### Pilot Reporting Utilities
-
-For cohort reporting and grant evidence:
-
-```bash
-python export_learner_data.py --data-dir ~/.dojo_ascension --format json
-python measure_retention.py --data-dir ~/.dojo_ascension
-```
-
-These commands aggregate anonymized learner outcomes from local save files.
-
----
-
-## 🤝 Contributing
-
-### For Mission Writers
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for the full guide. Quick start:
-
-1. Fork the repo
-2. Use `missions/mission_template.json` to draft a mission
-3. Review with `missions/MISSION_REVIEW_RUBRIC.md`
-4. Test locally: `python newcomer.py`
-5. Add your mission(s) to `missions/missions.json`
-6. Submit a pull request
-
-Good first mission path for non-coders:
-- Start with one recall/application mission
-- Keep challenge and answer short
-- Add one optional hint
-- Ask for review using the mission rubric
-- Use plain language and inclusive examples (see [docs/ACCESSIBILITY_BASELINE.md](docs/ACCESSIBILITY_BASELINE.md))
-
-### Project Governance, Metrics, and Roadmap
-
-- Governance and response times: [docs/GOVERNANCE.md](docs/GOVERNANCE.md)
-- Public metrics: [docs/METRICS.md](docs/METRICS.md)
-- Pilot program: [docs/PILOT_PROGRAM.md](docs/PILOT_PROGRAM.md)
-- Funding kit: [docs/FUNDING_KIT.md](docs/FUNDING_KIT.md)
-- Impact measurement: [docs/IMPACT_MEASUREMENT.md](docs/IMPACT_MEASUREMENT.md)
-- Learner privacy: [docs/DATA_PRIVACY.md](docs/DATA_PRIVACY.md)
-- Accessibility testing: [docs/ACCESSIBILITY_TESTING.md](docs/ACCESSIBILITY_TESTING.md)
-- Roadmap: [ROADMAP.md](ROADMAP.md)
-- Monthly updates: [CHANGELOG.md](CHANGELOG.md)
-
-### For Frontend Developers
-
-Want to build a new frontend (RPG, mobile, web framework, etc.)?
-
-1. Load missions from `missions/missions.json` (or embed them)
-2. Implement the same player state structure (see `~/.dojo_save.json` format)
-3. Follow the answer validation logic (see `validate_answer()` in `dojo_classroom.py`)
-4. Open an issue to discuss compatibility before building
-
-### For Code Contributors
-
-- Bug fixes and feature requests welcome
-- See [CONTRIBUTING.md](CONTRIBUTING.md) for development setup
-- **Zero-setup option:** click **Code → Codespaces → Create codespace** to get a ready-made Python environment in your browser (see [.devcontainer/devcontainer.json](.devcontainer/devcontainer.json))
-
-### Contributors
-
-We credit everyone who contributes code, missions, translations, accessibility, docs, facilitation, or review. See [CONTRIBUTORS.md](CONTRIBUTORS.md).
-
----
-
-## 📋 Project Status
-
-**v5.0 (Current)**
-- ✅ Dynamic mission engine (missions.json)
-- ✅ Terminal frontend (Python)
-- ✅ Browser frontend (HTML/JavaScript) — NEW!
-- ✅ Competency-based ranking
-- ✅ Uta Hagen reflection journal (Terminal only)
-- ✅ Dashboard with skill specialization
-- ✅ Persistent saves (JSON)
-- 🔜 Mission packs (Journalism, Genealogy, Governance)
-- 🔜 Classroom mode (instructor dashboard)
-- 🔜 Mobile app (iOS/Android)
-
----
-
-## 🔧 Maintenance & Sustainability
-
-Dojo Ascension is intentionally small, legible, and inexpensive to maintain.
-
-- **Minimal dependencies** — only small Python packages plus the standard library
-- **No required cloud backend** — core use stays local-first
-- **Transparent governance** — decisions, response times, and merge baselines are documented
-- **Grant-ready evidence** — privacy, pilot, and impact docs are part of the repository
-- **Community maintenance model** — contributors can help through code, curriculum, accessibility, documentation, facilitation, and translation
-
-Funding primarily supports maintenance, accessibility, curriculum expansion, pilot operations, and community stewardship.
-
----
-
-## 📖 License
-
-GNU GENERAL PUBLIC LICENSE
-Version 3, 29 June 2007
-
-Copyright (C) 2007 Free Software Foundation, Inc. https://fsf.org/
-
-Everyone is permitted to copy and distribute verbatim copies
-of this license document, but changing it is not allowed.
-
-The GNU General Public License is a free, copileft license for software and other kinds of works.
-
-When we use your software, we must adhere to the spirit of cooperation and transparency that defines the open-source community.
-
-[Full GPL-3.0 text available at: https://www.gnu.org/licenses/gpl-3.0.txt]
-
----
-
-## 🙏 Credits
-
-Built by and for the SolarPunk community. Inspired by:
-- **Uta Hagen's acting techniques** (systems thinking)
-- **Cornel West's philosophy** (public justice)
-- **Bruce Lee's martial philosophy** (efficiency)
-- **Estonia's e-governance model** (resilience)
-- **Brazilian Jiu-Jitsu** (collaborative learning)
-
----
-
-## 🔗 Links
-
-- [GitHub Repository](https://github.com/solarpunkopensourcelaboratory/dojo-ascension)
-- [Contributing Guide](CONTRIBUTING.md)
-- [Mission & Funding One-Pager](FUNDING_ONE_PAGER.md)
-- [Governance](docs/GOVERNANCE.md)
-- [Public Metrics](docs/METRICS.md)
-- [SolarPunk Open Source Laboratory](https://github.com/solarpunkopensourcelaboratory)
-
----
-
-**Let us never stop learning from Galileo.** — SolarPunk Opensource Laboratory
-
 ===== refresh_repo_bundle.py =====
 #!/usr/bin/env python3
 """Convenience wrapper to regenerate the plain-text repo bundle."""
@@ -6439,33 +6465,7 @@ colorama>=0.4.6     # Colored terminal output (cross-platform)
 requests>=2.31.0    # HTTP requests for API missions
 # All other modules (json, os, pathlib, subprocess) are Python stdlib
 
-===== ROADMAP.md =====
-# Roadmap
-
-## Now
-- Run one publishable pilot cohort
-- Improve learner retention, momentum cues, and pathway clarity
-- Strengthen contributor pathways for educators, writers, translators, facilitators, and coders
-- Maintain monthly public metrics and updates
-
-## Next
-- Mission packs for journalism, governance, genealogy, and AI literacy
-- Better cohort tooling and classroom-mode support
-- Accessibility and localization expansion
-
-## Later
-- Instructor dashboards
-- broader multi-client ecosystem growth
-- mobile and other alternative frontends
-
-## Funding priorities
-- Core maintenance and testing reliability
-- Curriculum expansion and review
-- Accessibility and localization work
-- Pilot facilitation and impact reporting
-- Community stewardship and contributor support
-
-===== tests\dojo.py =====
+===== tests/dojo.py =====
 class Engine:
     def __init__(self, player):
         self.player = player
@@ -6574,7 +6574,7 @@ if __name__ == "__main__":
     engine = Engine(player)
     engine.start()
 
-===== tests\test_chronicle_tips.py =====
+===== tests/test_chronicle_tips.py =====
 """Unit tests for the /chronicle tips feature in dojo_classroom.py."""
 import io
 import os
@@ -6837,7 +6837,7 @@ class TestChronicleMenuDispatch(unittest.TestCase):
 if __name__ == "__main__":
     unittest.main()
 
-===== tests\test_impact_metrics.py =====
+===== tests/test_impact_metrics.py =====
 import json
 import os
 import tempfile
@@ -6940,7 +6940,7 @@ class ImpactMetricTests(unittest.TestCase):
 if __name__ == "__main__":
     unittest.main()
 
-===== tests\test_repo_text_export.py =====
+===== tests/test_repo_text_export.py =====
 import tempfile
 import unittest
 from pathlib import Path
@@ -6971,7 +6971,7 @@ class RepoTextExportTests(unittest.TestCase):
 if __name__ == "__main__":
     unittest.main()
 
-===== tests\test_state_paths.py =====
+===== tests/test_state_paths.py =====
 import json
 import os
 import tempfile
@@ -7036,7 +7036,7 @@ class StatePathTests(unittest.TestCase):
 if __name__ == "__main__":
     unittest.main()
 
-===== tests\test_validate_missions.py =====
+===== tests/test_validate_missions.py =====
 import json
 import tempfile
 import unittest
