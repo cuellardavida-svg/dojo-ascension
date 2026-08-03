@@ -8,6 +8,12 @@ import sys
 
 IGNORE_DIRS = {".git", ".venv", "__pycache__", ".pytest_cache", "node_modules"}
 IGNORE_FILES = {".DS_Store", "Thumbs.db"}
+GENERATED_BUNDLE_FILES = {
+    "repo_bundle.txt",
+    "bundle_missions.txt",
+    "bundle_docs.txt",
+    "bundle_code.txt",
+}
 
 
 def iter_repo_files(root: Path):
@@ -23,6 +29,8 @@ def iter_repo_files(root: Path):
         if rel.parts and rel.parts[0] in IGNORE_DIRS:
             continue
         if path.name in IGNORE_FILES:
+            continue
+        if path.name in GENERATED_BUNDLE_FILES:
             continue
         yield path
 

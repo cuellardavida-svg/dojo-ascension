@@ -408,6 +408,22 @@ python refresh_repo_bundle.py
 ```
 
 This regenerates [repo_bundle.txt](repo_bundle.txt) from the current repository contents.
+For fast AI orientation, also see [llms.txt](llms.txt) and [CONTEXT.md](CONTEXT.md).
+
+### AI Collaborators
+
+Use these canonical, low-token entry points when working with agentic tools:
+
+- [llms.txt](llms.txt) - compact project manifest with key files and commands
+- [CONTEXT.md](CONTEXT.md) - onboarding context, structure, CI overview, and tone
+- [repo_bundle.txt](repo_bundle.txt) - full plain-text repository snapshot
+
+Public Pages URLs for URL-based tools:
+
+- https://solarpunkopensourcelaboratory.github.io/dojo-ascension/
+- https://solarpunkopensourcelaboratory.github.io/dojo-ascension/llms.txt
+- https://solarpunkopensourcelaboratory.github.io/dojo-ascension/CONTEXT.md
+- https://solarpunkopensourcelaboratory.github.io/dojo-ascension/repo_bundle.txt
 
 ### Pilot Reporting Utilities
 

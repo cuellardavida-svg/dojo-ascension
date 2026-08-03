@@ -1,0 +1,38 @@
+Dojo Ascension - AI Collaborator Manifest
+
+Purpose
+- Community-first learning system for Python, Git, JSON, and systems thinking.
+- Data-driven missions with contributor pathways for code, docs, and education.
+
+Canonical URLs
+- https://solarpunkopensourcelaboratory.github.io/dojo-ascension/
+- https://solarpunkopensourcelaboratory.github.io/dojo-ascension/llms.txt
+- https://solarpunkopensourcelaboratory.github.io/dojo-ascension/CONTEXT.md
+- https://solarpunkopensourcelaboratory.github.io/dojo-ascension/repo_bundle.txt
+
+Core Files
+- dojo_classroom.py (terminal runtime)
+- dojo_web.html (browser runtime)
+- missions/missions.json (canonical mission data)
+- CONTRIBUTING.md and .github/pull_request_template.md (contributor workflow)
+
+Quick Commands
+- python newcomer.py
+- python newcomer.py --play
+- python -m unittest discover -s tests
+- python validate_missions.py
+- python refresh_repo_bundle.py
+
+AI Loading Order
+1. CONTEXT.md
+2. llms.txt
+3. repo_bundle.txt
+4. task-specific files
+
+Project Tone
+- Clarity over jargon
+- Systems thinking over syntax memorization
+- Community stewardship and constructive review
+
+Follow-Up (Deferred)
+- Segmented bundles: bundle_missions.txt, bundle_docs.txt, bundle_code.txt
